@@ -9,7 +9,7 @@ public class works_onDaoImpl implements works_onDao {
     @Override
     public boolean AddWorks_on(works_on works) {
         boolean isAddSuccessful = false;
-        Connection conn = ConnectionFactory.getConnection();
+        Connection conn = data.ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO works_on(works_on_id,fk_works_on_student,fk_works_on_swp,fk_works_on_term)"+ "VALUES (?,?,?,?);");
             ps.setInt(1,works.getWorks_on_id());
@@ -40,7 +40,7 @@ public class works_onDaoImpl implements works_onDao {
     @Override
     public boolean updateWorks_on(works_on works) {
         boolean isUpdated = false;
-        Connection conn = ConnectionFactory.getConnection();
+        Connection conn = data.ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("update student" + "set student_fname = ?,student_lname = ?" + "where student_id=?");
             ps.setInt(1,works.getWorks_on_id());

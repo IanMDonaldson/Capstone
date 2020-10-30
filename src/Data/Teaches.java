@@ -5,7 +5,7 @@ import java.util.List;
 public class Teaches {
     private int teaches_id;
     private int fk_teaches_course;
-    private int fk_teaches_instructor;
+    private String fk_teaches_instructor;
     private int fk_teaches_term;
 
     public int getTeaches_id() {
@@ -28,7 +28,7 @@ public class Teaches {
         return fk_teaches_instructor;
     }
 
-    public void setFk_teaches_instructor(int fk_teaches_instructor) {
+    public void setFk_teaches_instructor(String fk_teaches_instructor) {
         this.fk_teaches_instructor = fk_teaches_instructor;
     }
 

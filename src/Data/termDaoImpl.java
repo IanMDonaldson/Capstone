@@ -10,7 +10,7 @@ public class termDaoImpl implements termDao {
     @Override
     public boolean Addterm(term term) {
         boolean isAddSuccessful = false;
-        Connection conn = ConnectionFactory.getConnection();
+        Connection conn = data.ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO term(term_id,term_name,term_year)"+ "VALUES (?,?,?);");
             ps.setInt(1,term.getTerm_id());
@@ -40,7 +40,7 @@ public class termDaoImpl implements termDao {
     @Override
     public boolean Updateterm(term term) {
         boolean isUpdated = false;
-        Connection conn = ConnectionFactory.getConnection();
+        Connection conn = data.ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("update term" + "set term_id = ?,term_name = ?" + "where term_year=?");
             ps.setInt(1,term.getTerm_id());
