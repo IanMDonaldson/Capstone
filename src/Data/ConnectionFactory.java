@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/data/ConnectionFactory.java
 package data;
+=======
+package Data;
+>>>>>>> origin/Justyn-Branch:src/Data/ConnectionFactory.java
 
 import com.mysql.jdbc.Driver;
 
@@ -18,6 +22,12 @@ public class ConnectionFactory {
     public static final String PASS = "kkkk";
 
     public static Connection getConnection()
+<<<<<<< HEAD:src/data/ConnectionFactory.java
+=======
+
+//yes
+
+>>>>>>> origin/Justyn-Branch:src/Data/ConnectionFactory.java
     {
         try {
             DriverManager.registerDriver(new Driver());

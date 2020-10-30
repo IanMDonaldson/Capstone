@@ -1,6 +1,6 @@
 package web;
 
-import data.JavaMail;
+import Data.works_onDao;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -37,7 +37,7 @@ public class Home extends HttpServlet {
         } else {
             if (request.getParameter("action").equals("registerPOST")) {
                 String email = request.getParameter("email");
-                JavaMail jmail = new JavaMail();
+                works_onDao.JavaMail jmail = new works_onDao.JavaMail();
                 try {
                     jmail.sendEmail(email);
                 } catch (MessagingException e) {
