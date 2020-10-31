@@ -9,7 +9,7 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public boolean AddCourse(Course course) {
         boolean isAddSuccessful = false;
-        Connection conn = data.ConnectionFactory.getConnection();
+        Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO student(course_id,course_title,department_id,fk_course_instructor)+ VALUES(?,?,?,?);");
             ps.setInt(1,course.getCourse_id());
@@ -38,7 +38,7 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public boolean UpdateCourse(Course course) {
         boolean isUpdated = false;
-        Connection conn = data.ConnectionFactory.getConnection();
+        Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("update course" + "set course_id = ?,course_title = ?" + "where department_id=?"+"where fk_course_instructor");
             ps.setInt(1,course.getCourse_id());

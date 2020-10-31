@@ -10,7 +10,7 @@ public class enrollmentDaoImpl implements enrollmentDao {
     public boolean addEnrollment(enrollment enrollment)
          {
             boolean isAddSuccessful = false;
-            Connection conn = data.ConnectionFactory.getConnection();
+            Connection conn = ConnectionFactory.getConnection();
             try{
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO enrollment(enrollment_id,enrollment_student,fk_enrollment_course,fk_enrollment_term)"+ "VALUES (?,?,?,?);");
                 ps.setInt(1,enrollment.getEnrollment_id());
@@ -40,7 +40,7 @@ public class enrollmentDaoImpl implements enrollmentDao {
     @Override
         public boolean updateEnrollment(enrollment enrollment) {
         boolean isUpdated = false;
-        Connection conn = data.ConnectionFactory.getConnection();
+        Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("update enrollment" + "set enrollment_id = ?,fk_enrollment_course = ? , fk_enrollment_student=? ,fk_enrollment_term");
             ps.setInt(1,enrollment.getEnrollment_id());
