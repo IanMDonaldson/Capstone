@@ -17,7 +17,6 @@ public class TeachesdaoImpl implements TeachesDao{
             ps.setInt(1,Teaches.getTeaches_id());
             ps.setInt(2,Teaches.getFk_teaches_course());
             ps.setString(3,Teaches.getFk_teaches_instructor());
-            ps.setInt(4,Teaches.getFk_teaches_term());
 
 
             int rowChanged = ps.executeUpdate();

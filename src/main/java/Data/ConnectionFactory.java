@@ -1,13 +1,5 @@
-<<<<<<< HEAD:src/data/ConnectionFactory.java
-package data;
-=======
 package Data;
->>>>>>> origin/Justyn-Branch:src/Data/ConnectionFactory.java
-
 import com.mysql.jdbc.Driver;
-
-
-
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -31,7 +23,7 @@ public class ConnectionFactory {
     {
         try {
             DriverManager.registerDriver(new Driver());
-         return DriverManager.getConnection(URL, USER, PASS);
+            return DriverManager.getConnection(URL, USER, PASS);
         } catch (SQLException ex) {
             throw new RuntimeException("Error connecting to the database", ex);
         }
