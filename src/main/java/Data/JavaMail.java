@@ -9,9 +9,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class JavaMail {
-
-    public static void main(String[] args) throws IOException {
-
+    private Session session;
+    private void setup() throws IOException {
+	
         String to = "dragomundo@outlook.com";
 
 
@@ -26,28 +26,30 @@ public class JavaMail {
         InputStream is = JavaMail.class.getClassLoader().getResourceAsStream("app.properties");
         props.load(is);
         String password = props.getProperty("gmailpass");
+        assert is != null;
         is.close();
-        Session session = Session.getInstance(props,
+        this.session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(from, password);
                     }
                 });
-
+    }
+    public void sendMail(String toUser, String messageString, String subject) throws IOException {
+	setup();
         try {
 
             Message message = new MimeMessage(session);
 
 
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress("admin@dragomundo.com"));
 
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
+                    InternetAddress.parse(toUser));
 
-            message.setSubject("Testing Subject");
+            message.setSubject(subject);
 
-            message.setText("Hello, this is sample for to check send "
-                    + "email using JavaMailAPI ");
+            message.setText(messageString);
 
             Transport.send(message);
 
