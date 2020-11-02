@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
     @Override
-    public boolean AddCourse(Course course) {
+    public boolean addCourse(Course course) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -36,7 +36,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean UpdateCourse(Course course) {
+    public boolean updateCourse(Course course) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{

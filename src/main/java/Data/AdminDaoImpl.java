@@ -1,22 +1,21 @@
 package Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class InstructorDaoImpl implements InstructorDao {
-    public InstructorDaoImpl() {
+public class AdminDaoImpl implements AdminDao {
 
-    }
 
     @Override
-    public boolean instructorExists(Instructor instructor) {
+    public boolean adminExists(Admin admin) {
         boolean exists = false;
         Connection conn = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from dcia.instructor as i where i.instructor_uname=? AND i.instructor_pw=?;");
-            ps.setString(1, instructor.getUsername());
-            ps.setString(2, instructor.getPassword());
+            PreparedStatement ps = conn.prepareStatement("select * from dcia.admin as i where i.admin_uname=? AND i.admin_pw=?;");
+            ps.setString(1, admin.getUsername());
+            ps.setString(2, admin.getPassword());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 exists = true;
