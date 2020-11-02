@@ -7,15 +7,15 @@ import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
     @Override
-    public boolean AddCourse(Course course) {
+    public boolean addCourse(Course course) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO student(course_id,course_title,department_id,fk_course_instructor)+ VALUES(?,?,?,?);");
-            ps.setInt(1,course.getCourse_id());
-            ps.setString(2,course.getCourse_title());
-            ps.setString(3,course.getDepartment_id());
-            ps.setString(4,course.getFk_course_instructor());
+            ps.setInt(1,course.getCourseId());
+            ps.setString(2,course.getCourseTitle());
+            ps.setString(3,course.getDepartmentId());
+            ps.setString(4,course.getFkCourseinstructor());
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
@@ -36,15 +36,15 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean UpdateCourse(Course course) {
+    public boolean updateCourse(Course course) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("update course" + "set course_id = ?,course_title = ?" + "where department_id=?"+"where fk_course_instructor");
-            ps.setInt(1,course.getCourse_id());
-            ps.setString(2,course.getCourse_title());
-            ps.setString(3,course.getDepartment_id());
-            ps.setString(4,course.getFk_course_instructor());
+            ps.setInt(1,course.getCourseId());
+            ps.setString(2,course.getCourseTitle());
+            ps.setString(3,course.getDepartmentId());
+            ps.setString(4,course.getFkCourseinstructor());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class CourseDaoImpl implements CourseDao {
 
 
     @Override
-    public List<Course> GetAllCourses() {
+    public List<Course> getAllCourses() {
         return null;
     }
 }

@@ -3,6 +3,7 @@ import javax.management.Query;
 import java.sql.Connection;
 public class LoginSrevice {
     private int count;
+    //defunct
     public LoginSrevice(){}
     public boolean LoginCheck(String uname, String password){
         ConnectionFactory conn = (ConnectionFactory) ConnectionFactory.getConnection();

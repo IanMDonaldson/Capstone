@@ -1,54 +1,40 @@
 package Data;
 
-import java.util.List;
-
 public class Teaches {
-    private int teaches_id;
-    private int fk_teaches_course;
-    private int fk_teaches_instructor;
-    private int fk_teaches_term;
+    private int teachesId;
+    private int fkteachescourse;
+    private int fkTeachesinstructor;
+    private int fkTeachesterm;
 
-    public int getTeaches_id() {
-        return teaches_id;
+    public int getTeachesId() {
+        return teachesId;
     }
 
-    public void setTeaches_id(int teaches_id) {
-        this.teaches_id = teaches_id;
+    public void setTeachesId(int teachesId) {
+        this.teachesId = teachesId;
     }
 
-    public int getFk_teaches_course() {
-        return fk_teaches_course;
+    public int getFkteachescourse() {
+        return fkteachescourse;
     }
 
-    public void setFk_teaches_course(int fk_teaches_course) {
-        this.fk_teaches_course = fk_teaches_course;
+    public void setFkteachescourse(int fkteachescourse) {
+        this.fkteachescourse = fkteachescourse;
     }
 
-    public String getFk_teaches_instructor() {
-        return fk_teaches_instructor;
+    public String getFkTeachesinstructor() {
+        return fkTeachesinstructor;
     }
 
-    public void setFk_teaches_instructor(int fk_teaches_instructor) {
-        this.fk_teaches_instructor = fk_teaches_instructor;
+    public void setFkTeachesinstructor(int fkTeachesinstructor) {
+        this.fkTeachesinstructor = fkTeachesinstructor;
     }
 
-    public int getFk_teaches_term() {
-        return fk_teaches_term;
+    public int getFkTeachesterm() {
+        return fkTeachesterm;
     }
 
-    public void setFk_teaches_term(int fk_teaches_term) {
-        this.fk_teaches_term = fk_teaches_term;
+    public void setFkTeachesterm(int fkTeachesterm) {
+        this.fkTeachesterm = fkTeachesterm;
     }
-
-    public List<Teaches> getGetTeacheslist() {
-        return getTeacheslist;
-    }
-
-    public void setGetTeacheslist(List<Teaches> getTeacheslist) {
-        this.getTeacheslist = getTeacheslist;
-    }
-
-    private List<Teaches> getTeacheslist;
-
-
 }
