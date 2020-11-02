@@ -36,7 +36,7 @@ public class JavaMail {
                 });
     }
     public void sendMail(String toUser, String messageString, String subject) throws IOException {
-	setup();
+	    setup();
         try {
 
             Message message = new MimeMessage(session);

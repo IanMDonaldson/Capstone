@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     public static final String URL = "jdbc:mysql://localhost:3306/dcia";
     public static final String USER = "root";
-    public static final String PASS = "kkkk";
+    public static final String PASS = "Toor1234!";
 
     public static Connection getConnection()
 <<<<<<< HEAD:src/data/ConnectionFactory.java

@@ -47,8 +47,8 @@ h1 {
 <div class="topnav">
   <a class="active" href="home_Page.html">Home</a>
   <div class="topnav-right">
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
+    <a href="Login?action=loginPage">Login</a>
+    <a href="Login?action=registerPage">Register</a>
   </div>
 </div>
 
