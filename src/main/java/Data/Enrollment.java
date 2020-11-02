@@ -1,6 +1,6 @@
 package Data;
 
-public class enrollment {
+public class Enrollment {
     private int enrollment_id;
     private int fk_enrollment_course;
 
