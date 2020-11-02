@@ -1,42 +1,47 @@
 package Data;
 
-public class Enrollment {
-    private int enrollment_id;
-    private int fk_enrollment_course;
+public class enrollment {
+    private int enrollmentId;
 
-    public int getEnrollment_id() {
-        return enrollment_id;
+
+
+    private int fkEnrollmentcourse;
+
+    public int getFkEnrollmentcourse() {
+        return fkEnrollmentcourse;
     }
 
-    public void setEnrollment_id(int enrollment_id) {
-        this.enrollment_id = enrollment_id;
+    public void setFkEnrollmentcourse(int fkEnrollmentcourse) {
+        this.fkEnrollmentcourse = fkEnrollmentcourse;
     }
 
-    public int getFk_enrollment_course() {
-        return fk_enrollment_course;
+    private int fkEnrollmentstudent;
+    private int fkEnrollmentterm;
+
+    public int getEnrollmentId() {
+        return enrollmentId;
     }
 
-    public void setFk_enrollment_course(int fk_enrollment_course) {
-        this.fk_enrollment_course = fk_enrollment_course;
+    public void setEnrollmentId(int enrollmentId) {
+        this.enrollmentId = enrollmentId;
     }
 
-    public int getFk_enrollment_student() {
-        return fk_enrollment_student;
+
+
+    public int getFkEnrollmentstudent() {
+        return fkEnrollmentstudent;
     }
 
-    public void setFk_enrollment_student(int fk_enrollment_student) {
-        this.fk_enrollment_student = fk_enrollment_student;
+    public void setFkEnrollmentstudent(int fkEnrollmentstudent) {
+        this.fkEnrollmentstudent = fkEnrollmentstudent;
     }
 
-    public int getFk_enrollment_term() {
-        return fk_enrollment_term;
+    public int getFkEnrollmentterm() {
+        return fkEnrollmentterm;
     }
 
-    public void setFk_enrollment_term(int fk_enrollment_term) {
-        this.fk_enrollment_term = fk_enrollment_term;
+    public void setFkEnrollmentterm(int fkEnrollmentterm) {
+        this.fkEnrollmentterm = fkEnrollmentterm;
     }
-
-    private int fk_enrollment_student;
-    private int fk_enrollment_term;
 }
 

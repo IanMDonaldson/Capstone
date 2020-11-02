@@ -1,40 +1,42 @@
 package Data;
 
 public class Course {
-    public int getCourse_id() {
-        return course_id;
+
+
+    private int courseId;
+    private String courseTitle;
+    private String departmentId;
+    private String fkCourseinstructor;
+
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
-    public String getCourse_title() {
-        return course_title;
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setCourse_title(String course_title) {
-        this.course_title = course_title;
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
-    public String getDepartment_id() {
-        return department_id;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment_id(String department_id) {
-        this.department_id = department_id;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public String getFk_course_instructor() {
-        return fk_course_instructor;
+    public String getFkCourseinstructor() {
+        return fkCourseinstructor;
     }
 
-    public void setFk_course_instructor(String fk_course_instructor) {
-        this.fk_course_instructor = fk_course_instructor;
+    public void setFkCourseinstructor(String fkCourseinstructor) {
+        this.fkCourseinstructor = fkCourseinstructor;
     }
-
-    private int course_id;
-    private String course_title;
-    private String department_id;
-    private String fk_course_instructor;
 }
