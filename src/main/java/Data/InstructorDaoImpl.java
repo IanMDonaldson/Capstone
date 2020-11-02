@@ -11,18 +11,21 @@ public class InstructorDaoImpl implements InstructorDao {
 
     @Override
     public boolean instructorExists(Instructor instructor) {
+        boolean exists = false;
         Connection conn = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from instructor where instructor.instructor_uname = ? AND instructor.instructor_pw = ?;");
+            PreparedStatement ps = conn.prepareStatement("select * from dcia.instructor as i where i.instructor_uname=? AND i.instructor_pw=?;");
             ps.setString(1, instructor.getUsername());
             ps.setString(2, instructor.getPassword());
             ResultSet rs = ps.executeQuery();
-            if (rs != null) {
-                return true;
+            if (rs.next()) {
+                exists = true;
             }
+            ps.close();
+            rs.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
+        return exists;
     }
 }

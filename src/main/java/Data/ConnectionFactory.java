@@ -14,12 +14,6 @@ public class ConnectionFactory {
     public static final String PASS = "Toor1234!";
 
     public static Connection getConnection()
-<<<<<<< HEAD:src/data/ConnectionFactory.java
-=======
-
-//yes
-
->>>>>>> origin/Justyn-Branch:src/Data/ConnectionFactory.java
     {
         try {
             DriverManager.registerDriver(new Driver());
