@@ -1,32 +1,31 @@
 package Data;
 
 public class term {
-    private int term_id;
-    private String term_name;
+    private int termId;
+    private String termName;
+    private int termYear;
 
-    public int getTerm_id() {
-        return term_id;
+    public int getTermYear() {
+        return termYear;
     }
 
-    public void setTerm_id(int term_id) {
-        this.term_id = term_id;
+    public void setTermYear(int termYear) {
+        this.termYear = termYear;
     }
 
-    public String getTerm_name() {
-        return term_name;
+    public int getTermId() {
+        return termId;
     }
 
-    public void setTerm_name(String term_name) {
-        this.term_name = term_name;
+    public void setTermId(int termId) {
+        this.termId = termId;
     }
 
-    public int getTerm_year() {
-        return term_year;
+    public String getTermName() {
+        return termName;
     }
 
-    public void setTerm_year(int term_year) {
-        this.term_year = term_year;
+    public void setTermName(String termName) {
+        this.termName = termName;
     }
-
-    private int term_year;
 }
