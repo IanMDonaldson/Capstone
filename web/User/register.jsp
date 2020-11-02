@@ -99,7 +99,7 @@ input[type=submit]:hover {
 
 /* Two-column layout */
 .col {
-  float: center;
+  float: start;
   width: 50%;
   margin: auto;
   padding: 0 50px;
@@ -135,10 +135,10 @@ input[type=submit]:hover {
     
 
   <div class="topnav">
-    <a class="active" href="home_Page.html">Home</a>
+    <a class="active" href="home_Page.jsp">Home</a>
     <div class="topnav-right">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+      <a href="login.jsp">Login</a>
+      <a href="register.jsp">Register</a>
     </div>
   </div>
 
