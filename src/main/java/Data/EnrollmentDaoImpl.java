@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class enrollmentDaoImpl implements enrollmentDao {
+public class enrollmentDaoImpl implements EnrollmentDao {
     @Override
-    public boolean addEnrollment(enrollment enrollment)
+    public boolean addEnrollment(Enrollment enrollment)
          {
             boolean isAddSuccessful = false;
             Connection conn = ConnectionFactory.getConnection();
@@ -38,7 +38,7 @@ public class enrollmentDaoImpl implements enrollmentDao {
     }
 
     @Override
-        public boolean updateEnrollment(enrollment enrollment) {
+        public boolean updateEnrollment(Enrollment enrollment) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -53,10 +53,9 @@ public class enrollmentDaoImpl implements enrollmentDao {
         return false;
     }
 
-
-
     @Override
-    public List<enrollment> getAllenrollment() {
+    public List<Enrollment> GetAllEnrollment() {
         return null;
     }
+
 }
