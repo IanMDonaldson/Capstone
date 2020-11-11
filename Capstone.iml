@@ -51,6 +51,9 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.security.enterprise:javax.security.enterprise-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.soteria:javax.security.enterprise:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.security.enterprise:javax.security.enterprise-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.soteria:javax.security.enterprise:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
