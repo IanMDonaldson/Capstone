@@ -1,12 +1,14 @@
 package web;
 
+import Data.works_onDao;
+
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 /**
  * Servlet implementation class Home
  */
@@ -22,17 +24,28 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if(request.getParameter("action") == null ) {
-            request.getRequestDispatcher("Menu.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        else if (request.getParameter("action").equals("mainMenu")) {
-            request.getRequestDispatcher("Menu.jsp").forward(request, response);
 
-        }
     }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        if (request.getParameter("action") == null ) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } else {
+            if (request.getParameter("action").equals("registerPOST")) {
+                String email = request.getParameter("email");
+                works_onDao.JavaMail jmail = new works_onDao.JavaMail();
+                try {
+                    jmail.sendEmail(email);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }
     }
 
 }

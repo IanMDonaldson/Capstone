@@ -188,7 +188,6 @@ body {
    </div>
    <a href="Setup_Term_Year.jsp">Setup Terms & Years</a>
    <a href="instuctors.jsp">Instructor</a>
-   <a href="pending_registration.jsp">Pending Registrations</a>
  
  </div> 
 
