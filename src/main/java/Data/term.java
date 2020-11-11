@@ -28,4 +28,7 @@ public class term {
     public void setTermName(String termName) {
         this.termName = termName;
     }
+
+
+
 }
