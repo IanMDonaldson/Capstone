@@ -1,8 +1,10 @@
 package web;
 
+import Data.Admin;
+import Data.AdminDaoImpl;
 import Data.Instructor;
 import Data.InstructorDaoImpl;
-import Data.works_onDao;
+
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -28,13 +30,18 @@ public class Login extends HttpServlet {
         } else {
             switch (request.getParameter("action")) {
                 case "loginPage":
+
                     request.getRequestDispatcher("login.jsp").forward(request, response);
+                    break;
                 case "registerPage":
                     request.getRequestDispatcher("register.jsp").forward(request, response);
+                    break;
                 case "login":
-
+                    break;
                 default:
+
                     request.getRequestDispatcher("home_page.jsp").forward(request, response);
+                    break;
             }
         }
 
@@ -46,26 +53,36 @@ public class Login extends HttpServlet {
         if (request.getParameter("action") == null ) {
             request.getRequestDispatcher("home_page.jsp").forward(request, response);
         } else {
-            if (request.getParameter("action").equals("loginPOST")) {
-                    if (request.getParameter("admin") == null) {
+            switch (request.getParameter("action")) {
+                case "loginPOST":
+                    if (request.getParameter("access_Level").equals("instructor")) {
                         InstructorDaoImpl instImpl = new InstructorDaoImpl();
                         Instructor instructor = new Instructor();
-                        instructor.setUsername(request.getParameter("usernameinstructor"));
-                        instructor.setPassword(request.getParameter("passwordinstructor"));
+                        instructor.setUsername(request.getParameter("username"));
+                        instructor.setPassword(request.getParameter("password"));
                         if (instImpl.instructorExists(instructor)) {
                             request.getRequestDispatcher("home_page.jsp").forward(request, response);
                         } else {
-                            PrintWriter writer = response.getWriter();
-                            writer.println("login");
-                            request.getRequestDispatcher("login.jsp").forward(request, response);
+                            request.getRequestDispatcher("failure_page.jsp").forward(request, response);
                         }
                     } else {
-                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                        AdminDaoImpl adminImpl = new AdminDaoImpl();
+                        Admin admin = new Admin();
+                        admin.setUsername(request.getParameter("username"));
+                        admin.setPassword(request.getParameter("password"));
+                        if (adminImpl.adminExists(admin)) {
+                            request.getRequestDispatcher("home_page.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("failure_page.jsp").forward(request, response);
+                        }
                     }
+                    break;
+                case "registerPOST":
 
-            }
-            else {
-                request.getRequestDispatcher("register.jsp").forward(request, response);
+                    break;
+                default:
+                    request.getRequestDispatcher("failure_page.jsp").forward(request, response);
+
             }
         }
     }
