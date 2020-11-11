@@ -157,11 +157,14 @@ input[type=submit]:hover {
         <h1 class="title_pg">DCIA Login</h1>
 
         <div class="col">
-          <input type="hidden" value="instructor" id="instructor">
-          <label for="usernameinstructor"><b>Username:</b></label>
-          <input type="text" name="usernameinstructor" placeholder="Enter Username" required>
-          <label for="passwordinstructor"><b>Password:</b></label>
-          <input type="password" name="passwordinstructor" placeholder="Enter Password" required>
+          <select name="access_Level" id="access_Level" required>
+            <option value="admin">Admin</option>
+            <option value="instructor">Instructor</option>
+          </select>
+          <label for="username"><b>Username:</b></label>
+          <input type="text" name="username" id="username" placeholder="Enter Username" required>
+          <label for="password"><b>Password:</b></label>
+          <input type="password" name="password" id="password" placeholder="Enter Password" required>
           <a href="home_page.jsp" style="float:right;">Forgotten Password?</a>
           <input class="login_btn" type="submit" value="Login">
         </div>
@@ -170,22 +173,7 @@ input[type=submit]:hover {
     </form>
   </div>
 
-  <form action="Login?action=loginPOST" method="post">
-    <div class="row">
-      <h1 class="title_pg">DCIA Login</h1>
 
-      <div class="col">
-        <input type="hidden" value="admin" id="admin">
-        <label for="usernameadmin"><b>Username:</b></label>
-        <input type="text" name="usernameadmin"  placeholder="Enter Username" required>
-        <label for="passwordadmin"><b>Password:</b></label>
-        <input type="password"  name="passwordadmin" placeholder="Enter Password" required>
-        <a href="home_page.jsp" style="float:right;">Forgotten Password?</a>
-        <input class="login_btn" type="submit" value="Login">
-      </div>
-
-    </div>
-  </form>
   
 
 </body>
