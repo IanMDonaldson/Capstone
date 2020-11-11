@@ -1,11 +1,13 @@
 package Data;
-import com.mysql.jdbc.Driver;
+
+import com.mysql.cj.jdbc.Driver;
+
 import java.sql.Connection;
 
 import java.sql.DriverManager;
 
 import java.sql.SQLException;
-
+//////////////yesyesyes
 
 
 public class ConnectionFactory {
@@ -14,12 +16,6 @@ public class ConnectionFactory {
     public static final String PASS = "Toor1234!";
 
     public static Connection getConnection()
-<<<<<<< HEAD:src/data/ConnectionFactory.java
-=======
-
-//yes
-
->>>>>>> origin/Justyn-Branch:src/Data/ConnectionFactory.java
     {
         try {
             DriverManager.registerDriver(new Driver());

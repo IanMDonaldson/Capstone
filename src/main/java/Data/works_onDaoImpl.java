@@ -7,7 +7,7 @@ import java.util.List;
 
 public class works_onDaoImpl implements works_onDao {
     @Override
-    public boolean addWorkson(works_on works) {
+    public boolean AddWorks_on(works_on works) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -38,7 +38,7 @@ public class works_onDaoImpl implements works_onDao {
 
 
     @Override
-    public boolean updateWorkson(works_on works) {
+    public boolean updateWorks_on(works_on works) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -55,7 +55,7 @@ public class works_onDaoImpl implements works_onDao {
 
 
     @Override
-    public List<works_on> getAllworks() {
+    public List<works_on> getAllWorks() {
         return null;
     }
 }
