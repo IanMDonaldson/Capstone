@@ -67,7 +67,6 @@ public class Login extends HttpServlet {
                 case "login":
                     break;
                 default:
-
                     request.getRequestDispatcher("home_page.jsp").forward(request, response);
                     break;
             }
