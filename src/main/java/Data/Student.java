@@ -7,6 +7,7 @@ public class Student {
     private List<Student> studentList;
     private String student_fname;
     private String Student_lname;
+    private List<StudentWorkProduct> swpList;
 
     public int getStudent_id() {
         return student_id;

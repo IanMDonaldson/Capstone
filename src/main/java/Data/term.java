@@ -3,7 +3,7 @@ package Data;
 public class term {
     private int term_id;
     private String term_name;
-
+    private List<Course> courses;
     public int getTerm_id() {
         return term_id;
     }
