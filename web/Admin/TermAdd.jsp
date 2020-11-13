@@ -12,10 +12,10 @@
   </head>
   <body>
   	<h1>Add new Term</h1>
-  	<%--form action="WebActor?action=addActorPOST&id=${sessionScope.id }" method="post" name="myForm" --%>
-  		<input type="hidden" id="id" name="id" value="${sessionScope.id }"/>
+  	<%--form action="AdminServlet?action=addTermPOST" method="post" name="myForm" --%>
 		<fieldset>
 			<label for="Term Year">Term Year: </label><input type="number"><br>
+			<label for="Term Name">Term Name: </label><input type="number"><br>
 			<input type="submit" name="submit" onclick="" value="Add Term"/>
 			<input type="button" onclick="window.location='ActorManagement.jsp'" value="Cancel"/>
 		</fieldset>

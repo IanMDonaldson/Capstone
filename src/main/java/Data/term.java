@@ -1,11 +1,12 @@
 package Data;
 
 public class term {
-    private int termId;
-    private String termName;
-    private int termYear;
+    private static int termId;
+    private static int termYear;
+    private static String termName;
 
-    public int getTermYear() {
+
+    public static int getTermYear() {
         return termYear;
     }
 
@@ -13,7 +14,7 @@ public class term {
         this.termYear = termYear;
     }
 
-    public int getTermId() {
+    public static int getTermId() {
         return termId;
     }
 
@@ -21,7 +22,7 @@ public class term {
         this.termId = termId;
     }
 
-    public String getTermName() {
+    public static String getTermName() {
         return termName;
     }
 
