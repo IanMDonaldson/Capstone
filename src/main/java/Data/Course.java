@@ -1,16 +1,12 @@
 package Data;
 
-import java.util.List;
-
 public class Course {
-    public Course(List<Student> studentList, Instructor instructor) {
-        this.studentList = studentList;
-        this.instructor = instructor;
-    }
 
-    public int getCourse_id() {
-        return course_id;
-    }
+
+    private int courseId;
+    private String courseTitle;
+    private String departmentId;
+    private String fkCourseinstructor;
 
     public void setCourse_id(int course_id) {
         this.course_id = course_id;
@@ -40,10 +36,7 @@ public class Course {
         this.fk_course_instructor = fk_course_instructor;
     }
 
-    private int course_id;
-    private String course_title;
-    private String department_id;
-    private String fk_course_instructor;
-    private List<Student> studentList;
-    private Instructor instructor;
+    public void setFkCourseinstructor(String fkCourseinstructor) {
+        this.fkCourseinstructor = fkCourseinstructor;
+    }
 }
