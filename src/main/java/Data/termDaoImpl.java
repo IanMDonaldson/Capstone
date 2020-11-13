@@ -9,8 +9,10 @@ import java.util.List;
 
 public class termDaoImpl implements termDao {
 
+
+
     @Override
-    public boolean addTerm(term term) {
+    public static boolean addTerm(term term) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try {
@@ -78,7 +80,7 @@ public class termDaoImpl implements termDao {
         }
 
     @Override
-    public boolean termExists(term term) {
+    public static boolean termExists(term term) {
         boolean termExists = true;
         Connection conn = ConnectionFactory.getConnection();
         try{

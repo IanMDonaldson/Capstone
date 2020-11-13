@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-/*
+
 public class enrollmentDaoImpl implements enrollmentDao {
     @Override
     public boolean addEnrollment(enrollment enrollment)
@@ -61,5 +61,5 @@ public class enrollmentDaoImpl implements enrollmentDao {
         return null;
     }
 }
-*/
+
 
