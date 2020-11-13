@@ -1,5 +1,7 @@
 package Data;
 
+import Data.term;
+
 import java.util.List;
 
 public interface termDao {

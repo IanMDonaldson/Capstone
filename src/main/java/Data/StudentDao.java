@@ -1,5 +1,7 @@
 package Data;
 
+import Data.Student;
+
 import java.util.List;
 
 public interface StudentDao {

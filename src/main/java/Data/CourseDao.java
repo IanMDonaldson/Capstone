@@ -1,5 +1,7 @@
 package Data;
 
+import Data.Course;
+
 import java.util.List;
 
 public interface CourseDao {
