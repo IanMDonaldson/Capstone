@@ -6,20 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminDaoImpl implements AdminDao {
+
+
     @Override
-    public boolean adminExist(Admin admin) {
+    public boolean adminExists(Admin admin) {
+        boolean exists = false;
         Connection conn = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from admin where admin.admin_uname = ? AND admin.admin_pw = ?;");
+            PreparedStatement ps = conn.prepareStatement("select * from dcia.admin as i where i.admin_uname=? AND i.admin_pw=?;");
             ps.setString(1, admin.getUsername());
             ps.setString(2, admin.getPassword());
             ResultSet rs = ps.executeQuery();
-            if (rs != null) {
-                return true;
+            if (rs.next()) {
+                exists = true;
             }
+            ps.close();
+            rs.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
+        return exists;
     }
 }

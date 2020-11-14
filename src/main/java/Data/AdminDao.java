@@ -1,5 +1,5 @@
 package Data;
 
 public interface AdminDao {
-   public boolean adminExist(Admin admin);
+    public boolean adminExists(Admin admin);
 }
