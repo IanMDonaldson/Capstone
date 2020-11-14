@@ -11,11 +11,11 @@
 </head>
 <body>
 <form action="WebActor?action=searchActorPOST" method="post">
-<label for="actorName">Search: </label>
-    <input type="text" id="actorName" name="actorName"/>
-    <input type="submit" value="Search Actors" /><br><br>
-<a href="WebActor?action=getAllActors">List all Terms</a>
-<a href="WebActor?action=addActorGET">Add Actor</a>
+<label for="termName">Search: </label>
+    <input type="text" id="termName" name="termName"/>
+    <input type="submit" value="Search Terms" /><br><br>
+<a href="WebActor?action=getAllTerm">List all Terms</a>
+<a href="WebActor?action=addTermGET">Add Actor</a>
 </form>
 </body>
 </html>

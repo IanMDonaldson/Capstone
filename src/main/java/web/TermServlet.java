@@ -1,7 +1,7 @@
 package web;
 
-import Data.term;
-import Data.termDaoImpl;
+import Data.Term;
+import Data.TermDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ public class TermServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
     private String termIDParm;
     private int termID;
-    private term Term;
+    private Term term;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -34,13 +34,28 @@ public class TermServlet extends HttpServlet {
             request.getRequestDispatcher("TermList.jsp").forward(request, response);
         }
         else {
-            termDaoImpl TermDaoImpl = new termDaoImpl();
+            TermDaoImpl termDaoImpl = new TermDaoImpl();
             switch (request.getParameter("action")){
                 case "getAllTerms":
-                    request.getSession().setAttribute(("termList",termDaoImpl.updateTerm);
+                    request.getSession().setAttribute(("termList",TermDaoImpl.updateTerm);
                     request.getRequestDispatcher("termList.jsp").forward(request, response);
                     break;
+                case "getTerm":
+                    termIDParm = request.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParm);
+                    term= termDaoImpl.getTerm(termID);
+                    request.getSession().setAttribute("id",term.getTermId());
+                    request.getSession().setAttribute("termName",term.getTermName().toUpperCase());
+                    request.getSession().setAttribute("termYear",term.getTermYear());
+                    request.getRequestDispatcher("TermUpdate.jsp").forward(request, response);
+                    break;
+                case "addTermGET":
+                    termID=termDaoImpl.getNewTermID();
+                    request.getSession().setAttribute("id",Integer.toString(termID));
+                    request.getRequestDispatcher("TermAdd.jsp").forward(request, response);
+                    break;
             }
+
         }
     }
     /**
@@ -57,17 +72,17 @@ public class TermServlet extends HttpServlet {
                 termID = Integer.parseInt("actorIDParam");
                 int TermYear = Integer.parseInt(request.getParameter("termYear").toUpperCase());
                 int TermID = Integer.parseInt(request.getParameter("termID").toUpperCase());
-                term Term = new term();
+                Term term = new Term();
                 term.setTermId(TermID);
                 term.setTermYear(TermYear);
 
-                boolean termExist = termDaoImpl.termExists(Term);
+                boolean termExist = TermDaoImpl.termExists();
                 if(termExist){
                     request.getSession().setAttribute("add", true);
                     request.getRequestDispatcher("termFailurePage.jsp").forward(request, response);
                 }
                 else{
-                    if(!termDaoImpl.addTerm(Term)){
+                    if(!TermDaoImpl.addTerm(Term)){
                         request.getSession().setAttribute("add", true);
                         request.getRequestDispatcher("termFailurePage.jsp").forward(request, response);
                     }
