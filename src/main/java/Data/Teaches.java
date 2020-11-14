@@ -3,7 +3,7 @@ package Data;
 public class Teaches {
     private int teachesId;
     private int fkteachescourse;
-    private int fkTeachesinstructor;
+    private String fkTeachesinstructor;
     private int fkTeachesterm;
 
     public int getTeachesId() {
@@ -26,7 +26,7 @@ public class Teaches {
         return fkTeachesinstructor;
     }
 
-    public void setFkTeachesinstructor(int fkTeachesinstructor) {
+    public void setFkTeachesinstructor(String fkTeachesinstructor) {
         this.fkTeachesinstructor = fkTeachesinstructor;
     }
 

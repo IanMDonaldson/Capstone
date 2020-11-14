@@ -6,7 +6,8 @@ public class Student {
     private int studentId;
     private List<Student> studentList;
     private String studentFname;
-
+    private String StudentLname;
+    private int isGraded;
     public int getStudentId() {
         return studentId;
     }
@@ -39,7 +40,12 @@ public class Student {
         StudentLname = studentLname;
     }
 
-    private String StudentLname;
+   public void setIsGraded(int grade)
+   {
+       this.isGraded=grade;
+   }
 
-
+    public int getIsGraded() {
+        return isGraded;
+    }
 }

@@ -11,11 +11,11 @@ public class CourseDaoImpl implements CourseDao {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO student(course_id,course_title,department_id,fk_course_instructor)+ VALUES(?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO course(course_id,course_title,department_id,course_number)VALUES(?,?,?,?);");
             ps.setInt(1,course.getCourseId());
-            ps.setString(2,course.getCourseTitle());
-            ps.setString(3,course.getDepartmentId());
-            ps.setString(4,course.getFkCourseinstructor());
+            ps.setString(2,course.getCourse_title());
+            ps.setString(3,course.getDepartment_id());
+            ps.setString(4,course.getCourse_num());
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
@@ -40,11 +40,11 @@ public class CourseDaoImpl implements CourseDao {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("update course" + "set course_id = ?,course_title = ?" + "where department_id=?"+"where fk_course_instructor");
+            PreparedStatement ps = conn.prepareStatement("update course set course_id = ?,course_title = ?, course_number=?" + "where department_id=?");
             ps.setInt(1,course.getCourseId());
-            ps.setString(2,course.getCourseTitle());
-            ps.setString(3,course.getDepartmentId());
-            ps.setString(4,course.getFkCourseinstructor());
+            ps.setString(2,course.getCourse_title());
+            ps.setString(3,course.getDepartment_id());
+           //ps.setString(4,course.getFk_course_instructor());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

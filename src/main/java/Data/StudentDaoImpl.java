@@ -14,10 +14,11 @@ public class StudentDaoImpl implements StudentDao {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO student(student_id,student_fname,student_lname)+ VALUES(?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO student(student_id,student_fname,student_lname,isGraduated)VALUES(?,?,?,?);");
             ps.setInt(1,student.getStudentId());
             ps.setString(2,student.getStudentFname());
             ps.setString(3,student.getStudentLname());
+            ps.setInt(4,student.getIsGraded());
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
@@ -44,7 +45,7 @@ public class StudentDaoImpl implements StudentDao {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-             PreparedStatement ps = conn.prepareStatement("update student" + "set student_fname = ?,student_lname = ?" + "where student_id=?");
+             PreparedStatement ps = conn.prepareStatement("update student set student_fname = ?,student_lname = ?" + "where student_id=?");
              ps.setString(1,student.getStudentFname());
              ps.setString(2,student.getStudentLname());
              ps.setInt(3,student.getStudentId());
