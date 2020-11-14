@@ -2,20 +2,23 @@ package Data;
 
 public class Course {
 
-    //private int course_id;
-    //private String course_title;
-    private String department_id;
-    private String fk_course_instructor;
-
     private int course_id;
     private String courseTitle;
-    private String departmentId;
-    // private String fkCourseinstructor;
+    private String department_id;
+    private String fk_course_instructor;
+    private String course_num;
+    //private String departmentId;
+// private String fkCourseinstructor;
+
+
+
 
     public void setCourseId(int course_id) {
         this.course_id = course_id;
     }
-
+    public int getCourseId() {
+        return course_id;
+    }
 
     public void setCourse_title(String course_title) {
         this.courseTitle = course_title;
@@ -42,6 +45,13 @@ public class Course {
         return fk_course_instructor;
     }
 
+    public void setCourse_num(String course_num) {
+        this.course_num = course_num;
+    }
+
+    public String getCourse_num() {
+        return course_num;
+    }
 }
 
 

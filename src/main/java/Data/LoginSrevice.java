@@ -6,11 +6,13 @@ import java.sql.Connection;
 public class LoginSrevice {
     private int count;
     //defunct
+    //the someValue was giving an error so i made an it an int varailble in this file temparally.
+    int somevalue=1;
     public LoginSrevice(){}
     public boolean LoginCheck(String uname, String password){
         ConnectionFactory conn = (ConnectionFactory) ConnectionFactory.getConnection();
         //need to fix connection factory on my end maybe
-       if (1=somevalue) {
+       if (1==somevalue) {
            // if(get the login state of user )
            String adminlogin = "select admin_uname,uname_pw from admin as  where admin_name='" + uname + "' and admin_pw'" + password + "'";
            // run getALLadmins command here
