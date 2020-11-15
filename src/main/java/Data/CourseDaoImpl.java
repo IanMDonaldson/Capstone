@@ -7,11 +7,11 @@ import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
     @Override
-    public boolean addCourse(Course course) {
+    public boolean AddCourse(Course course) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO dcia.student(course_id,course_title,department_id,fk_course_instructor) VALUES(?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO student(course_id,course_title,department_id,fk_course_instructor)+ VALUES(?,?,?,?);");
             ps.setInt(1,course.getCourse_id());
             ps.setString(2,course.getCourse_title());
             ps.setString(3,course.getDepartment_id());
@@ -36,7 +36,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean updateCourse(Course course) {
+    public boolean UpdateCourse(Course course) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{

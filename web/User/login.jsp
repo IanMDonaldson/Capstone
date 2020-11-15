@@ -108,6 +108,7 @@ input[type=submit]:hover {
 
 /* Two-column layout */
 .col {
+  float: start;
   width: 50%;
   margin: auto;
   padding: 0 50px;
@@ -157,14 +158,11 @@ input[type=submit]:hover {
         <h1 class="title_pg">DCIA Login</h1>
 
         <div class="col">
-          <select name="access_Level" id="access_Level" required>
-            <option value="admin">Admin</option>
-            <option value="instructor">Instructor</option>
-          </select>
-          <label for="username"><b>Username:</b></label>
-          <input type="text" name="username" id="username" placeholder="Enter Username" required>
-          <label for="password"><b>Password:</b></label>
-          <input type="password" name="password" id="password" placeholder="Enter Password" required>
+          <input type="hidden" value="instructor" id="instructor">
+          <label for="usernameinstructor"><b>Username:</b></label>
+          <input type="text" name="usernameinstructor" placeholder="Enter Username" required>
+          <label for="passwordinstructor"><b>Password:</b></label>
+          <input type="password" name="passwordinstructor" placeholder="Enter Password" required>
           <a href="home_page.jsp" style="float:right;">Forgotten Password?</a>
           <input class="login_btn" type="submit" value="Login">
         </div>
@@ -172,8 +170,8 @@ input[type=submit]:hover {
       </div>
     </form>
   </div>
-
-
+  
+ 
   
 
 </body>

@@ -3,7 +3,7 @@ package Data;
 import java.util.List;
 
 public interface CourseDao {
-    public boolean addCourse(Course course);
-    public boolean updateCourse(Course course);
+    public boolean AddCourse(Course course);
+    public boolean UpdateCourse(Course course);
     public List<Course> GetAllCourses();
 }
