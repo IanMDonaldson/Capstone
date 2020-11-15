@@ -1,7 +1,10 @@
 /.idea/
 /lib/
+/lib/*
 /out/
+/out/*
 /target/
+/target/*
 /.settings/
 /shelf/
 /workspace.xml
