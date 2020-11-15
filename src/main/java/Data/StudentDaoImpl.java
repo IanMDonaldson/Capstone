@@ -10,14 +10,14 @@ public class StudentDaoImpl implements StudentDao {
 
 
     @Override
-    public boolean AddStudent(Student student) {
+    public boolean addStudent(Student student) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO student(student_id,student_fname,student_lname)+ VALUES(?,?,?);");
-            ps.setInt(1,student.getStudent_id());
-            ps.setString(2,student.getStudent_fname());
-            ps.setString(3, student.getStudent_lname());
+            ps.setInt(1,student.getStudentId());
+            ps.setString(2,student.getStudentFname());
+            ps.setString(3,student.getStudentLname());
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
@@ -45,9 +45,9 @@ public class StudentDaoImpl implements StudentDao {
         Connection conn = ConnectionFactory.getConnection();
         try{
              PreparedStatement ps = conn.prepareStatement("update student" + "set student_fname = ?,student_lname = ?" + "where student_id=?");
-             ps.setString(1,student.getStudent_fname());
-             ps.setString(2,student.getStudent_lname());
-             ps.setInt(3,student.getStudent_id());
+             ps.setString(1,student.getStudentFname());
+             ps.setString(2,student.getStudentLname());
+             ps.setInt(3,student.getStudentId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> getAllStudents() {
+    public List<Student> getAllstudents() {
         return null;
     }
 }

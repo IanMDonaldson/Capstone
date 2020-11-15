@@ -3,18 +3,17 @@ package Data;
 import java.util.List;
 
 public class Student {
-    private int student_id;
+    private int studentId;
     private List<Student> studentList;
     private String student_fname;
     private String Student_lname;
-    private List<StudentWorkProduct> swpList;
 
-    public int getStudent_id() {
-        return student_id;
+    public int getStudentId() {
+        return studentId;
     }
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
     public List<Student> getStudentList() {
@@ -25,19 +24,23 @@ public class Student {
         this.studentList = studentList;
     }
 
-    public String getStudent_fname() {
-        return student_fname;
+    public String getStudentFname() {
+        return studentFname;
     }
 
-    public void setStudent_fname(String student_fname) {
-        this.student_fname = student_fname;
+    public void setStudentFname(String studentFname) {
+        this.studentFname = studentFname;
     }
 
-    public String getStudent_lname() {
-        return Student_lname;
+    public String getStudentLname() {
+        return StudentLname;
     }
 
-    public void setStudent_lname(String student_lname) {
-        Student_lname = student_lname;
+    public void setStudentLname(String studentLname) {
+        StudentLname = studentLname;
     }
+
+    private String StudentLname;
+
+
 }
