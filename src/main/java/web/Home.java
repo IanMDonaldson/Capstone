@@ -37,12 +37,6 @@ public class Home extends HttpServlet {
         } else {
             if (request.getParameter("action").equals("registerPOST")) {
                 String email = request.getParameter("email");
-                works_onDao.JavaMail jmail = new works_onDao.JavaMail();
-                try {
-                    jmail.sendEmail(email);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         }

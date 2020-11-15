@@ -8,3 +8,5 @@
 /httpRequests/
 /resources/app.properties
 /.idea
+/libraries/
+/artifacts/

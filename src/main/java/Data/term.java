@@ -1,5 +1,7 @@
 package Data;
 
+import java.util.List;
+
 public class term {
     private int term_id;
     private String term_name;
