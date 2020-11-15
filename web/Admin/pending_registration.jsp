@@ -168,28 +168,15 @@ body {
     
       <a  href="#page_name">Pending Registrations</a>
    <div class="topnav-right">
-      <button class="btn">Admin</button>
+      <button class="btn">Root</button>
       <button class="btn">Logout</button>
     </div>
       
   </div>
 
   <div class="sidenav">
-    <a id="noClick">Fall 2019</a>
-   <button class="dropdown-btn">Analysis
-     <i class="fa fa-caret-down"></i>
-   </button>
-   <div class="dropdown-container">
-    <a href="analyisis_swp.jsp">SWP-Row, Mean, & Median Scores</a>
-    <a href="analylisis_CSOP.jsp">Course SO Performance</a>
-    <a href="analysis_ISOP.jsp">Instructor SO Performance</a>
-    <a href="analysiis_ALL_CSOP_byTerm.jsp">All Courses SO Performance by Term</a>
-    <a href="analysis_CSOP_byTerm.jsp">Courses SO Performance by Term</a>
-  </div>
-  <a href="Setup_Term_Year.jsp">Setup Terms & Years</a>
-  <a href="instuctors.jsp">Instructor</a>
+    <a id="noClick">DCIA</a>
   <a href="pending_registration.jsp">Pending Registrations</a>
- 
  </div> 
 
 
@@ -197,23 +184,7 @@ body {
   
 </div>
 
-<script>
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
 
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
-  this.classList.toggle("active");
-  var dropdownContent = this.nextElementSibling;
-  if (dropdownContent.style.display === "block") {
-  dropdownContent.style.display = "none";
-  } else {
-  dropdownContent.style.display = "block";
-  }
-  });
-}
-</script>
 
 </body>
 </html> 

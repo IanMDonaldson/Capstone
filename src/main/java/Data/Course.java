@@ -1,13 +1,6 @@
 package Data;
 
-import java.util.List;
-
 public class Course {
-    public Course(List<Student> studentList, Instructor instructor) {
-        this.studentList = studentList;
-        this.instructor = instructor;
-    }
-
     public int getCourse_id() {
         return course_id;
     }
@@ -44,6 +37,4 @@ public class Course {
     private String course_title;
     private String department_id;
     private String fk_course_instructor;
-    private List<Student> studentList;
-    private Instructor instructor;
 }
