@@ -1,4 +1,4 @@
-package web;
+/*package web;
 
 import Data.Term;
 import Data.TermDaoImpl;
@@ -20,13 +20,14 @@ public class TermServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+/*
     public WebTerm() {
         super();
     }
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-
+/*
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
@@ -37,13 +38,12 @@ public class TermServlet extends HttpServlet {
             TermDaoImpl termDaoImpl = new TermDaoImpl();
             switch (request.getParameter("action")){
                 case "getAllTerms":
-                    request.getSession().setAttribute(("termList",TermDaoImpl.updateTerm);
+                    request.getSession().setAttribute(("termList",TermDaoImpl.updateTerm(term));
                     request.getRequestDispatcher("termList.jsp").forward(request, response);
                     break;
                 case "getTerm":
                     termIDParm = request.getParameter(("id"));
                     termID = Integer.parseInt(termIDParm);
-                    term= termDaoImpl.getTerm(termID);
                     request.getSession().setAttribute("id",term.getTermId());
                     request.getSession().setAttribute("termName",term.getTermName().toUpperCase());
                     request.getSession().setAttribute("termYear",term.getTermYear());
@@ -61,6 +61,7 @@ public class TermServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
+/*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         if (request.getParameter("action") == null) {
             request.getRequestDispatcher("Menu.jsp").forward(request, response);
@@ -99,3 +100,4 @@ public class TermServlet extends HttpServlet {
         }
     }
 }
+*/
