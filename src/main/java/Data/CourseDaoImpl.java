@@ -57,4 +57,17 @@ public class CourseDaoImpl implements CourseDao {
     public List<Course> getAllCourses() {
         return null;
     }
+    /* Inserts into the ENROLLMENT TABLE a list of students to a course
+    *  checks to see if student is associated with a course already by searching
+    *  database for a row matching all of STUDENTID, COURSEID, TERMID
+    *                 :D       */
+    @Override
+    public void associateStudents(List<Student> students, Term term) {
+
+    }
+
+    @Override
+    public void associateInstructor(Instructor instructor, Term term) {
+
+    }
 }

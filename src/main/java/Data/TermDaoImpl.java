@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class termDaoImpl implements termDao {
+public class TermDaoImpl implements TermDao {
 
     @Override
-    public boolean addTerm(term term) {
+    public boolean addTerm(Term term) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -38,7 +38,7 @@ public class termDaoImpl implements termDao {
     }
 
     @Override
-    public boolean updateTerm(term term) {
+    public boolean updateTerm(Term term) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
@@ -57,7 +57,7 @@ public class termDaoImpl implements termDao {
 
 
     @Override
-    public List<term> getAllterms() {
+    public List<Term> getAllterms() {
         return null;
     }
 }

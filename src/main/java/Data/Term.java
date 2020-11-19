@@ -1,6 +1,6 @@
 package Data;
 
-public class term {
+public class Term {
     private int termId;
     private String termName;
     private int termYear;

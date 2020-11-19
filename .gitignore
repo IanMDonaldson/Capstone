@@ -17,3 +17,9 @@
 /.idea
 /libraries/
 /artifacts/
+/target/generated-sources/
+/target/generated-sources/annotations/
+/target/classes/Data/
+/target/classes/
+/target/
+/src/test/java/
