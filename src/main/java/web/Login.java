@@ -58,7 +58,6 @@ public class Login extends HttpServlet {
         } else {
             switch (request.getParameter("action")) {
                 case "loginPage":
-<<<<<<< HEAD
 
                     request.getRequestDispatcher("User/login.jsp").forward(request, response);
                     break;
@@ -70,15 +69,6 @@ public class Login extends HttpServlet {
                 default:
                     request.getRequestDispatcher("home_page.jsp").forward(request, response);
                     break;
-=======
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                case "registerPage":
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
-                case "login":
-
-                default:
-                    request.getRequestDispatcher("home_page.jsp").forward(request, response);
->>>>>>> origin/taylor_branch
             }
         }
 

@@ -5,8 +5,8 @@ import java.util.List;
 public class Student {
     private int studentId;
     private List<Student> studentList;
-    private String student_fname;
-    private String Student_lname;
+    private String studentFname;
+    private String StudentLname;
 
     public int getStudentId() {
         return studentId;
@@ -39,8 +39,5 @@ public class Student {
     public void setStudentLname(String studentLname) {
         StudentLname = studentLname;
     }
-
-    private String StudentLname;
-
 
 }
