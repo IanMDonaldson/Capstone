@@ -1,7 +1,5 @@
 package Data;
 
-import javax.print.DocFlavor;
-
 public class Admin {
     private String firstName;
     private String lastName;
