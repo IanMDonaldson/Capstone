@@ -12,6 +12,7 @@
           <element id="library" level="project" name="javax.mail:javax.mail-api:1.6.2" />
         </element>
       </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/java/web" />
     </root>
   </artifact>
 </component>

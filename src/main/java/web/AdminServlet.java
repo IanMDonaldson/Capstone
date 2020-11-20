@@ -1,26 +1,23 @@
 package web;
 
+
 import Data.Term;
 import Data.TermDaoImpl;
 
-import javax.annotation.security.DeclareRoles;
-import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
-@WebServlet(name="AdminServlet", urlPatterns={"/admin"})
-@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
-@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
+//@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
+@WebServlet(name="AdminServlet", urlPatterns={"/AdminServlet"})
+//@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
+//@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
 public class AdminServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
-    private String termIDParm;
+    private String termIDParam;
     private int termID;
     private Term term;
     private TermDaoImpl termDao;
@@ -40,8 +37,8 @@ public class AdminServlet extends HttpServlet {
 
                     break;
                 case "getTerm":
-                    termIDParm = req.getParameter(("id"));
-                    termID = Integer.parseInt(termIDParm);
+                    termIDParam = req.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParam);
                     req.getSession().setAttribute("id",term.getTermId());
                     req.getSession().setAttribute("termName",term.getTermName().toUpperCase());
                     req.getSession().setAttribute("termYear",term.getTermYear());
@@ -67,29 +64,29 @@ public class AdminServlet extends HttpServlet {
         else{
             switch (req.getParameter("action")){
                 case "addTermPOST":
-                    termIDParm = req.getParameter("id");
-                    termID = Integer.parseInt("actorIDParam");
-                    int TermYear = Integer.parseInt(req.getParameter("termYear").toUpperCase());
-                    int TermID = Integer.parseInt(req.getParameter("termID").toUpperCase());
+                    termIDParam = req.getParameter("id");
+                    termID = Integer.parseInt(req.getParameter(termIDParam));
+                    int TermYear = Integer.parseInt(req.getParameter("termYear"));
+                    String TermName = req.getParameter("termID");
                     Term term = new Term();
-                    term.setTermId(TermID);
+                    term.setTermName(TermName);
                     term.setTermYear(TermYear);
 
                     boolean termExist = termDao.termExists(term);
                     if(termExist){
                         req.getSession().setAttribute("add", true);
-                        req.getRequestDispatcher("termFailurePage.jsp").forward(req, resp);
+                        req.getRequestDispatcher("Admin/termFailurePage.jsp").forward(req, resp);
                     }
                     else{
                         if(!termDao.addTerm(term)){
                             req.getSession().setAttribute("add", true);
-                            req.getRequestDispatcher("termFailurePage.jsp").forward(req, resp);
+                            req.getRequestDispatcher("Admin/termFailurePage.jsp").forward(req, resp);
                         }
                         else{
                             req.getSession().setAttribute("id", term.getTermId());
                             req.getSession().setAttribute("Name", term.getTermName().toUpperCase());
                             req.getSession().setAttribute("Year", term.getTermYear());
-                            req.getRequestDispatcher("term.jsp").forward(req, resp);
+                            req.getRequestDispatcher("Admin/Term.jsp").forward(req, resp);
                         }
                     }
                     break;

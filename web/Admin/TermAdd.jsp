@@ -4,15 +4,13 @@
   <head>
     <title>DCIA</title>
     <!style sheet here>
-
-    <script> type="application/javascript"; src="Script/validateTermAdd.js"> </script>
   </head>
   <body>
   	<h1>Add new Term</h1>
-  	<form action="AdminServlet?action=addTermPOST">
+  	<form method="post" action="AdminServlet?action=addTermPOST">
 		<fieldset>
 			<%--@declare id="term year"--%>
-                <%--@declare id="term name"--%>
+            <%--@declare id="term name"--%>
                 <label for="Term Year">Term Year: </label><label>
                 <input type="number">
             </label><br>

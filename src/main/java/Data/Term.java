@@ -1,5 +1,7 @@
 package Data;
 
+import java.util.List;
+
 public class Term {
     public int getTermId() {
         return TermId;
@@ -28,4 +30,7 @@ public class Term {
     private  int TermId;
     private int TermYear;
     private String TermName;
+
+    public void setCourseList(List<Course> courseList) {
+    }
 }

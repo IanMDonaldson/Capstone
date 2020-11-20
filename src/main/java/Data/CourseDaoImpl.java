@@ -3,6 +3,7 @@ package Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
@@ -49,7 +50,7 @@ public class CourseDaoImpl implements CourseDao {
             throwables.printStackTrace();
         }
         return false;
-    }
+    }root_user
 
 
 
@@ -57,4 +58,14 @@ public class CourseDaoImpl implements CourseDao {
     public List<Course> getAllCourses() {
         return null;
     }
+
+    @Override
+    public List<Course> getCoursesForTerm(Term term) throws SQLException {
+        List<Term> termList = new LinkedList<Term>();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM teaches join course c on teaches.fk_teaches_course = c.course_id");
+        }
+    }
 }
+//
