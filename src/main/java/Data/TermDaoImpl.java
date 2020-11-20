@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class TermDaoImpl implements TermDao {
 
@@ -105,11 +103,6 @@ public class TermDaoImpl implements TermDao {
         return 0;
     }
 
-    @Override
-    public boolean assocCourse(Term term, String newlyAssocCourseID) {
-        List<Course> newCourse = new LinkedList<Course>();
-        StringBuilder statement = new StringBuilder("INSERT INTO()")
-    }
-
 
 }
+

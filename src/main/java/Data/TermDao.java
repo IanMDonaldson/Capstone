@@ -6,5 +6,5 @@ public interface TermDao {
     public boolean updateTerm(Term term);
     public Term getTerm(int Id);
     public int getNewTermID();
-    public boolean assocCourse(Term term,String newlyAssocCourseID);
+    public boolean InstructorforCourse();
 }
