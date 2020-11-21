@@ -1,5 +1,6 @@
 package web;
 
+import Data.CourseDaoImpl;
 import Data.Term;
 import Data.TermDaoImpl;
 
@@ -24,6 +25,7 @@ public class AdminServlet extends HttpServlet {
     private int termID;
     private Term term;
     private TermDaoImpl termDao;
+    private CourseDaoImpl courseDaoImpl;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -48,9 +50,15 @@ public class AdminServlet extends HttpServlet {
                     req.getRequestDispatcher("TermUpdate.jsp").forward(req, resp);
                     break;
                 case "addTermGET":
-                    termID=termDaoImpl.getNewTermID();
+
                     req.getSession().setAttribute("id",Integer.toString(termID));
                     req.getRequestDispatcher("TermAdd.jsp").forward(req, resp);
+                    break;
+                case "analyzeRawGET":
+                    req.getSession().setAttribute("rawList", courseDaoImpl.getCourseSORaw(1,1));
+                    req.getSession().setAttribute("meanList", courseDaoImpl.getCourseSOMean(1,1));
+                    req.getSession().setAttribute("medianList", courseDaoImpl.getCourseSOMedian(1,1));
+                    req.getRequestDispatcher("analysis_swp.jsp").forward(req, resp);
                     break;
             }
 
