@@ -1,11 +1,20 @@
 package Data;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TermDaoImpl implements TermDao {
+
+    @Override
+    public boolean termExists(Term term) {
+        return false;
+    }
 
     @Override
     public boolean addTerm(Term term) {
@@ -42,7 +51,7 @@ public class TermDaoImpl implements TermDao {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("update term" + "set term_id = ?,term_name = ?" + "where term_year=?");
+            PreparedStatement ps = conn.prepareStatement("update term set term_id = ?,term_name = ? where term_year=?");
             ps.setInt(1,term.getTermId());
             ps.setInt(2,term.getTermYear());
             ps.setString(3,term.getTermName() );
@@ -52,12 +61,58 @@ public class TermDaoImpl implements TermDao {
         return isUpdated;
     }
 
-
-
-
-
     @Override
-    public List<Term> getAllterms() {
+    public Term getTerm(int Id) {
         return null;
     }
+
+    @Override
+    public List<Term> getAllTerms() {
+        List<Term> termList = new LinkedList<>();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from term;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Term term = new Term();
+                term.setTermId(rs.getInt("term_id"));
+                term.setTermName(rs.getString("term_name"));
+                term.setTermYear(rs.getInt("term_year"));
+                termList.add(term);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return termList;
+    }
+
+
+    /*inside 3.3.2 Setup - Department's Courses- Admin will enter the information
+     *for the set of courses offered by the department
+     * This can mean either, THIS FUNCTION - course is already created and we need to associate it to a term
+     * OR CourseDaoImpl.addCourse(Course course) we need to create a new course
+     * this inserts into teaches table leaving instructor NULL because the adminSetup associates an instructor to course later*/
+    @Override
+    public boolean assocCourse(int termID, int courseID) {
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("insert into teaches(fk_teaches_course, fk_teaches_term) VALUES (?,?);");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
+            int rowChange = ps.executeUpdate();
+            if (rowChange == 0) {
+                return false;
+            } else {
+                ps.close();
+                conn.close();
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

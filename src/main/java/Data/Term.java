@@ -1,5 +1,8 @@
 package Data;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Term {
     public int getTermId() {
         return TermId;
@@ -28,4 +31,13 @@ public class Term {
     private  int TermId;
     private int TermYear;
     private String TermName;
+    private List<Course> courseList;
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
 }

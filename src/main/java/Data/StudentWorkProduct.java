@@ -1,18 +1,13 @@
 package Data;
 
+import java.util.List;
+
 public class StudentWorkProduct {
     private double grade;
     private String name;
     private int swpID;
-    private StudentOutcome so;
+    private List<StudentOutcome> so;
 
-    public StudentOutcome getSo() {
-        return so;
-    }
-
-    public void setSo(StudentOutcome so) {
-        this.so = so;
-    }
 
 
     public double getGrade() {
@@ -40,4 +35,11 @@ public class StudentWorkProduct {
     }
 
 
+    public List<StudentOutcome> getSo() {
+        return so;
+    }
+
+    public void setSo(List<StudentOutcome> so) {
+        this.so = so;
+    }
 }
