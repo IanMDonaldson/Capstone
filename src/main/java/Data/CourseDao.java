@@ -3,9 +3,17 @@ package Data;
 import java.util.List;
 
 public interface CourseDao {
-    public boolean addCourse(Course course);
-    public boolean updateCourse(Course course);
-    public List<Course> getAllCourses();
-    public void associateStudents(List<Student> students, Term term);
-    public void associateInstructor(Instructor instructor, Term term);
+    boolean insertCourse(Course course);
+    boolean updateCourse(Course course);
+    List<Course> getAllCourses();
+    boolean associateStudents(List<Student> students, int termID, int courseID);
+     /*assumes that TermDaoImpl.assocCourse has already been called
+     * - meaning that theres an entry inside of TEACHES table where instructor = null
+     *   that's where we will insert the instructor*/
+    boolean associateInstructor(Instructor instructor, int termID, int courseID);
+    List<StudentWorkProduct> getCoursesMeanSWPOverTime(int courseID, int[] termIDRange);
+    List<StudentOutcome> getCourseSORaw(int courseID, int termID);
+    List<StudentOutcome> getCourseSOMean(int courseID, int termID);
+    List<StudentOutcome> getCourseSOMedian(int courseID, int termID);
+
 }
