@@ -1,7 +1,5 @@
 package Data;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,7 +112,7 @@ public class CourseDaoImpl implements CourseDao {
         try {
             PreparedStatement ps = conn.prepareStatement("update teaches set" +
                     " fk_teaches_instructor =? where fk_teaches_term=? AND fk_teaches_course=?;");
-            ps.setString(1, instructor.getInstructorUname());
+            ps.setString(1, instructor.getUsername());
             ps.setInt(2, termID);
             ps.setInt(3, courseID);
             int rowchanged = ps.executeUpdate();

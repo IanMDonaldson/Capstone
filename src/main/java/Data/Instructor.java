@@ -2,10 +2,11 @@ package Data;
 
 public class Instructor {
     private int instructorId;
-    private String instructorUname;
-    private String instructorFname;
-    private String instructorLname;
-    private String instructorEmail;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 
     public int getInstructorId() {
         return instructorId;
@@ -16,36 +17,44 @@ public class Instructor {
     }
 
 
-    public String getInstructorFname() {
-        return instructorFname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setInstructorFname(String instructorFname) {
-        this.instructorFname = instructorFname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getInstructorLname() {
-        return instructorLname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setInstructorLname(String instructorLname) {
-        this.instructorLname = instructorLname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getInstructorEmail() {
-        return instructorEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setInstructorEmail(String instructorEmail) {
-        this.instructorEmail = instructorEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 
-    public String getInstructorUname() {
-        return instructorUname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setInstructorUname(String instructorUname) {
-        this.instructorUname = instructorUname;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
