@@ -6,6 +6,7 @@ public interface CourseDao {
     boolean insertCourse(Course course);
     boolean updateCourse(Course course);
     List<Course> getAllCourses();
+    Course getCourse(int Id);
     boolean associateStudents(List<Student> students, int termID, int courseID);
      /*assumes that TermDaoImpl.assocCourse has already been called
      * - meaning that theres an entry inside of TEACHES table where instructor = null
