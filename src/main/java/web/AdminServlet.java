@@ -26,6 +26,7 @@ public class AdminServlet extends HttpServlet {
     private Term term;
     private TermDaoImpl termDao;
     private CourseDaoImpl courseDao;
+
     private Course course;
     private Instructor instructor;
     @Override
@@ -65,6 +66,7 @@ public class AdminServlet extends HttpServlet {
                     termIDParm = req.getParameter(("id"));
                     termID = Integer.parseInt(termIDParm);
                     term = termDao.getTerm(termID);
+                    req.getSession().setAttribute("id", term.getTermId());
                     req.getSession().setAttribute("courseList", courseDao.getAllCourses());
                     req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
                     break;
@@ -75,8 +77,12 @@ public class AdminServlet extends HttpServlet {
                     courseIDParm = req.getParameter(("cid"));
                     courseID = Integer.parseInt(courseIDParm);
                     course = courseDao.getCourse(courseID);
+                    req.getSession().setAttribute("InsId",instructor.getInstructorId());
+                    req.getSession().setAttribute("id", term.getTermId());
+                    req.getSession().setAttribute("cid", course.getCourseId());
                     req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
                     break;
+                case "":
 
             }
 
