@@ -1,26 +1,33 @@
 package Data;
 
-import java.util.List;
-
 public class Course {
-
-
-    private int courseId;
-    private String courseTitle;
-    private String departmentId;
-
-
-
+    private int courseID;
     private int courseNumber;
-    private String fkCourseinstructor;
+    private String department;
+    private String courseTitle;
 
-
-    public int getCourseId() {
-        return courseId;
+    public int getCourseID() {
+        return courseID;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
+    }
+
+    public int getCourseNumber() {
+        return courseNumber;
+    }
+
+    public void setCourseNumber(int courseNumber) {
+        this.courseNumber = courseNumber;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getCourseTitle() {
@@ -29,28 +36,5 @@ public class Course {
 
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getFkCourseinstructor() {
-        return fkCourseinstructor;
-    }
-
-    public void setFkCourseinstructor(String fkCourseinstructor) {
-        this.fkCourseinstructor = fkCourseinstructor;
-    }
-    public int getCourseNumber() {
-        return courseNumber;
-    }
-
-    public void setCourseNumber(int courseNumber) {
-        this.courseNumber = courseNumber;
     }
 }
