@@ -22,17 +22,23 @@ public class InstructorServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
     private String termIDParm;
     private String courseIDParm;
+    private String SWPidParm;
+    private String SOidParm;
     private int termID;
     private int courseID;
+    private int SWPid;
+    private int SOid;
     private Term term;
     private Student student;
+    private StudentWorkProduct SWP;
+    private StudentOutcome SO;
+    private Course course;
+    private Instructor instructor;
     private TermDaoImpl termDao;
     private CourseDaoImpl courseDao;
     private StudentDaoImpl stundentDao;
     private StudentOutcomeDaoImpl soDao;
-    private Course course;
-    private Instructor instructor;
-    private StudentOutcome SO;
+
 
 
 
@@ -48,9 +54,25 @@ public class InstructorServlet extends HttpServlet {
                     courseIDParm=req.getParameter("Cid");
                     courseID = Integer.parseInt((courseIDParm));
                     course = courseDao.getCourse(courseID);
+                    req.getSession().setAttribute("Sid",student.getStudentId());
+                    req.getSession().setAttribute("Cid",course.getCourseId());
                     req.getRequestDispatcher("assocStudent2Course.jsp").forward(req,resp);
                     break;
-                case "listStudentOutcomeGET":
+                case "getStudentWorkProduct":
+                    req.getSession().setAttribute("Cid",course.getCourseId());
+                    req.getSession().setAttribute("SWPid", SWP.getSwpID());
+                    req.getSession().setAttribute("grade",SWP.getGrade());
+                    req.getRequestDispatcher("getStudentWorkProduct.jsp");
+                    break;
+                case "getStudentOutcomes":
+                    req.getSession().setAttribute("SOid",SO.getSoID());
+                    req.getSession().setAttribute("SWPid", SWP.getSwpID());
+                    req.getSession().setAttribute("Cid",course.getCourseId());
+                    req.getRequestDispatcher("getStudentOutcomes.jsp");
+                    break;
+                case "getStudentGrade":
+                    break;
+
 
 
 
