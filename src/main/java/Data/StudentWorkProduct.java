@@ -3,18 +3,22 @@ package Data;
 import java.util.List;
 
 public class StudentWorkProduct {
-    private double grade;
+    private float grade;
     private String name;
     private int swpID;
-    private List<StudentOutcome> so;
+    private List<StudentOutcome> soList;
+    private int studentID;
+    private String instructorID;
+    private int termID;
+    private int courseID;
 
 
 
-    public double getGrade() {
+    public float getGrade() {
         return grade;
     }
 
-    public void setGrade(double grade) {
+    public void setGrade(float grade) {
         this.grade = grade;
     }
 
@@ -35,11 +39,43 @@ public class StudentWorkProduct {
     }
 
 
-    public List<StudentOutcome> getSo() {
-        return so;
+    public List<StudentOutcome> getSoList() {
+        return soList;
     }
 
-    public void setSo(List<StudentOutcome> so) {
-        this.so = so;
+    public void setSoList(List<StudentOutcome> so) {
+        this.soList = so;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public String getInstructorID() {
+        return instructorID;
+    }
+
+    public void setInstructorID(String instructorID) {
+        this.instructorID = instructorID;
+    }
+
+    public int getTermID() {
+        return termID;
+    }
+
+    public void setTermID(int termID) {
+        this.termID = termID;
+    }
+
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 }
