@@ -80,7 +80,7 @@ public class AdminServlet extends HttpServlet {
                     req.getSession().setAttribute("InsId",instructor.getInstructorId());
                     req.getSession().setAttribute("id", term.getTermId());
                     req.getSession().setAttribute("cid", course.getCourseId());
-                    req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
+                    req.getRequestDispatcher("assocCourse2Instructor.jsp").forward(req,resp);
                     break;
                 case "":
 
