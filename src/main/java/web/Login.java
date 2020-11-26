@@ -5,7 +5,6 @@ import Data.AdminDaoImpl;
 import Data.Instructor;
 import Data.InstructorDaoImpl;
 
-
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,8 +82,8 @@ public class Login extends HttpServlet {
             switch (request.getParameter("action")) {
                 case "loginPOST":
                     if (request.getParameter("access_Level").equals("instructor")) {
-                        InstructorDaoImpl instImpl = new InstructorDaoImpl();
-                        Instructor instructor = new Instructor();
+                      InstructorDaoImpl instImpl = new InstructorDaoImpl();
+                      Instructor instructor = new Instructor();
                         instructor.setUsername(request.getParameter("username"));
                         instructor.setPassword(request.getParameter("password"));
                         if (instImpl.instructorExists(instructor)) {

@@ -5,17 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CourseDaoImpl implements CourseDao {
+public class StudentWorkProductDaoImpl implements StudentWorkProductDao {
     @Override
-    public boolean addCourse(Course course) {
+    public boolean addSWP(StudentWorkProduct swp) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO course(course_id,course_title,department_id,course_number)VALUES(?,?,?,?);");
-            ps.setInt(1,course.getCourseId());
-            ps.setString(2,course.getCourse_title());
-            ps.setString(3,course.getDepartment_id());
-            ps.setString(4,course.getCourse_num());
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO student_work_product(swp_id,swp_title,swp_grade,fk_swp_student,fk_swp_teaches)VALUES(?,?,?,?,?);");
+            ps.setInt(1,swp.getSwp_id());
+            ps.setString(2,swp.getSwp_name());
+            ps.setDouble(3,swp.getSwp_grade());
+            ps.setInt(4,swp.getFk_swp_student());
+            ps.setInt(5,swp.getFk_swp_teaches());
+
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
@@ -35,26 +37,25 @@ public class CourseDaoImpl implements CourseDao {
         return isAddSuccessful;
     }
 
+
     @Override
-    public boolean updateCourse(Course course) {
+    public boolean updateSWP(StudentWorkProduct swp) {
         boolean isUpdated = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("update course set course_id = ?,course_title = ?, course_number=?" + "where department_id=?");
-            ps.setInt(1,course.getCourseId());
-            ps.setString(2,course.getCourse_title());
-            ps.setString(3,course.getDepartment_id());
-           //ps.setString(4,course.getFk_course_instructor());
+            PreparedStatement ps = conn.prepareStatement("update student_work_product set swp_id = ?,swp_title= ?, swp_grade=?" + "where fk_swp_student=?");
+            ps.setInt(1,swp.getSwp_id());
+            ps.setString(2,swp.getSwp_name());
+            ps.setDouble(3,swp.getSwp_grade());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return false;
     }
 
-
-
     @Override
-    public List<Course> getAllCourses() {
+    public List<StudentWorkProduct> getAllswp() {
         return null;
     }
+
 }
