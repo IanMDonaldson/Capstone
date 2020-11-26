@@ -1,11 +1,9 @@
 package Data;
 
-import com.mysql.cj.jdbc.Driver;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
-import javax.servlet.annotation.WebListener;
 
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "java:mysql://localhost:3306/dcia",
