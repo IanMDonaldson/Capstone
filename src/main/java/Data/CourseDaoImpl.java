@@ -62,8 +62,44 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> getAllCourses() {
-        return null;
+        List<Course> courseList = new LinkedList<Course>();
+        Connection conn = ConnectionFactory.getConnection();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * form course order;");
+            ps.setString(1,"course_id");
+            courseList=getCourse(ps);
+
+            conn.close();
+            ps.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  courseList;
     }
+
+    @Override
+    public Course getCourse(int Id) {
+        Course course=new Course();
+        try{
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select * from course where course.course_id = ?;");
+            ps.setInt(1,Id);
+            ResultSet rs = ps.executeQuery();
+                    while(rs.next()){
+                        course.setCourseId(rs.getInt("course_id"));
+                        course.setCourseNumber(rs.getInt("course_number"));
+                        course.setCourseTitle(rs.getString("course_title"));
+                        course.setDepartmentId(rs.getString("department_id"));
+                    }
+            conn.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    return course;
+    }
+
     /* Inserts into the ENROLLMENT TABLE a list of students to a course
     *  checks to see if student is associated with a course already by searching
     *  database for a row matching all of STUDENTID, COURSEID, TERMID
