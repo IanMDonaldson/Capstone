@@ -1,8 +1,6 @@
 package web;
 
-import Data.CourseDaoImpl;
-import Data.Term;
-import Data.TermDaoImpl;
+import Data.*;
 
 import javax.annotation.security.DeclareRoles;
 import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
@@ -22,10 +20,15 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
     private String termIDParm;
+    private String courseIDParm;
     private int termID;
+    private int courseID;
     private Term term;
     private TermDaoImpl termDao;
-    private CourseDaoImpl courseDaoImpl;
+    private CourseDaoImpl courseDao;
+
+    private Course course;
+    private Instructor instructor;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -50,16 +53,37 @@ public class AdminServlet extends HttpServlet {
                     req.getRequestDispatcher("TermUpdate.jsp").forward(req, resp);
                     break;
                 case "addTermGET":
-
                     req.getSession().setAttribute("id",Integer.toString(termID));
                     req.getRequestDispatcher("TermAdd.jsp").forward(req, resp);
                     break;
                 case "analyzeRawGET":
-                    req.getSession().setAttribute("rawList", courseDaoImpl.getCourseSORaw(1,1));
-                    req.getSession().setAttribute("meanList", courseDaoImpl.getCourseSOMean(1,1));
-                    req.getSession().setAttribute("medianList", courseDaoImpl.getCourseSOMedian(1,1));
+                    req.getSession().setAttribute("rawList", courseDao.getCourseSORaw(1,1));
+                    req.getSession().setAttribute("meanList", courseDao.getCourseSOMean(1,1));
+                    req.getSession().setAttribute("medianList", courseDao.getCourseSOMedian(1,1));
                     req.getRequestDispatcher("analysis_swp.jsp").forward(req, resp);
                     break;
+                case "assocCourseTermGET":
+                    termIDParm = req.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParm);
+                    term = termDao.getTerm(termID);
+                    req.getSession().setAttribute("id", term.getTermId());
+                    req.getSession().setAttribute("courseList", courseDao.getAllCourses());
+                    req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
+                    break;
+                case "assocInstructorGET":
+                    termIDParm = req.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParm);
+                    term = termDao.getTerm(termID);
+                    courseIDParm = req.getParameter(("cid"));
+                    courseID = Integer.parseInt(courseIDParm);
+                    course = courseDao.getCourse(courseID);
+                    req.getSession().setAttribute("InsId",instructor.getInstructorId());
+                    req.getSession().setAttribute("id", term.getTermId());
+                    req.getSession().setAttribute("cid", course.getCourseId());
+                    req.getRequestDispatcher("assocCourse2Instructor.jsp").forward(req,resp);
+                    break;
+                case "":
+
             }
 
         }
@@ -77,8 +101,8 @@ public class AdminServlet extends HttpServlet {
                 case "addTermPOST":
                     termIDParm = req.getParameter("id");
                     termID = Integer.parseInt("actorIDParam");
-                    int TermYear = Integer.parseInt(req.getParameter("termYear").toUpperCase());
-                    int TermID = Integer.parseInt(req.getParameter("termID").toUpperCase());
+                    int TermYear = Integer.parseInt(req.getParameter("termYear"));
+                    int TermID = Integer.parseInt(req.getParameter("termID"));
                     Term term = new Term();
                     term.setTermId(TermID);
                     term.setTermYear(TermYear);
@@ -95,15 +119,57 @@ public class AdminServlet extends HttpServlet {
                         }
                         else{
                             req.getSession().setAttribute("id", term.getTermId());
-                            req.getSession().setAttribute("Name", term.getTermName().toUpperCase());
+                            req.getSession().setAttribute("Name", term.getTermName());
                             req.getSession().setAttribute("Year", term.getTermYear());
                             req.getRequestDispatcher("term.jsp").forward(req, resp);
                         }
                     }
                     break;
+                case "assocCourseTermPOST":
+                    termIDParm = req.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParm);
+                    term = termDao.getTerm(termID);
+                    courseIDParm = req.getParameter(("cid"));
+                    courseID = Integer.parseInt(courseIDParm);
+                    if (termDao.assocCourse(termID, courseID))
+                    {
+                        req.getSession().setAttribute("termList",termDao.getAllTerms());
+                        req.getSession().setAttribute("id",term.getTermId());
+                        req.getSession().setAttribute("cid", course.getCourseId());
+                        req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
+                    }else{
+                        req.getSession().setAttribute("update",true);
+                        req.getRequestDispatcher("termFailurePage.jsp").forward(req, resp);
+                    }
+                    break;
+                case "assocInstructorPOST ":
+                    termIDParm = req.getParameter(("id"));
+                    termID = Integer.parseInt(termIDParm);
+                    term = termDao.getTerm(termID);
+                    courseIDParm = req.getParameter(("cid"));
+                    courseID = Integer.parseInt(courseIDParm);
+                    course = courseDao.getCourse(courseID);
+                    if (courseDao.associateInstructor(instructor,termID,courseID))
+                    {
+                        req.getSession().setAttribute("termList",termDao.getAllTerms());
+                        req.getSession().setAttribute("id",term.getTermId());
+                        req.getSession().setAttribute("cid",course.getCourseId());
+                        req.getRequestDispatcher("assocInstructor2term.jsp").forward(req,resp);
+
+                    }else{
+                        req.getSession().setAttribute("update",true);
+                        req.getRequestDispatcher("termFailurePage.jsp").forward(req, resp);
+                    }
+                    break;
+                    }
+
+
+
+
+
 
             }
         }
     }
-    }
+
 
