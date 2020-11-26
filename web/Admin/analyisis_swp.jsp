@@ -19,7 +19,7 @@
             padding-left: 201px;
             background-color: #F7F8FC;
             position: fixed;
-            width: 87%;
+            width: 88%;
         }
 
 
@@ -159,14 +159,14 @@
         }
 
         /* Some media queries for responsiveness */
-       /* @media screen and (max-height: 450px) {
+        @media screen and (max-height: 450px) {
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
-        }*/
+        }
+
+
 
     </style>
-    <title></title>
-
 </head>
 <body>
 <div class="topnav">
@@ -193,7 +193,7 @@
     </div>
     <a href="Setup_Term_Year.jsp">Setup Terms & Years</a>
     <a href="instuctors.jsp">Instructor</a>
-    <a href="pending_registration.jsp">Pending Registrations</a>
+
 
 </div>
 
@@ -221,7 +221,26 @@
 </script>
 
 
-<div id="curve_chart" style="width: 50%; height: 500px; padding-left:500px; padding-top: 150px;" ></div>
+<div id="curve_chart" style="width: 75%; height: 500px; padding-left:300px; padding-top: 150px;" ></div>
+
+
+<input type="hidden" value="${sessionScope.someList}">
+
+<label  for="terms" style="padding-left:650px; padding-top:100px; ">Term:</label>
+<select name="terms" id="terms">
+    <option value="default">Select Term</option>
+</select>
+
+<label for="courses" style="padding-left:10px; padding-top:100px; ">Course:</label>
+<select name="courses" id="courses">
+    <option>Select Course</option>
+
+</select>
+
+<label for="chartfucntions" style="padding-left:10px; padding-top:100px; ">Data:</label>
+<select name="chartfucntions" id="chartfucntions">
+    <option>Select Data</option>
+</select>
 
 </body>
 </html> 

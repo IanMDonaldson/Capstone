@@ -9,7 +9,7 @@
         <module name="Capstone" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11">
       <module name="Capstone" target="11" />
     </bytecodeTargetLevel>
   </component>
