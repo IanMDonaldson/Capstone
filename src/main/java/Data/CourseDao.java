@@ -6,7 +6,7 @@ public interface CourseDao {
     Instructor getInstructor4Course(int courseID, int termID);
 
     List<Course> getAllCourses();
-
+    Course getCourse(int Id);
     List<Student> getStudents4Course(int courseID, int termID);
 
     List<StudentOutcome> getCourseSOMean(int courseID, int termID);

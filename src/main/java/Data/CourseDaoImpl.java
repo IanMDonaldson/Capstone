@@ -65,10 +65,18 @@ public class CourseDaoImpl implements CourseDao {
         List<Course> courseList = new LinkedList<Course>();
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * form course order;");
-            ps.setString(1,"course_id");
-            courseList=getCourse(ps);
+            PreparedStatement ps = conn.prepareStatement("SELECT * from course order by course_id;");
 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course();
+                course.setCourseID(rs.getInt("course_id"));
+                course.setDepartment(rs.getString("department_id"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                courseList.add(course);
+            }
+            rs.close();
             conn.close();
             ps.close();
         } catch (SQLException throwables) {
@@ -86,10 +94,10 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1,Id);
             ResultSet rs = ps.executeQuery();
                     while(rs.next()){
-                        course.setCourseId(rs.getInt("course_id"));
+                        course.setCourseID(rs.getInt("course_id"));
                         course.setCourseNumber(rs.getInt("course_number"));
                         course.setCourseTitle(rs.getString("course_title"));
-                        course.setDepartmentId(rs.getString("department_id"));
+                        course.setDepartment(rs.getString("department_id"));
                     }
             conn.close();
             ps.close();
@@ -298,21 +306,6 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<StudentWorkProduct> getCoursesMeanSWPOverTime(int courseID, int[] termIDRange) {
-        /*- StudentOutcome class has private double performance;
-            - create sum, counter, studentOutcome INT variable and mean DOUBLE variable
-            - Instrcutor instructor = new instructor;
-            - grab first row in ResultSet and set that studentOUtcome variable to the first Row's so_id
-            - for each row in ResultSet
-                - sum += resultset.getInt(grade)
-                - counter++;
-                - IF ResultSet.next(getInt(so_id) != studentOutcome
-                    - mean = sum/counter;
-                    - So.setPerformance(mean)
-                    - mean,counter,sum=0;
-                    - studentOutcome (local variable) = ResultSet.next(getInt(fulfills.fk_fulfills_so))
-                    - StudentOUtcome so = new studentOutcome;
-                    - so.setPerformance(mean);
-                    - soList.add(so);*/
         List<StudentWorkProduct> swps = new LinkedList<>();
         Connection conn = ConnectionFactory.getConnection();
 
