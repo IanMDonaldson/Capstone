@@ -53,14 +53,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="adopt-openj9-11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="mysql:mysql-connector-java:8.0.21" level="project" />
-    <orderEntry type="library" name="org.apache.maven.plugins:maven-war-plugin:3.2.3" level="project" />
-    <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
-    <orderEntry type="library" name="font-awesome" level="application" />
-    <orderEntry type="library" name="a076d05399" level="application" />
-    <orderEntry type="library" name="loader" level="application" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="mysql:mysql-connector-java:8.0.21" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="font-awesome" level="application" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="a076d05399" level="application" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="loader" level="application" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
