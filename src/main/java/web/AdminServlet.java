@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
+//@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
 @WebServlet(name="AdminServlet", urlPatterns={"/admin"})
-@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
-@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
+//@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
+//@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
 public class AdminServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
     private String termIDParm;
