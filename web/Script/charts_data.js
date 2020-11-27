@@ -6,7 +6,7 @@ google.charts.setOnLoadCallback(drawChart);
 
 var swpData=[2.95,3.5,3.2,2.75];
 var swpName=["SWP1","SWP2","SWP3","SWP4"];
-
+var rawList='<%= Session["rawSOData"].ToString() %>';
 //select for term
 function fillSelectData(target, data){
 
@@ -38,18 +38,18 @@ document.addEventListener("DOMContentLoaded", ready);
 
 function drawChart() {
     var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales', 'Expenses'],
-    ['2004',  1000,      400],
-    ['2005',  1170,      460],
-    ['2006',  660,       1120],
-    ['2007',  1030,      540]
+        ['Year', 'Sales', 'Expenses'],
+        ['2004',  1000,      400],
+        ['2005',  1170,      460],
+        ['2006',  660,       1120],
+        ['2007',  1030,      540]
     ]);
 
     var options = {
-    title: 'Student Work Product',
-    curveType: 'function',
-    legend: { position: 'bottom' }
-};
+        title: 'Student Work Product',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
 
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 

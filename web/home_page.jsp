@@ -54,7 +54,7 @@ h1 {
 
 <div class="title_center" style="padding:20px;margin-top:30px;align-content: center;" >
     
-  <h1 id="title_header"> Department Continuos Improvement Application</h1>
+  <h1 id="title_header"> Department Continuous Improvement Application</h1>
 
 </div>
 
