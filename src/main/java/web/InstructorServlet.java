@@ -55,11 +55,11 @@ public class InstructorServlet extends HttpServlet {
                     courseID = Integer.parseInt((courseIDParm));
                     course = courseDao.getCourse(courseID);
                     req.getSession().setAttribute("Sid",student.getStudentId());
-                    req.getSession().setAttribute("Cid",course.getCourseId());
+                    req.getSession().setAttribute("Cid",course.getCourseID());
                     req.getRequestDispatcher("assocStudent2Course.jsp").forward(req,resp);
                     break;
                 case "getStudentWorkProduct":
-                    req.getSession().setAttribute("Cid",course.getCourseId());
+                    req.getSession().setAttribute("Cid",course.getCourseID());
                     req.getSession().setAttribute("SWPid", SWP.getSwpID());
                     req.getSession().setAttribute("grade",SWP.getGrade());
                     req.getRequestDispatcher("getStudentWorkProduct.jsp");
@@ -67,7 +67,7 @@ public class InstructorServlet extends HttpServlet {
                 case "getStudentOutcomes":
                     req.getSession().setAttribute("SOid",SO.getSoID());
                     req.getSession().setAttribute("SWPid", SWP.getSwpID());
-                    req.getSession().setAttribute("Cid",course.getCourseId());
+                    req.getSession().setAttribute("Cid",course.getCourseID());
                     req.getRequestDispatcher("getStudentOutcomes.jsp");
                     break;
                 case "getStudentGrade":
@@ -93,7 +93,7 @@ public class InstructorServlet extends HttpServlet {
                     {
                         req.getSession().setAttribute("studentList",courseDao.getAllCourses());
                         req.getSession().setAttribute("id",term.getTermId());
-                        req.getSession().setAttribute("cid",course.getCourseId());
+                        req.getSession().setAttribute("cid",course.getCourseID());
                         req.getRequestDispatcher("assocInstructor2term.jsp").forward(req,resp);
                     }else {req.getSession().setAttribute("update",true);
                         req.getRequestDispatcher("termFailurePage.jsp").forward(req, resp);}

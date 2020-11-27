@@ -11,10 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.ColorUIResource;
 import java.io.IOException;
+import java.util.List;
 
 //@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
-@WebServlet(name="AdminServlet", urlPatterns={"/admin"})
+@WebServlet("/AdminServlet")
 //@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
 //@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
 public class AdminServlet extends HttpServlet {
@@ -25,7 +27,7 @@ public class AdminServlet extends HttpServlet {
     private int courseID;
     private Term term;
     private TermDaoImpl termDao;
-    private CourseDaoImpl courseDao;
+    private CourseDaoImpl courseDao = new CourseDaoImpl();
 
     private Course course;
     private Instructor instructor;
@@ -79,10 +81,18 @@ public class AdminServlet extends HttpServlet {
                     course = courseDao.getCourse(courseID);
                     req.getSession().setAttribute("InsId",instructor.getInstructorId());
                     req.getSession().setAttribute("id", term.getTermId());
-                    req.getSession().setAttribute("cid", course.getCourseId());
+                    req.getSession().setAttribute("cid", course.getCourseID());
                     req.getRequestDispatcher("assocCourse2Instructor.jsp").forward(req,resp);
                     break;
-                case "":
+                case "rawSOGET":
+                    List<StudentOutcome> soList = courseDao.getCourseSORaw(1, 1);
+                    List<StudentOutcome> soMedian = courseDao.getCourseSOMedian(1,1);
+                    List<StudentOutcome> soMean = courseDao.getCourseSOMean(1,1);
+                    req.getSession().setAttribute("rawSOData",soList);
+                    req.getSession().setAttribute("meanSOData", soMean);
+                    req.getSession().setAttribute("medianSOData", soMedian);
+                    req.getRequestDispatcher("Admin/analyisis_swp.jsp").forward(req,resp);
+                    return;
 
             }
 
@@ -135,7 +145,7 @@ public class AdminServlet extends HttpServlet {
                     {
                         req.getSession().setAttribute("termList",termDao.getAllTerms());
                         req.getSession().setAttribute("id",term.getTermId());
-                        req.getSession().setAttribute("cid", course.getCourseId());
+                        req.getSession().setAttribute("cid", course.getCourseID());
                         req.getRequestDispatcher("assocCourse2term.jsp").forward(req,resp);
                     }else{
                         req.getSession().setAttribute("update",true);
@@ -153,7 +163,7 @@ public class AdminServlet extends HttpServlet {
                     {
                         req.getSession().setAttribute("termList",termDao.getAllTerms());
                         req.getSession().setAttribute("id",term.getTermId());
-                        req.getSession().setAttribute("cid",course.getCourseId());
+                        req.getSession().setAttribute("cid",course.getCourseID());
                         req.getRequestDispatcher("assocInstructor2term.jsp").forward(req,resp);
 
                     }else{

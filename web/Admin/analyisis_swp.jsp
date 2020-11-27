@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +10,7 @@
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <jsp:include page="sidenav.jsp"/>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -179,25 +181,6 @@
 
 </div>
 
-<div class="sidenav">
-    <a id="noClick">Fall 2019</a>
-    <button class="dropdown-btn">Analysis
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-container">
-        <a href="analyisis_swp.jsp">SWP-Row, Mean, & Median Scores</a>
-        <a href="analylisis_CSOP.jsp">Course SO Performance</a>
-        <a href="analysis_ISOP.jsp">Instructor SO Performance</a>
-        <a href="analysiis_ALL_CSOP_byTerm.jsp">All Courses SO Performance by Term</a>
-        <a href="analysis_CSOP_byTerm.jsp">Courses SO Performance by Term</a>
-    </div>
-    <a href="Setup_Term_Year.jsp">Setup Terms & Years</a>
-    <a href="instuctors.jsp">Instructor</a>
-
-
-</div>
-
-
 <div class="main">
 
 </div>
@@ -223,8 +206,10 @@
 
 <div id="curve_chart" style="width: 75%; height: 500px; padding-left:300px; padding-top: 150px;" ></div>
 
-
-<input type="hidden" value="${sessionScope.someList}">
+<form id="selections" method="post" action="../AdminServlet?action=rawSOGET">
+    <c:forEach items="${sessionScope.rawSOData}" var="current">
+        <h3>${current.performance} -- ${current.soID}</h3>
+    </c:forEach>
 
 <label  for="terms" style="padding-left:650px; padding-top:100px; ">Term:</label>
 <select name="terms" id="terms">
@@ -234,13 +219,13 @@
 <label for="courses" style="padding-left:10px; padding-top:100px; ">Course:</label>
 <select name="courses" id="courses">
     <option>Select Course</option>
-
 </select>
 
 <label for="chartfucntions" style="padding-left:10px; padding-top:100px; ">Data:</label>
 <select name="chartfucntions" id="chartfucntions">
     <option>Select Data</option>
 </select>
-
+<button type="submit">GO</button>
+</form>
 </body>
 </html> 

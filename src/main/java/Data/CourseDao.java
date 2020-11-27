@@ -11,7 +11,7 @@ public interface CourseDao {
 
     List<StudentOutcome> getCourseSOMean(int courseID, int termID);
     List<StudentOutcome> getCourseSOMedian(int courseID, int termID);
-    List<StudentOutcome> getCourseSORaw(int courseID, int termID);
+    List<?> getCourseSORaw(int courseID, int termID);
     List<StudentOutcome> getSOs4Course(int courseID, int termID);
 
     List<StudentWorkProduct> getCoursesMeanSWPOverTime(int courseID, int[] termIDRange);

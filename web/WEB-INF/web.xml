@@ -10,7 +10,45 @@
         <exception-type>java.lang.Exception</exception-type>
         <location>/failure_page.jsp</location>
     </error-page>
+    <!--<servlet>
+        <display-name>AdminServlet</display-name>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>web.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <display-name>InstructorServlet</display-name>
+        <servlet-name>InstructorServlet</servlet-name>
+        <servlet-class>web.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InstructorServlet</servlet-name>
+        <url-pattern>/InstructorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>RootServlet</display-name>
+        <servlet-name>RootServlet</servlet-name>
+        <servlet-class>web.RootServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RootServlet</servlet-name>
+        <url-pattern>/RootServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <display-name>Login</display-name>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>web.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>-->
   <!--  <security-role>
     <role-name>admin</role-name>
 </security-role>
