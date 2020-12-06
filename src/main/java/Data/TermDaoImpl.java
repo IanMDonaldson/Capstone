@@ -13,6 +13,32 @@ public class TermDaoImpl implements TermDao {
 
     @Override
     public boolean termExists(Term term) {
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from term where " +
+                    "term_name = ? AND term_year = ?;" );
+            ps.setString(1, term.getTermName());
+            ps.setInt(2, term.getTermYear());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Integer x = rs.getInt("term_year");
+            if (x==null) {
+                rs.close();
+                ps.close();
+                conn.close();
+                return false;
+                //if resultset returns nothing then term doesn't exist yet
+            } else {
+                rs.close();
+                ps.close();
+                conn.close();
+                return true;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return false;
     }
 
@@ -112,6 +138,30 @@ public class TermDaoImpl implements TermDao {
             throwables.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public Term getLastTerm() {
+        Term term = new Term();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from term;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.isLast()) {
+                    term.setTermName(rs.getString("term_name"));
+                    term.setTermYear(rs.getInt("term_year"));
+                    term.setTermId(rs.getInt("term_id"));
+                }
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return term;
     }
 
 
