@@ -1,6 +1,5 @@
 package Data;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface TermDao {
@@ -15,6 +14,7 @@ public interface TermDao {
      * OR CourseDaoImpl.addCourse(Course course) we need to create a new course
      * this inserts into teaches table leaving instructor NULL because the adminSetup associates an instructor to course later*/
     boolean assocCourse(int termID, int courseID);
+    public Term getLastTerm();
 
 
 }

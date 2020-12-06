@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<h1>ya done fucked up</h1>
+<h1>${message}</h1>
 </body>
 </html>

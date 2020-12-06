@@ -65,10 +65,18 @@ public class CourseDaoImpl implements CourseDao {
         List<Course> courseList = new LinkedList<Course>();
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * form course order;");
-            ps.setString(1,"course_id");
-            courseList=getCourse(ps);
+            PreparedStatement ps = conn.prepareStatement("SELECT * from course order by course_id;");
 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course();
+                course.setCourseID(rs.getInt("course_id"));
+                course.setDepartment(rs.getString("department_id"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                courseList.add(course);
+            }
+            rs.close();
             conn.close();
             ps.close();
         } catch (SQLException throwables) {
@@ -77,33 +85,10 @@ public class CourseDaoImpl implements CourseDao {
         return  courseList;
     }
 
-    @Override
-    public Course getCourse(int Id) {
-        Course course=new Course();
-        try{
-            Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select * from course where course.course_id = ?;");
-            ps.setInt(1,Id);
-            ResultSet rs = ps.executeQuery();
-                    while(rs.next()){
-                        course.setCourseId(rs.getInt("course_id"));
-                        course.setCourseNumber(rs.getInt("course_number"));
-                        course.setCourseTitle(rs.getString("course_title"));
-                        course.setDepartmentId(rs.getString("department_id"));
-                    }
-            conn.close();
-            ps.close();
-            rs.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    return course;
-    }
-
     /* Inserts into the ENROLLMENT TABLE a list of students to a course
-    *  checks to see if student is associated with a course already by searching
-    *  database for a row matching all of STUDENTID, COURSEID, TERMID
-    *                 :D       */
+     *  checks to see if student is associated with a course already by searching
+     *  database for a row matching all of STUDENTID, COURSEID, TERMID
+     *                 :D       */
     @Override
     public boolean associateStudents(List<Student> students, int courseID, int termID) {
         PreparedStatement ps = null;
@@ -139,7 +124,7 @@ public class CourseDaoImpl implements CourseDao {
         return false;
     }
     /* todo: maybe change the parameters of the function based on what information is pulled from the page
-    *       when adding a set of students and their student work products*/
+     *       when adding a set of students and their student work products*/
     @Override
     public boolean assocSWPs2Course(List<StudentWorkProduct> swpList, int courseID, int termID, String instructorUname) {
         SwpDaoImpl swpDaoImpl = new SwpDaoImpl();
@@ -185,8 +170,8 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     /*assumes that TermDaoImpl.assocCourse has already been called
-    * - meaning that theres an entry inside of TEACHES table where instructor = null
-    *   that's where we will insert the instructor*/
+     * - meaning that theres an entry inside of TEACHES table where instructor = null
+     *   that's where we will insert the instructor*/
     public boolean associateInstructor(Instructor instructor, int termID, int courseID) {
         Connection conn = ConnectionFactory.getConnection();
         try {
@@ -320,8 +305,8 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     /* each of the student Outcomes in the returned list holds its own performance variable
-    *
-    * - is a list of all student outcome performances for each student outcome*/
+     *
+     * - is a list of all student outcome performances for each student outcome*/
     @Override
     public List<StudentOutcome> getCourseSORaw(int courseID, int termID) {
         List<StudentOutcome> soList = new LinkedList<>();
@@ -345,7 +330,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     /* returns a list of studentOutcomes each having the mean performance for those student outcomes for a course
-    *   */
+     *   */
     @Override
     public List<StudentOutcome> getCourseSOMean(int courseID, int termID) {
         List<StudentOutcome> soList = new LinkedList<>();
@@ -434,4 +419,30 @@ public class CourseDaoImpl implements CourseDao {
         }
         return soList;
     }
+    @Override
+    public List<Course> getCoursesNotAssocWInstructor(){
+        Connection conn = ConnectionFactory.getConnection();
+        List<Course> courseNotAssoc = new LinkedList<Course>();
+        try{
+            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches on course.course_id = teaches.fk_teaches_course where teaches.fk_teaches_instructor IS null");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Term term =new Term();
+                Course course = new Course();
+                course.setCourseID(rs.getInt("course_id"));
+                course.setDepartment(rs.getString("department_id"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                courseNotAssoc.add(course);
+            }
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return  courseNotAssoc;
+    }
+
 }
