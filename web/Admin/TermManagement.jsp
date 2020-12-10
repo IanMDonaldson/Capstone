@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<form action="AdminServlet?action=" method="post">
+<form action="AdminServlet?action=searchActorPOST" method="post">
 <label for="termName">Search: </label>
     <input type="text" id="termName" name="termName"/>
     <input type="submit" value="Search Terms" /><br><br>

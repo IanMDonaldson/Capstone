@@ -187,9 +187,9 @@ body {
      <a href="analysis_CSOP_byTerm_intru.jsp">Courses SO Performance by Term</a>
    </div>
    <a href="setup_instuctor.jsp">Setup Term & Year</a>
-  <a href="student.jsp">Students</a>
+  <a href="addStudents.jsp">Students</a>
   <a href="SWP.jsp">SWP</a>
-  <a href="grades.jsp">Grades</a>
+  <a href="gradebook.jsp">Grades</a>
  
  </div> 
 

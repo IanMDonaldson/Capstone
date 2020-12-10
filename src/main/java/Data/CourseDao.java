@@ -17,7 +17,8 @@ public interface CourseDao {
     List<StudentWorkProduct> getCoursesMeanSWPOverTime(int courseID, int[] termIDRange);
     List<StudentWorkProduct> getSWPs4Course(int courseID, int termID);
 
-
+    public boolean addCourse(Course course);
+    public boolean courseExist(Course course);
     boolean associateInstructor(Instructor instructor, int termID, int courseID);
     boolean associateStudents(List<Student> students, int termID, int courseID);
     boolean assocSWPs2Course(List<StudentWorkProduct> swpList, int courseID, int termID, String instructorUname);

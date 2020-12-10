@@ -277,6 +277,64 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public boolean addCourse(Course course) {
+        boolean isAddSuccessful = false;
+        Connection conn = ConnectionFactory.getConnection();
+        try{
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO term(course_id,course_title,department_id,course_number)" + "VALUES (?,?,?,?);");
+            ps.setInt(1,course.getCourseID());
+            ps.setString(2,course.getCourseTitle());
+            ps.setString(3,course.getDepartment());
+            ps.setInt(4,course.getCourseNumber());
+
+            int rowChanged = ps.executeUpdate();
+            if (rowChanged == 0)
+            {
+                return isAddSuccessful;
+            }
+            else
+            {
+                isAddSuccessful = true;
+                ps.close();
+                conn.close();
+                return isAddSuccessful;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return isAddSuccessful;
+    }
+@Override
+public boolean courseExist(Course course)
+{
+    Connection conn = ConnectionFactory.getConnection();
+    try {
+        PreparedStatement ps = conn.prepareStatement("select * from course where " +
+                "course_title = ? AND department_id = ?" );
+        ps.setString(1, course.getCourseTitle());
+        ps.setString(2,course.getDepartment());
+        ResultSet rs = ps.executeQuery();
+        if (rs == null) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+            //if resultset returns nothing then term doesn't exist yet
+        } else {
+            rs.close();
+            ps.close();
+            conn.close();
+            return false;
+        }
+
+    } catch (SQLException throwables) {
+        throwables.printStackTrace();
+    }
+
+    return false;
+}
+    @Override
     public List<StudentOutcome> getSOs4Course(int courseID, int termID) {
         return null;
     }
@@ -444,5 +502,7 @@ public class CourseDaoImpl implements CourseDao {
 
         return  courseNotAssoc;
     }
+
+
 
 }

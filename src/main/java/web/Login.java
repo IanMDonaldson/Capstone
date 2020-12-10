@@ -1,19 +1,13 @@
 package web;
 
-import Data.Admin;
-import Data.AdminDaoImpl;
-import Data.Instructor;
-import Data.InstructorDaoImpl;
+import Data.LoginDao;
 
-
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 /*
 /////////A REALM is a database of users and groups///////////////////
 @BasicAuthenticationMechanismDefinition(realmName="${'user‑realm'}")
@@ -46,11 +40,9 @@ import java.io.PrintWriter;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    public Login() {
-        super();
-
-    }
+    private String username = null;
+    private String password = null;
+    private LoginDao loginDao = new LoginDao();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if(request.getParameter("action") == null ) {
@@ -82,26 +74,25 @@ public class Login extends HttpServlet {
         } else {
             switch (request.getParameter("action")) {
                 case "loginPOST":
-                    if (request.getParameter("access_Level").equals("instructor")) {
-                        InstructorDaoImpl instImpl = new InstructorDaoImpl();
-                        Instructor instructor = new Instructor();
-                        instructor.setUsername(request.getParameter("username"));
-                        instructor.setPassword(request.getParameter("password"));
-                        if (instImpl.instructorExists(instructor)) {
-                            request.getRequestDispatcher("home_page.jsp").forward(request, response);
+                    username = request.getParameter("username");
+                    password = request.getParameter("password");
+                    if (LoginDao.validate(username, password)) {
+                        String usertype = LoginDao.getUserType(username, password);
+                        if (usertype == "instructor") {
+                            request.getSession().setAttribute("uname", username);
+                            request.getRequestDispatcher("InstructorServlet?action=changeCourseGET").forward(request,response);
+                            break;
+                        } else if (usertype == "admin") {
+
+                        } else if (usertype == "root") {
+
                         } else {
-                            request.getRequestDispatcher("failure_page.jsp").forward(request, response);
+                            request.getRequestDispatcher("failure_page.jsp").forward(request,response);
                         }
+
                     } else {
-                        AdminDaoImpl adminImpl = new AdminDaoImpl();
-                        Admin admin = new Admin();
-                        admin.setUsername(request.getParameter("username"));
-                        admin.setPassword(request.getParameter("password"));
-                        if (adminImpl.adminExists(admin)) {
-                            request.getRequestDispatcher("home_page.jsp").forward(request, response);
-                        } else {
-                            request.getRequestDispatcher("failure_page.jsp").forward(request, response);
-                        }
+                        request.getSession().setAttribute("message", "Username/Password Combination doesn't exist.");
+                        request.getRequestDispatcher("failure_page.jsp").forward(request, response);
                     }
                     break;
                 case "registerPOST":

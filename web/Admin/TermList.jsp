@@ -1,7 +1,7 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Fordj
-  Date: 11/28/2020
+  User: dragomundo
+  Date: 11/28/20
   Time: 12:52 AM
   To change this template use File | Settings | File Templates.
 --%>
@@ -13,12 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-<label  for="terms" style="padding-left:650px; padding-top:100px; ">Term:</label>
-<select name="terms" id="terms">
-    <c:forEach items="${sessionScope.termList}" var="current">
-        <option value="${current.termId}">${current.termName} ${current.termYear}</option>
-    </c:forEach>
-</select>
+<c:forEach items="${sessionScope.termList}" var="current">
+    <h1>${current.termName}</h1>
+</c:forEach>
 </body>
 </html>
-

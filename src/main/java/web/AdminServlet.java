@@ -55,6 +55,10 @@ public class AdminServlet extends HttpServlet {
                     req.getSession().setAttribute("id",Integer.toString(termID));
                     req.getRequestDispatcher("Admin/TermAdd.jsp").forward(req, resp);
                     break;
+                case"addCourseGet":
+                    req.getSession().setAttribute("id",Integer.toString(courseID));
+                    req.getRequestDispatcher("Admin/CourseAdd.jsp").forward(req, resp);
+                    break;
                 case "analyzeRawGET":
                     req.getSession().setAttribute("rawList", courseDao.getCourseSORaw(1,1));
                     req.getSession().setAttribute("meanList", courseDao.getCourseSOMean(1,1));
@@ -114,6 +118,34 @@ public class AdminServlet extends HttpServlet {
                         }
                     }
                     break;
+                case "addCoursePOST":
+                String courseName = req.getParameter("courseName");
+                int courseNumber = Integer.parseInt(req.getParameter("courseNumber"));
+                String departmetID = req.getParameter("departmentID");
+                Course course = new Course();
+                course.setCourseTitle(courseName);
+                course.setCourseNumber(courseNumber);
+                course.setDepartment(departmetID);
+                boolean courseExist = courseDao.courseExist(course);
+                if(courseExist){
+                    req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
+                }
+                else{
+                    if(!courseDao.insertCourse(course)){
+                        req.getSession().setAttribute("add", true);
+                        req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
+                    }
+                    else{
+                        req.getSession().setAttribute("courseNumber", course.getCourseNumber());
+                        req.getSession().setAttribute("Department", course.getDepartment());
+                        req.getSession().setAttribute("courseTitle", course.getCourseTitle());
+                        req.getSession().setAttribute("courseList",courseDao.getAllCourses());
+                        req.getRequestDispatcher("Admin/CourseList.jsp").forward(req, resp);
+                    }
+                }
+                break;
+
+
                 case "assocCourseTermPOST":
                     termIDParm = req.getParameter(("Term"));
                     termID = Integer.parseInt(termIDParm);
