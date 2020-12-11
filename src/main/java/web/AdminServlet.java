@@ -60,9 +60,13 @@ public class AdminServlet extends HttpServlet {
                     req.getRequestDispatcher("Admin/CourseAdd.jsp").forward(req, resp);
                     break;
                 case "analyzeRawGET":
-                    req.getSession().setAttribute("rawList", courseDao.getCourseSORaw(1,1));
-                    req.getSession().setAttribute("meanList", courseDao.getCourseSOMean(1,1));
-                    req.getSession().setAttribute("medianList", courseDao.getCourseSOMedian(1,1));
+                    String[] soNames = courseDao.SOnames(1,1);
+                    req.getSession().setAttribute("soNames",soNames);
+                    req.getSession().setAttribute("rawList", courseDao.so2Array(courseDao.getCourseSORaw(1,1),soNames));
+                    req.getSession().setAttribute("meanList", courseDao.so2Array(courseDao.getCourseSOMean(1,1),soNames));
+                    req.getSession().setAttribute("medianList", courseDao.so2Array(courseDao.getCourseSOMedian(1,1),soNames));
+                    req.getSession().setAttribute("courseList", courseDao.getAllCourses());
+                    req.getSession().setAttribute("termList", termDao.getAllTerms());
                     req.getRequestDispatcher("Admin/analysis_swp.jsp").forward(req, resp);
                     break;
                 case "assocCourseTermGET":

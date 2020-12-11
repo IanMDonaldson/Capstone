@@ -1,28 +1,35 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: dragomundo
+  Date: 11/27/20
+  Time: 11:44 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- chart scripts-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/Script/charts_data.js"></script>
+
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <jsp:include page="sidenav.jsp"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="../Script/jquery.repeatable.js"></script>
+
     <style>
         body {
             font-family: "Lato", sans-serif;
             margin:0;
         }
         .topnav {
-            margin: 0 0 0 201px;
+            margin: 0;
+            padding-left: 10%;
             background-color: #F7F8FC;
             position: fixed;
-            width: 86%;
+            width: 90%;
         }
-
 
 
         .topnav a  {
@@ -56,7 +63,6 @@
             float: left;
             overflow: hidden;
         }
-
         .dropdown .dropbtn {
             font-size: 16px;
             border: none;
@@ -67,9 +73,6 @@
             font-family: inherit;
             margin: 0;
         }
-
-
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -78,7 +81,6 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
-
         .dropdown-content a {
             float: none;
             color: black;
@@ -87,11 +89,9 @@
             display: block;
             text-align: left;
         }
-
         .dropdown-content a:hover {
             background-color: #ddd;
         }
-
         .dropdown:hover .dropdown-content {
             display: block;
         }
@@ -99,7 +99,7 @@
         /* Fixed sidenav, full height */
         .sidenav {
             height: 100%;
-            width: 200px;
+            width: 10%;
             position: fixed;
             z-index: 1;
             top: 0;
@@ -108,8 +108,7 @@
             overflow-x: hidden;
             padding-top: 20px;
         }
-
-        /* Style the sidenav links and the navDropdowns button */
+        /* Style the sidenav links and the dropdown button */
         .sidenav a, .dropdown-btn {
             padding: 6px 8px 6px 16px;
             text-decoration: none;
@@ -124,123 +123,93 @@
             outline: none;
             display: inline-block;
             word-break: break-word;
-
         }
-
         /* On mouse-over */
         .sidenav a:hover, .dropdown-btn:hover {
             color: #f1f1f1;
         }
-
         /* Main content */
         .main {
             margin-left: 200px; /* Same as the width of the sidenav */
-
             font-size: 20px; /* Increased text to enable scrolling */
-            padding: 100px 10px;
-            background-color: #474a69;
+            padding: 0px 10px;
+            padding-top: 50px;
         }
-
-        /* Add an active class to the active navDropdowns button */
+        /* Add an active class to the active dropdown button */
         .active {
             background-color: rgb(45, 45, 53);
             color: white;
         }
-
-        /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the navDropdowns content */
+        /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
         .dropdown-container {
             display: none;
             background-color: #363740;
             padding-left: 6px;
 
         }
-
         /* Optional: Style the caret down icon */
         .fa-caret-down {
             float: right;
             padding-right: 8px;
         }
-
         /* Some media queries for responsiveness */
         @media screen and (max-height: 450px) {
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
 
-        .chart{
-
-            margin-top: 50px;
-        }
-
-
     </style>
 </head>
 <body>
 <div class="topnav">
-
-    <a  href="#page_name">Student Work Project</a>
+    <a  href="#page_name">Student</a>
     <div class="topnav-right">
-        <button class="btn">Admin</button>
+        <button class="btn"><i class="fas fa-edit"></i>Edit</button>
+        <button class="btn"><i class="fa fa-trash"></i>Delete</button>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <i class="fa fa-caret-down"></i>
+                Select Course
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Course1</a>
+                <a href="#">Course2</a>
+                <a href="#">Course3</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <i class="fa fa-caret-down"></i>
+                Select Term
+            </button>
+            <div class="dropdown-content">
+                <a href="#">year1</a>
+                <a href="#">year2</a>
+                <a href="#">year3</a>
+            </div>
+        </div>
+
+        <button class="btn">Instuctor</button>
         <button class="btn">Logout</button>
     </div>
-
-</div>
-<script>
-    /* Loop through all navDropdowns buttons to toggle between hiding and showing its navDropdowns content - This allows the user to have multiple dropdowns without any conflict */
-    var navDropdowns = document.getElementsByClassName("dropdown-btn");
-    var i;
-
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
-<div class="main">
-
-    <div class="chart" id="curve_chart" style="width: 75%; height: 500px;  margin-left:100px;" ></div>
-
-
-    <input type="hidden" id="meanAry" value="${sessionScope.meanList}"/>
-    <input type="hidden" id="medianAry" value="${sessionScope.medianList}"/>
-    <input type="hidden" id="namesAry" value="${sessionScope.soNames}"/>
-
-
-
-  <c:out value="${sessionScope.rawAry}"></c:out>
-    <form style="background-color: red" id="selections" method="post" action="AdminServlet?action=rawSOPOST">
-
-        <label  for="terms" style="padding-left:300px; padding-top:100px; ">Term:</label>
-        <select name="terms" id="terms">
-            <c:forEach items="${sessionScope.termList}" var="current">
-                <option value="${current.termId}" name="termID">${current.termName} ${current.termYear}</option>
-            </c:forEach>
-        </select>
-
-        <label for="courses" style="padding-left:10px; padding-top:100px; ">Course:</label>
-        <select name="courses" id="courses" style="width:auto;">
-            <c:forEach items="${sessionScope.courseList}" var="current">
-                <option value="${current.courseID}" name="courseID"> CoUrSe ${current.courseTitle} </option>
-            </c:forEach>
-        </select>
-
-        <label for="chartfucntions" style="padding-left:10px; padding-top:100px; ">Data:</label>
-        <select name="chartfucntions" id="chartfucntions">
-            <option>Select Data</option>
-            <option value="Raw">Raw</option>
-            <option value="Median">Median</option>
-            <option value="Mean">Mean</option>
-        </select>
-        <button id ="submitBtn" type="submit">GO</button>
-    </form>
 </div>
 
-
+<div class="sidenav">
+    <a id="noClick">Fall 2019</a>
+    <button class="dropdown-btn">Analysis
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="analysis_swp_instr.jsp">SWP-Row, Mean, & Median Scores</a>
+        <a href="analysis_CSOP_instr.jsp">Course SO Performance</a>
+        <a href="analysis_ISOP_instr.jsp">Instructor SO Performance</a>
+        <a href="analysis_ALL_CSOP_instr.jsp">All Courses SO Performance by Term</a>
+        <a href="analysis_CSOP_byTerm_intru.jsp">Courses SO Performance by Term</a>
+    </div>
+    <a href="setup_instuctor.jsp">Setup Term & Year</a>
+    <a href="student.jsp">Students</a>
+    <a href="SWP.jsp">SWP</a>
+    <a href="grades.jsp">Grades</a>
+</div>
 </body>
-</html> 
+</html>
