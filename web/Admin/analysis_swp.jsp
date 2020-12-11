@@ -238,7 +238,6 @@
         </select>
         <button id ="submitBtn" type="reset">GO</button>
         <p id="test"  style="padding-top: 100px; padding-left: 300px">This was selected: <spam id="changed"></spam></p>
-        <p id="test2"  style="padding-top: 100px; padding-left: 300px">This: <spam id="changed2"></spam></p>
 
     </form>
 
