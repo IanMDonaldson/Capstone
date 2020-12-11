@@ -375,6 +375,8 @@ public boolean courseExist(Course course)
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1,courseID);
+            ps.setInt(2,termID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 StudentOutcome so = new StudentOutcome(rs.getInt("student_outcome_id"),
@@ -399,6 +401,8 @@ public boolean courseExist(Course course)
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1,courseID);
+            ps.setInt(2,termID);
             ResultSet rs = ps.executeQuery();
             rs.next();
 
@@ -436,42 +440,40 @@ public boolean courseExist(Course course)
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
             ResultSet rs = ps.executeQuery();
             rs.next();
 
             float counter = 1;
             int currOutcomeID = rs.getInt("student_outcome_id");
-
+            int listIndex = 0;
+            StudentOutcome so = new StudentOutcome(currOutcomeID,-1,rs.getString("student_outcome_title"));
             ArrayList<Float> grades = new ArrayList<Float>();
             grades.add(rs.getFloat("swp_grade"));
+            soList.add(so);
             while (rs.next()) {
                 if(rs.getInt("student_outcome_id") != currOutcomeID) {
-                    float median;
-                    int size = grades.size();
-                    if (grades.size() %2 == 0) {
-                        median = ((grades.get(size-1)+(grades.get(size+1))/2));
-                        StudentOutcome so = new StudentOutcome(currOutcomeID,
-                                median,
-                                rs.getString("student_outcome_title"));
-                        soList.add(so);
-                    } else {
-                        median = grades.get(size/2);
-                        StudentOutcome so = new StudentOutcome(currOutcomeID,
-                                median,
-                                rs.getString("student_outcome_title"));
-                        soList.add(so);
-                    }
-                    counter=1;
+                    float median = getMedian(grades);
+                    soList.get(listIndex).setPerformance(median);
+                    so = new StudentOutcome(rs.getInt("student_outcome_id"),
+                            -1,
+                            rs.getString("student_outcome_title"));
+                    soList.add(so);
+                    listIndex++;
                     currOutcomeID=rs.getInt("student_outcome_id");
                     grades.clear();
                     grades.add(rs.getFloat("swp_grade"));
                     counter=1;
-                    currOutcomeID=rs.getInt("student_outcome_id");
                 } else {
                     counter++;
                     grades.add(rs.getFloat("swp_grade"));
                 }
             }
+            rs.close();
+            ps.close();
+            conn.close();
+            soList.get(listIndex).setPerformance(getMedian(grades));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -502,7 +504,99 @@ public boolean courseExist(Course course)
 
         return  courseNotAssoc;
     }
+    /* each of the student Outcomes in the returned list holds its own performance variable
+     *
+     * - is a list of all student outcome performances for each student outcome*/
+    public String[] SOnames(int courseID, int termID) {
+        List<String> nameList = new LinkedList<>();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select distinct so.student_outcome_id from student_work_product " +
+                    "join fulfills f on student_work_product.swp_id = f.fk_fulfills_swp " +
+                    "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
+                    "where fk_swp_course = ? AND fk_swp_term = ? " +
+                    "order by f.fk_fulfills_so;");
+            ps.setInt(1,courseID);
+            ps.setInt(2,termID);
+            ResultSet rs = ps.executeQuery();
 
+            nameList.add("SO");
+            while (rs.next()) {
+                nameList.add("SO" + rs.getInt("student_outcome_id"));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String[] names = new String[nameList.size()];
+        names[0] = "SO";
+        for (int i = 1; i< nameList.size(); i++) {
+            names[i] = nameList.get(i);
+        }
+        return names;
+    }
+    public Float getMedian(ArrayList<Float> grades) {
+        int half = grades.size()/2;
+        float median;
+        if (grades.size() %2 == 0) {
+            median = ((grades.get(half)+(grades.get(half-1))/2));
+        } else {
+            median = grades.get(grades.size()/2);
+        }
+        return median;
+    }
+    //todo doesn't work with 1 so
+    public Float[][] so2Array(List<StudentOutcome> soList,String[] soNames) {
+        Float[][] list = new Float[soList.size()][soNames.length];
+        for (int i = 0; i < soList.size();i++) {
+            if (i == 0) {
+                list[i][0]= (float)i;
+                list[i][1] = soList.get(i).getPerformance();
+            } else if (soList.get(i).getSoID() > soList.get(i-1).getSoID()) {
+                int newsize = soList.size() - i;
+                for (int j=0;j<newsize;j++) {
+                    int k = i+j;
+                    list[j][2] = soList.get(k).getPerformance();
+                }
+                i = soList.size();
+            } else {
+                list[i][0]= (float)i;
+                list[i][1] = soList.get(i).getPerformance();
+            }
+        }
 
+        return list;
+    }
+    public static void main(String[] args) {
+        CourseDaoImpl courseDao = new CourseDaoImpl();
+        String [] soNames = courseDao.SOnames(5,3);
+        courseDao.so2Array(courseDao.getCourseSORaw(5,3), soNames);
+
+    }
+    private int courseCount(){
+        int count = -1;
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select count(*) as count from course;" );
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            count = rs.getInt("count");
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return count;
+    }
+    public Course[] courseList2Arr(List<Course> courseList) {
+        Course[] courses = new Course[courseCount()];
+        for (int i = 0; i <courseList.size();i++) {
+            courses[i] = courseList.get(i);
+        }
+        return courses;
+    }
 
 }

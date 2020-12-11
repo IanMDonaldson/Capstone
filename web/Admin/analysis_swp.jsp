@@ -206,11 +206,14 @@
 
     <div class="chart" id="curve_chart" style="width: 75%; height: 500px;  margin-left:100px;" ></div>
 
-    <input type="hidden" id="rawAry" value="${sessionScope.rawList}"/>
+
     <input type="hidden" id="meanAry" value="${sessionScope.meanList}"/>
     <input type="hidden" id="medianAry" value="${sessionScope.medianList}"/>
     <input type="hidden" id="namesAry" value="${sessionScope.soNames}"/>
 
+
+
+  <c:out value="${sessionScope.rawAry}"></c:out>
     <form style="background-color: red" id="selections" method="post" action="AdminServlet?action=rawSOPOST">
 
         <label  for="terms" style="padding-left:300px; padding-top:100px; ">Term:</label>
