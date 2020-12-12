@@ -105,7 +105,7 @@ body {
   padding-top: 20px;
 }
 
-/* Style the sidenav links and the dropdown button */
+/* Style the sidenav links and the navDropdowns button */
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -135,13 +135,13 @@ body {
   padding: 0px 10px;
 }
 
-/* Add an active class to the active dropdown button */
+/* Add an active class to the active navDropdowns button */
 .active {
   background-color: rgb(45, 45, 53);
   color: white;
 }
 
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the navDropdowns content */
 .dropdown-container {
   display: none;
   background-color: #363740;

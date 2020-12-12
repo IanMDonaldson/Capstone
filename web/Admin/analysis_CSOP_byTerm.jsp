@@ -105,7 +105,7 @@ body {
   padding-top: 20px;
 }
 
-/* Style the sidenav links and the dropdown button */
+/* Style the sidenav links and the navDropdowns button */
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -135,13 +135,13 @@ body {
   padding: 0px 10px;
 }
 
-/* Add an active class to the active dropdown button */
+/* Add an active class to the active navDropdowns button */
 .active {
   background-color: rgb(45, 45, 53);
   color: white;
 }
 
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the navDropdowns content */
 .dropdown-container {
   display: none;
   background-color: #363740;
@@ -180,10 +180,10 @@ body {
      <i class="fa fa-caret-down"></i>
    </button>
    <div class="dropdown-container">
-    <a href="analyisis_swp.jsp">SWP-Row, Mean, & Median Scores</a>
-    <a href="analylisis_CSOP.jsp">Course SO Performance</a>
+    <a href="analysis_swp.jsp">SWP-Row, Mean, & Median Scores</a>
+    <a href="analysis_CSOP.jsp">Course SO Performance</a>
     <a href="analysis_ISOP.jsp">Instructor SO Performance</a>
-    <a href="analysiis_ALL_CSOP_byTerm.jsp">All Courses SO Performance by Term</a>
+    <a href="analysis_ALL_CSOP_byTerm.jsp">All Courses SO Performance by Term</a>
     <a href="analysis_CSOP_byTerm.jsp">Courses SO Performance by Term</a>
   </div>
   <a href="Setup_Term_Year.jsp">Setup Terms & Years</a>
@@ -198,8 +198,8 @@ body {
 </div>
 
 <script>
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-var dropdown = document.getElementsByClassName("dropdown-btn");
+/* Loop through all navDropdowns buttons to toggle between hiding and showing its navDropdowns content - This allows the user to have multiple dropdowns without any conflict */
+var navDropdowns = document.getElementsByClassName("dropdown-btn");
 var i;
 
 for (i = 0; i < dropdown.length; i++) {

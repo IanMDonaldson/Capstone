@@ -1,0 +1,9 @@
+.formContainer {
+    margin-left: 20vw;
+    padding-top: 10vh;
+    display: grid;
+}
+td,tr {
+    border: 1px solid #363740;
+    padding: 0.5rem;
+}
