@@ -62,6 +62,27 @@ public class StudentOutcomeDaoImpl implements StudentOutcomeDao {
     }
 
     @Override
+    public StudentOutcome getSO(int soID) {
+        StudentOutcome so = new StudentOutcome();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from student_outcome " +
+                    "where student_outcome_id = ?;");
+            ps.setInt(1,soID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            so.setTitle(rs.getString("student_outcome_title"));
+            so.setSoID(soID);
+            conn.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return so;
+    }
+
+    @Override
     public List<StudentOutcome> getAllSO() {
         List<StudentOutcome> soList = new LinkedList<StudentOutcome>();
         Connection conn = ConnectionFactory.getConnection();

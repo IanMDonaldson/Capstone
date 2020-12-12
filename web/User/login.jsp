@@ -158,10 +158,6 @@ input[type=submit]:hover {
         <h1 class="title_pg">DCIA Login</h1>
 
         <div class="col">
-          <select name="access_Level" id="access_Level" required>
-            <option value="admin">Admin</option>
-            <option value="instructor">Instructor</option>
-          </select>
           <label for="username"><b>Username:</b></label>
           <input type="text" name="username" id="username" placeholder="Enter Username" required>
           <label for="password"><b>Password:</b></label>
