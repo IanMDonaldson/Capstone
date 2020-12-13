@@ -39,6 +39,7 @@ import java.io.IOException;
 */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private String username = null;
     private String password = null;
@@ -105,6 +106,8 @@ public class Login extends HttpServlet {
         }
     }
 }
+
+
 
 /*
 * IDENTITY STORE - it's just a database that stores user data like username, password or anything else
