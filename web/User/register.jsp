@@ -150,6 +150,7 @@ input[type=submit]:hover {
 
         <div class="col">
           <div class="row">
+          <input type="text" name="first_name" placeholder="Username" required>
           <input type="text" name="first_name" placeholder="First Name" required>
           <input type="text" name="last_name" placeholder="Last Name" required>
         </div>

@@ -61,6 +61,7 @@ public class AdminServlet extends HttpServlet {
                     break;
                 case "analyzeRawGET":
                     String[] soNames = courseDao.SOnames(1,1);
+
                     req.getSession().setAttribute("soNames",soNames);
                     req.getSession().setAttribute("rawList", courseDao.so2Array(courseDao.getCourseSORaw(1,1),soNames));
                     req.getSession().setAttribute("meanList", courseDao.so2Array(courseDao.getCourseSOMean(1,1),soNames));
@@ -68,6 +69,7 @@ public class AdminServlet extends HttpServlet {
                     req.getSession().setAttribute("courseList", courseDao.getAllCourses());
                     req.getSession().setAttribute("termList", termDao.getAllTerms());
                     req.getRequestDispatcher("Admin/analysis_swp.jsp").forward(req, resp);
+
                     break;
                 case "assocCourseTermGET":
                     req.getSession().setAttribute("term", termDao.getLastTerm());
@@ -184,6 +186,24 @@ public class AdminServlet extends HttpServlet {
                         req.getSession().setAttribute("update",true);
                         req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                     }
+                    break;
+                case "analyzeRawPOST":
+                    //change the changeME to the id or name? cant remember which, of the option value on the dropdowns
+                    //DROPDOWN DATA - will be given as ARRAY of objects, which i think js can parse
+                    // form method=post  action=../AdminServlet?action=analyzeRawPOST
+                    String termIDparm = req.getParameter("termID");
+                    int termID = Integer.parseInt(termIDparm);
+                    String courseIDparm = req.getParameter("courseID");
+                    int courseID = Integer.parseInt(courseIDparm);
+                    String[] soNames = courseDao.SOnames(courseID, termID);
+
+                    req.getSession().setAttribute("soNames",soNames);
+                    req.getSession().setAttribute("rawList", courseDao.so2Array(courseDao.getCourseSORaw(courseID, termID),soNames));
+                    req.getSession().setAttribute("meanList", courseDao.so2Array(courseDao.getCourseSOMean(courseID, termID),soNames));
+                    req.getSession().setAttribute("medianList", courseDao.so2Array(courseDao.getCourseSOMedian(courseID, termID),soNames));
+                    req.getSession().setAttribute("courseList", courseDao.getAllCourses());
+                    req.getSession().setAttribute("termList", termDao.getAllTerms());
+                    req.getRequestDispatcher("Admin/analysis_swp.jsp").forward(req, resp);
                     break;
                     }
 

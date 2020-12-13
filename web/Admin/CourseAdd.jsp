@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%--doctype html--%>
+<%@ include file="topSideNav.jsp" %>
 <html lang="en">
 <head>
     <title>DCIA</title>
