@@ -10,16 +10,17 @@
 <%@ include file="topSideNav.jsp"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Department Continuous Improvement Application</title>
 
 </head>
 <body>
+<h1><b>${sessionScope.message}</b></h1>
 <h3>Students attending ${sessionScope.course.courseId} ${sessionScope.course.courseTitle} </h3>
 <h3> for Term: ${sessionScope.term.termName} ${sessionScope.term.termYear}</h3>
 <c:forEach items="${sessionScope.studentList}" var="current">
     ${current.studentFname} ${current.studentLname}
     <a href="InstructorServlet?action=editStudent&id=${current.studentId}&courseID=${sessionScope.course.courseId}
-        &termID=${sessionScope.term.termId}" class="button" id="edit">Edit</a>
+        &termID=${sessionScope.term.termId}&uname=${sessionScope.uname}" class="button" id="edit">Edit</a>
     <a href="InstructorServlet?action=deleteStudent&id=${current.studentId}" class="button" id="delete">Delete</a>
     <br>
 </c:forEach>

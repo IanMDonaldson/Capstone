@@ -6,7 +6,21 @@ public class PublicUser {
     private String username;
     private String email;
     private String password;
-    private int adminID;
+    private String accessLevel;
+    public PublicUser() {}
+    public PublicUser(String username,
+                      String password,
+                      String firstName,
+                      String lastName,
+                      String email,
+                      String accessLevel) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.accessLevel = accessLevel;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -48,11 +62,11 @@ public class PublicUser {
         this.password = password;
     }
 
-    public int getAdminID() {
-        return adminID;
+    public String getAccessLevel() {
+        return accessLevel;
     }
 
-    public void setAdminID(int adminID) {
-        this.adminID = adminID;
+    public void setAccessLevel(String accessLevel) {
+        this.accessLevel = accessLevel;
     }
 }

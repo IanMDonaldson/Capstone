@@ -7,8 +7,9 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/web" relative="/" />
           <root url="file://$MODULE_DIR$/src/main/java" relative="/" />
+          <root url="file://$MODULE_DIR$/web" relative="/" />
+          <root url="file://$MODULE_DIR$/src/main/resources" relative="/" />
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
@@ -28,15 +29,28 @@
       <sourceFolder url="file://$MODULE_DIR$/web" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="adopt-openj9-11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.security.enterprise:javax.security.enterprise-api:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.soteria:javax.security.enterprise:1.0" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.21" level="project" />
-    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.security.enterprise:javax.security.enterprise-api:1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-catalina:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-servlet-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-jsp-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-el-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-juli:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-annotations-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-jni:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-coyote:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-util:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-util-scan:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat:tomcat-jaspic-api:9.0.39" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.glassfish.soteria:javax.security.enterprise:1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: mysql:mysql-connector-java:8.0.21" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.39" level="project" />
   </component>
 </module>

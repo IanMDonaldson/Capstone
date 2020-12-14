@@ -1,5 +1,6 @@
 package web;
 import Data.*;
+import Data.Login;
 
 import javax.annotation.security.DeclareRoles;
 import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
@@ -11,20 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-//@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
+//@BasicAuthenticationMechanismDefinition(realmName="${'jdbc/dcia'}")
 //@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
 //@ServletSecurity(@HttpConstraint(rolesAllowed = "instructor"))
 @WebServlet("/InstructorServlet")
 public class InstructorServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
+    private Login login = new Login();
     private String termIDParm;
     private String courseIDParm;
     private String SWPidParm;
@@ -32,6 +32,7 @@ public class InstructorServlet extends HttpServlet {
     private String uname = null;
     private int termID = -1;
     private int courseID = -1;
+    private int studentID = -1;
     private int swpID = -1;
     private int soID = -1;
     private Term term;
@@ -47,15 +48,7 @@ public class InstructorServlet extends HttpServlet {
     private SwpDaoImpl swpDao = new SwpDaoImpl();
     private StudentOutcomeDaoImpl soDao = new StudentOutcomeDaoImpl();
     private List<StudentOutcome> soList = new LinkedList<>();
-    private MultivaluedMap<Student, StudentWorkProduct> studentSwpMap(List<Student> students, List<StudentWorkProduct> swpList) {
-        MultivaluedMap<Student, StudentWorkProduct> multivaluedMap = new MultivaluedHashMap<>();
-        for (Student student : students){
-            for(StudentWorkProduct swp : swpList) {
 
-            }
-        }
-        return null;
-    }
 
 
 
@@ -67,12 +60,10 @@ public class InstructorServlet extends HttpServlet {
         }else {
             switch (req.getParameter("action")){
                 case "addStudentsGET":
-                    termID = 1;
-                    courseID=1;
-                    uname = "instructor1";
-//                    termID = Integer.parseInt(req.getParameter("termID"));
-//                    courseID = Integer.parseInt(req.getParameter("courseID"));
-//                    uname = req.getParameter("uname");
+
+                    termID = Integer.parseInt(req.getParameter("termID"));
+                    courseID = Integer.parseInt(req.getParameter("courseID"));
+                    uname = req.getParameter("uname");
                     req.getSession().setAttribute("termID", termID);
                     req.getSession().setAttribute("courseID",courseID);
                     req.getSession().setAttribute("uname", uname);
@@ -81,11 +72,11 @@ public class InstructorServlet extends HttpServlet {
                     req.getRequestDispatcher("Instructor/addStudents.jsp").forward(req, resp);
                     break;
                 case "assocStudentsGET":
-//                    termID = Integer.parseInt(req.getParameter("termID"));
-//                    courseID = Integer.parseInt(req.getParameter("courseID"));
-//                    uname = req.getParameter("uname");
-                    req.getSession().setAttribute("termID", 4);
-                    req.getSession().setAttribute("courseID",1);
+                    termID = Integer.parseInt(req.getParameter("termID"));
+                    courseID = Integer.parseInt(req.getParameter("courseID"));
+                    uname = req.getParameter("uname");
+                    req.getSession().setAttribute("termID", termID);
+                    req.getSession().setAttribute("courseID",courseID);
                     req.getSession().setAttribute("uname", "instructor1");
                     req.getSession().setAttribute("students", studentDao.sortStudents(studentDao.getAllStudents()));
                     req.getSession().setAttribute("courses", instructorDao.getCoursesTaught("instructor1", 4));
@@ -110,18 +101,32 @@ public class InstructorServlet extends HttpServlet {
                     req.getRequestDispatcher("Instructor/createSwp.jsp").forward(req,resp);
                     break;
                 case "editStudentGET":
-                    /*TODO create the student List page with two buttons, to edit and to delete the student*/
-                    termID = Integer.parseInt(req.getParameter("termID"));
+                    studentID = Integer.parseInt(req.getParameter("studentID"));
                     courseID = Integer.parseInt(req.getParameter("courseID"));
+                    termID = Integer.parseInt(req.getParameter("termID"));
                     uname = req.getParameter("uname");
                     req.getSession().setAttribute("termID", termID);
                     req.getSession().setAttribute("courseID",courseID);
                     req.getSession().setAttribute("uname", uname);
-                    req.getSession().setAttribute("students", courseDao.getStudents4Course(courseID, termID));
-                    req.getRequestDispatcher("Instructor/studentList.jsp").forward(req,resp);
+                    req.getSession().setAttribute("student", studentDao.getStudent(studentID));
+                    req.getRequestDispatcher("Instructor/editStudent.jsp").forward(req,resp);
                     break;
                 case "deleteStudentGET":
-
+                    studentID = Integer.parseInt(req.getParameter("studentID"));
+                    courseID = Integer.parseInt(req.getParameter("courseID"));
+                    termID = Integer.parseInt(req.getParameter("termID"));
+                    uname = req.getParameter("uname");
+                    if (studentDao.deleteStudent(studentID)) {
+                        req.getSession().setAttribute("message", "Student Deletion Successful");
+                        req.getSession().setAttribute("term", termDao.getTerm(Integer.parseInt(req.getParameter("termID"))));
+                        req.getSession().setAttribute("course", courseDao.getCourse(Integer.parseInt(req.getParameter("courseID"))));
+                        req.getSession().setAttribute("uname", uname);
+                        req.getSession().setAttribute("students", courseDao.getStudents4Course(courseID, termID));
+                        req.getRequestDispatcher("Instructor/studentList.jsp").forward(req,resp);
+                    } else {
+                        req.getSession().setAttribute("message", "Student Deletion Failed!");
+                        req.getRequestDispatcher("failure_page.jsp").forward(req,resp);
+                    }
                     break;
                 case "gradebookGET":
                     termID = Integer.parseInt(req.getParameter("termID"));
@@ -244,11 +249,25 @@ public class InstructorServlet extends HttpServlet {
                     termID = Integer.parseInt(req.getParameter("termID"));
                     courseID = Integer.parseInt(req.getParameter("courseID"));
                     uname = req.getParameter("uname");
-                    req.getSession().setAttribute("termID", termID);
-                    req.getSession().setAttribute("courseID",courseID);
-                    req.getSession().setAttribute("uname", uname);
-                    req.getSession().setAttribute("students", courseDao.getStudents4Course(courseID,termID));
-                    req.getRequestDispatcher("Instructor/studentList.jsp").forward(req,resp);
+                    student.setStudentId(Integer.parseInt(req.getParameter("studentID")));
+                    student.setStudentFname(req.getParameter("studentFname"));
+                    student.setStudentLname(req.getParameter("studentLname"));
+                    if (studentDao.updateStudent(student)) {
+                        req.getSession().setAttribute("termID", termID);
+                        req.getSession().setAttribute("courseID",courseID);
+                        req.getSession().setAttribute("uname", uname);
+                        req.getSession().setAttribute("students", courseDao.getStudents4Course(courseID,termID));
+                        req.getSession().setAttribute("message", "Student Edit Successful!");
+                        req.getRequestDispatcher("Instructor/studentList.jsp").forward(req,resp);
+                    } else {
+                        req.getSession().setAttribute("termID", termID);
+                        req.getSession().setAttribute("courseID",courseID);
+                        req.getSession().setAttribute("uname", uname);
+                        req.getSession().setAttribute("students", courseDao.getStudents4Course(courseID,termID));
+                        req.getSession().setAttribute("message", "Student Edit Failed!");
+                        req.getRequestDispatcher("Instructor/studentList.jsp").forward(req,resp);
+
+                    }
                     break;
                 case "gradebookPOST":
                     List<StudentWorkProduct> swpList = courseDao.getSWPs4Course(courseID,termID);
