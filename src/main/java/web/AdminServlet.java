@@ -18,7 +18,7 @@ import java.util.List;
 //@BasicAuthenticationMechanismDefinition(realmName="${'jdbc-realm'}")
 //@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
 //@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
-@WebServlet("/AdminServlet")
+//@WebServlet("/AdminServlet")
 public class AdminServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
     private String termIDParm;

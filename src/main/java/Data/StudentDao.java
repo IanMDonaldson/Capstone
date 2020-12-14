@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 public interface StudentDao {
+ boolean deleteStudent(int studentID);
  public boolean addStudent(Student student);
  public boolean updateStudent(Student student);
  public List<Student> getAllStudents();

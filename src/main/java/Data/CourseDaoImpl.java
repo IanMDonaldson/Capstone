@@ -1,5 +1,6 @@
 package Data;
 
+import javax.mail.MessagingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +22,8 @@ public class CourseDaoImpl implements CourseDao {
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
+                ps.close();
+                conn.close();
                 return false;
             }
             else
@@ -516,10 +519,9 @@ public class CourseDaoImpl implements CourseDao {
 
         return list;
     }
-    public static void main(String[] args) {
-        CourseDaoImpl courseDao = new CourseDaoImpl();
-        String [] soNames = courseDao.SOnames(5,3);
-        courseDao.so2Array(courseDao.getCourseSORaw(5,3), soNames);
+    public static void main(String[] args) throws MessagingException {
+        JavaMail jmail = new JavaMail();
+        jmail.sendEmail("dragomundoh@gmail.com", "body ofmessage", "Test subject");
 
     }
     private int courseCount(){

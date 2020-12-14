@@ -46,10 +46,10 @@ h1 {
 <body>
 
 <div class="topnav">
-  <a class="active" href="home_Page.html">Home</a>
+  <a class="active" href="home_page.jsp">Home</a>
   <div class="topnav-right">
-    <a href="Login?action=loginPage">Login</a>
-    <a href="Login?action=registerPage">Register</a>
+    <a href="LoginServlet?action=loginGET">Login</a>
+    <a href="Register?action=registerGET">Register</a>
   </div>
 </div>
 

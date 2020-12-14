@@ -12,5 +12,8 @@
 </head>
 <body>
 <h1>${message}</h1>
+
+<br><br><br>
+<a href="home_page.jsp">Home Page</a>
 </body>
 </html>

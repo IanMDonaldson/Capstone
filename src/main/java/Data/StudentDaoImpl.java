@@ -1,7 +1,6 @@
 package Data;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,27 @@ public class StudentDaoImpl implements StudentDao {
 
     private StudentLnameComparator comparator = new StudentLnameComparator();
     private SwpDaoImpl swpDao = new SwpDaoImpl();
+
+    @Override
+    public boolean deleteStudent(int studentID) {
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("delete from student " +
+                    "where student_id=?;");
+            ps.setInt(1,studentID);
+            int rowchange = ps.executeUpdate();
+            if (rowchange == 0) {
+                ps.close();
+                conn.close();
+                return false;
+            }
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+    }
 
     @Override
     public boolean addStudent(Student student) {
