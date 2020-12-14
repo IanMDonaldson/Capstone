@@ -142,15 +142,15 @@ input[type=submit]:hover {
         </style>
 </head>
 <body style="background-color:#F7F8FC;">
-    
 
-  <div class="topnav">
-    <a class="active" href="home_Page.html">Home</a>
-    <div class="topnav-right">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
+
+<div class="topnav">
+  <a class="active" href="home_page.jsp">Home</a>
+  <div class="topnav-right">
+    <a href="LoginServlet?action=loginGET">Login</a>
+    <a href="Register?action=registerGET">Register</a>
   </div>
+</div>
 
 
   <div class="container">

@@ -321,7 +321,7 @@ public class CourseDaoImpl implements CourseDao {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO term(course_id,course_title,department_id,course_number)" + "VALUES (?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO course(course_id,course_title,department_id,course_number)" + "VALUES (?,?,?,?);");
             ps.setInt(1,course.getCourseID());
             ps.setString(2,course.getCourseTitle());
             ps.setString(3,course.getDepartment());
