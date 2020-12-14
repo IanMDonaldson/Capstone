@@ -233,11 +233,12 @@
             <option value="Raw">Raw</option>
             <option value="Mean">Mean</option>
             <option value="Median">Median</option>
-            <option value="Default">Default</option>
+
 
         </select>
         <button id ="submitBtn" type="reset">GO</button>
         <p id="test"  style="padding-top: 100px; padding-left: 300px">This was selected: <spam id="changed"></spam></p>
+
 
     </form>
 
