@@ -27,8 +27,8 @@
             margin: 0;
             padding-left: 201px;
             background-color: #F7F8FC;
-            position: fixed;
-            width: 87%;
+            position: absolute;
+            width: 86%;
         }
 
 
