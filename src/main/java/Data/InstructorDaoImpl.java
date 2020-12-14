@@ -7,26 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class InstructorDaoImpl implements InstructorDao {
-    @Override
-    public List<Instructor> getAllInstructor() {
-        Connection conn = ConnectionFactory.getConnection();
-        List<Instructor> instructorList = new LinkedList<Instructor>();
-        try {
-            PreparedStatement ps = conn.prepareStatement("select * from user where user_type = 'instructor';");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Instructor instructor = new Instructor();
-                instructor.setUsername(rs.getString("user_uname"));
-                instructor.setFirstName(rs.getString("user_fname"));
-                instructor.setLastName(rs.getString("user_lname"));
-                instructor.setEmail(rs.getString("user_email"));
-                instructorList.add(instructor);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return instructorList;
-    }
+
 
     public InstructorDaoImpl() {
 
@@ -99,6 +80,9 @@ public class InstructorDaoImpl implements InstructorDao {
                 instructor.setEmail(rs.getString("user_email"));
                 instructorList.add(instructor);
             }
+            rs.close();
+            ps.close();
+            conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
