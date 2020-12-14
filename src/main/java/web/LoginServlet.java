@@ -129,7 +129,7 @@ public class LoginServlet extends HttpServlet {
                                         req.getSession().setAttribute("term", termDao.getLastTerm());
                                         req.getSession().setAttribute("courses",
                                                 instructorDao.getCoursesTaught(username, termDao.getLastTerm().getTermId()));
-                                        req.getRequestDispatcher("/Instructor/changeCourse.jsp").forward(req, resp);
+                                        req.getRequestDispatcher("Instructor/changeCourse.jsp").forward(req, resp);
                                         break;
                                 }
                                 return;
