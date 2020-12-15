@@ -17,7 +17,13 @@
         grid-template-columns: 13vw 13vw 13vw 13vw 13vw 13vw 13vw auto;
         grid-gap: 1rem;
     }
-    <style>
+    h3{
+        position: absolute;
+        float: top;
+        padding-top: 5vh;
+        padding-left: 40vw;
+        padding-right: 40vw;
+    }
      body {margin:0;
          font-family: Arial, Helvetica, sans-serif
      }
@@ -144,6 +150,7 @@
         <a href="Register?action=registerGET">Register</a>
     </div>
 </div>
+<h3>Pending Registration Requests</h3>
 <div class="container">
 <c:forEach items="${sessionScope.pubUsers}" var="user">
     <div class="email">${user.email}</div>

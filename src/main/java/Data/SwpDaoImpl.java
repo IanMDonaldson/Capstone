@@ -176,6 +176,42 @@ public class SwpDaoImpl implements SwpDao {
         }
         return false;
     }
+    @Override
+    public boolean assocStudentOutcomes(Connection conn, List<StudentOutcome> studentOutcomes, List<StudentWorkProduct> swpList) {
+        PreparedStatement ps = null;
+        try {
+            conn.setAutoCommit(false);//if one of the inserts fails, this allows for rollbacks
+            ps = conn.prepareStatement("insert into fulfills " +
+                    "(fk_fulfills_swp, fk_fulfills_so) values(?,?);");
+            for (StudentWorkProduct swp : swpList) {
+                for(StudentOutcome so : studentOutcomes) {
+                    ps.setInt(1,swp.getSwpID());
+                    ps.setInt(2, so.getSoID());
+                    ps.addBatch();
+                }
+            }
+            assert ps != null;
+            ps.executeBatch();
+            ps.close();
+            conn.setAutoCommit(true);
+            conn.close();
+            return true;
+        } catch (SQLException throwables) {
+            /* if execute batch throws an exception( means one of them failed to execute )
+             *   we can rollback the changes*/
+            try {
+                conn.rollback();
+                conn.setAutoCommit(true);
+                assert ps != null;
+                ps.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+        return false;
+    }
     /*needs to go through each student, associating a SWP with each student in the course, setting grade to null
     * initially */
     @Override
@@ -183,6 +219,42 @@ public class SwpDaoImpl implements SwpDao {
         StudentDaoImpl studentDao = new StudentDaoImpl();
         List<Student> students = studentDao.getStudentsEnrolled2Course(courseID,termID);
         Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = null;
+        try {
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement("insert into student_work_product " +
+                    "(swp_title, fk_swp_instructor, fk_swp_course, fk_swp_term, fk_swp_student) " +
+                    "VALUES(?,?,?,?,?);");
+            for (Student s :
+                    students) {
+                ps.setString(1, swpTitle);
+                ps.setString(2, instructorUname);
+                ps.setInt(3, courseID);
+                ps.setInt(4, termID);
+                ps.setInt(5, s.getStudentId());
+                ps.addBatch();
+            }
+            assert ps!=null;
+            ps.executeBatch();
+            ps.close();
+            conn.setAutoCommit(true);
+            conn.close();
+            return true;
+        } catch (SQLException e){
+            try {
+                conn.rollback();
+                conn.setAutoCommit(true);
+                assert ps != null;
+                ps.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return false;
+    }
+    @Override
+    public boolean createOldSwp4NewStudents(Connection conn, List<Student> students, String swpTitle, int courseID, int termID, String instructorUname) {
         PreparedStatement ps = null;
         try {
             conn.setAutoCommit(false);

@@ -10,6 +10,11 @@ public interface SwpDao {
     List<StudentOutcome> getStudentOutcomesForSwp(int swpID, int courseID, int termID);
 
     boolean assocStudentOutcomes(List<StudentOutcome> studentOutcomes, List<StudentWorkProduct> swpList);
+
+    boolean assocStudentOutcomes(Connection conn, List<StudentOutcome> studentOutcomes, List<StudentWorkProduct> swpList);
+
     boolean createSwp(String swp, int courseID, int termID, String instructorUname);
     boolean updateSwpGrades(List<StudentWorkProduct> swpList);
+
+    boolean createOldSwp4NewStudents(Connection conn, List<Student> students, String swpTitle, int courseID, int termID, String instructorUname);
 }

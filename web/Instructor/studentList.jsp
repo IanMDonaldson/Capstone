@@ -11,18 +11,26 @@
 <html>
 <head>
     <title>Department Continuous Improvement Application</title>
-
+    <style>
+        .container {
+            padding-left: 12vw;
+            padding-top: 5vh;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
 <h1><b>${sessionScope.message}</b></h1>
-<h3>Students attending ${sessionScope.course.courseId} ${sessionScope.course.courseTitle} </h3>
+<h3>Students attending ${sessionScope.course.courseTitle} </h3>
 <h3> for Term: ${sessionScope.term.termName} ${sessionScope.term.termYear}</h3>
-<c:forEach items="${sessionScope.studentList}" var="current">
+    <div class="grid">
+<c:forEach items="${sessionScope.students}" var="current">
     ${current.studentFname} ${current.studentLname}
-    <a href="InstructorServlet?action=editStudent&id=${current.studentId}&courseID=${sessionScope.course.courseId}
-        &termID=${sessionScope.term.termId}&uname=${sessionScope.uname}" class="button" id="edit">Edit</a>
-    <a href="InstructorServlet?action=deleteStudent&id=${current.studentId}" class="button" id="delete">Delete</a>
+    <a href="InstructorServlet?action=editStudentGET&studentID=${current.studentId}&courseID=${sessionScope.courseID}&termID=${sessionScope.termID}&uname=${sessionScope.uname}" class="button" id="edit">Edit</a>
+    <a href="InstructorServlet?action=deleteStudentGET&studentID=${current.studentId}&courseID=${sessionScope.courseID}&termID=${sessionScope.termID}&uname=${sessionScope.uname}" class="button" id="delete">Delete</a>
     <br>
 </c:forEach>
+    </div>
+</div>
 </body>
 </html>

@@ -19,14 +19,12 @@
             <option value="${current.courseID}" >${current.courseNumber} ${current.department} ${current.courseTitle}</option>
         </c:forEach>
     </select>
-
+    <label for="InsID">Instructor: </label>
     <select name = "InsID" id= "InsID" >
         <c:forEach items="${sessionScope.instructorList}" var="current">
             <option value="${current.username}" >${current.firstName} ${current.lastName}</option>
         </c:forEach>
     </select>
-
-</label>
     <input type="submit" value="Submit" id = "submit">
 
 </form>

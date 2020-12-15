@@ -31,4 +31,5 @@ public interface CourseDao {
     boolean updateCourse(Course course);
 
     List<Course> getCoursesNotAssocWInstructor();
+    List<Course> getCoursesAssoc2Instructor(int termID, int courseID);
 }

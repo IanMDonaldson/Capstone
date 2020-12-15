@@ -59,8 +59,10 @@
         /* style the container */
         .container {
             border-radius: 5px;
-            padding: 20px 0 30px 0;
             position: center;
+            padding-left: 20vw;
+            padding-right: 20vw;
+            padding-top: 2vh;
         }
         form{
 
@@ -142,8 +144,8 @@
 <div class="topnav">
     <a class="active" href="home_page.jsp">Home</a>
     <div class="topnav-right">
-        <a href="Login?action=loginGET">Login</a>
-        <a href="RegisterServlet?action=registerGET">Register</a>
+        <a href="LoginServlet?action=loginGET">Login</a>
+        <a href="Register?action=registerGET">Register</a>
     </div>
 </div>
 <div class="container">

@@ -15,14 +15,14 @@
 <form action="AdminServlet?action=addCoursePOST" method="post">
     <fieldset>
         <label for="courseNumber">Course Number: </label>
-        <input type="number"id="courseNumber" name="courseNumber">
-        </label><br>
-        <label for="courseName">Course Name: </label><label>
-        <input type="text"id="courseName" name="courseName">
-    </label><br>
-        <label for="departmentID">Department ID: </label><label>
-        <input type="text"id="departmentID" name="departmentID">
-    </label><br>
+        <input type="number"id="courseNumber" name="courseNumber" required>
+        <br>
+        <label for="courseName">Course Name: </label>
+        <input type="text"id="courseName" name="courseName" required>
+    <br>
+        <label for="departmentID">Department ID: </label>
+        <input type="text" id="departmentID" name="departmentID" pattern="[A-Z]{0,4}$" required>
+    <br>
         <input type="submit" name="submit" onclick="" value="Add Term"/>
     </fieldset>
 </form>

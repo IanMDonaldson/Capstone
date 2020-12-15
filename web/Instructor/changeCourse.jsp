@@ -11,6 +11,7 @@
     <h3>The current Term is ${sessionScope.term.termName} ${sessionScope.term.termYear}</h3>
     <h3>Please choose a course you're assigned to.</h3>
     <form action="InstructorServlet?action=changeCoursePOST" method="post">
+        <input type="hidden" name="uname" value="${sessionScope.uname}"/>
         <input type="hidden" name="termID" value="${sessionScope.term.termId}"/>
         <label for="select">Course: </label>
         <select id="select" name="courseID">

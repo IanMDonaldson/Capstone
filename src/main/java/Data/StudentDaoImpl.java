@@ -13,13 +13,14 @@ public class StudentDaoImpl implements StudentDao {
 
     private StudentLnameComparator comparator = new StudentLnameComparator();
     private SwpDaoImpl swpDao = new SwpDaoImpl();
+    private CourseDaoImpl courseDao = new CourseDaoImpl();
 
     @Override
     public boolean deleteStudent(int studentID) {
         Connection conn = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = conn.prepareStatement("delete from student " +
-                    "where student_id=?;");
+            PreparedStatement ps = conn.prepareStatement("delete from enrollment " +
+                    "where fk_enrollment_student=?;");
             ps.setInt(1,studentID);
             int rowchange = ps.executeUpdate();
             if (rowchange == 0) {
@@ -39,6 +40,7 @@ public class StudentDaoImpl implements StudentDao {
     public boolean addStudent(Student student) {
         boolean isAddSuccessful = false;
         Connection conn = ConnectionFactory.getConnection();
+        SwpDaoImpl swpDao = new SwpDaoImpl();
         try{
             PreparedStatement ps = conn.prepareStatement("INSERT INTO student(student_id,student_fname,student_lname) VALUES(?,?,?);");
             ps.setInt(1,student.getStudentId());
@@ -47,14 +49,12 @@ public class StudentDaoImpl implements StudentDao {
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
-                return isAddSuccessful;
+                return false;
             }
-            else
-                {
-                    isAddSuccessful = true;
+            else {
                     ps.close();
                     conn.close();
-                    return isAddSuccessful;
+                    return true;
                 }
 
         } catch (SQLException throwables) {
@@ -197,6 +197,8 @@ public class StudentDaoImpl implements StudentDao {
         return sortStudents(studentList);
     }
 
+
+
     @Override
     public List<Student> getStudentsUnassoc(int termID, int courseID) {
 
@@ -210,14 +212,14 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public boolean addStudents(List<Student> students) {
+    public boolean addStudents(List<Student> students, int courseID, int termID) {
         PreparedStatement ps = null;
         Connection conn = ConnectionFactory.getConnection();
         try {
             conn.setAutoCommit(false);//if one of the inserts fails, this allows for rollbacks
+            ps = conn.prepareStatement("insert into student " +
+                    "(student_fname, student_lname, isGraduated) VALUES (?,?,?);");
             for (Student student : students) {
-                ps = conn.prepareStatement("insert into student " +
-                        "(student_fname, student_lname, isGraduated) VALUES (?,?,?);");
                 ps.setString(1, student.getStudentFname() );
                 ps.setString(2, student.getStudentLname());
                 ps.setInt(3, 0);
