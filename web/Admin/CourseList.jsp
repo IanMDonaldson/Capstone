@@ -11,14 +11,22 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+    .container {
+        padding-left: 12vw;
+        padding-top: 5vh;
+    }
+</style>
 </head>
 <body>
+<div class="container">
 <label for="courses" style="padding-left:10px; padding-top:100px; ">Course:</label>
 <select name="courses" id="courses">
     <c:forEach items="${sessionScope.courseList}" var="current">
         <option value="${current.courseID}"> ${current.courseTitle} ${current.courseNumber} ${current.department} ${current.courseTitle} </option>
     </c:forEach>
 </select>
+</div>
 </body>
 </html>
 

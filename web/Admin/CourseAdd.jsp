@@ -1,18 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Fordj
-  Date: 12/8/2020
-  Time: 8:26 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%--doctype html--%>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" %>
+<jsp:include page="topSideNav.jsp"/>
 <head>
     <title>DCIA</title>
-    <!style sheet here>
+    <style>
+        .container {
+            padding-left: 12vw;
+            padding-top: 5vh;
+        }
+    </style>
 </head>
 <body>
 <h1>Add new Course</h1>
+<div class="container">
 <form action="AdminServlet?action=addCoursePOST" method="post">
     <fieldset>
         <label for="courseNumber">Course Number: </label>
@@ -27,5 +26,6 @@
         <input type="submit" name="submit" onclick="" value="Add Term"/>
     </fieldset>
 </form>
+</div>
 </body>
 </html>

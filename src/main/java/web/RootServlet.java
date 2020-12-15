@@ -4,11 +4,12 @@ import Data.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+@WebServlet("/RootServlet")
 public class RootServlet extends HttpServlet {
     private PublicUserDaoImpl publicUserDao = new PublicUserDaoImpl();
     private RootUserDaoImpl rootUserDao = new RootUserDaoImpl();
@@ -58,6 +59,10 @@ public class RootServlet extends HttpServlet {
                         req.getSession().setAttribute("message","delete public user failed!");
                         req.getRequestDispatcher("failure_page.jsp").forward(req,resp);
                     }
+                    break;
+                case "pubUserListGET":
+                    req.getSession().setAttribute("pubUsers",publicUserDao.getAllPublicUsers());
+                    req.getRequestDispatcher("Root/publicUserList.jsp").forward(req,resp);
                     break;
                 default:
                     req.getSession().setAttribute("message", "Not a valid URL");

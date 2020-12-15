@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dragomundo
-  Date: 11/27/20
-  Time: 11:44 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,10 +21,8 @@
             padding-left: 10%;
             background-color: #F7F8FC;
             position: fixed;
-            width: 90%;
+            width: 100vw;
         }
-
-
         .topnav a  {
             display: block;
             color: #363740;
@@ -39,12 +30,9 @@
             padding: 14px 16px;
             text-decoration: none;
             float: left;
-
         }
-
         .topnav-right {
             float: right;
-
         }
         .btn {
             background-color:transparent;
@@ -53,7 +41,6 @@
             padding: 12px 16px;
             font-size: 16px;
             cursor: pointer;
-
         }
         .btn i {
             padding-right: 4px;
@@ -95,11 +82,10 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-
         /* Fixed sidenav, full height */
         .sidenav {
             height: 100%;
-            width: 10%;
+            width: 10vw;
             position: fixed;
             z-index: 1;
             top: 0;
@@ -145,7 +131,6 @@
             display: none;
             background-color: #363740;
             padding-left: 6px;
-
         }
         /* Optional: Style the caret down icon */
         .fa-caret-down {
@@ -157,40 +142,12 @@
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
-
     </style>
 </head>
 <body>
 <div class="topnav">
-    <a  href="#page_name">Student</a>
     <div class="topnav-right">
-        <button class="btn"><i class="fas fa-edit"></i>Edit</button>
-        <button class="btn"><i class="fa fa-trash"></i>Delete</button>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <i class="fa fa-caret-down"></i>
-                Select Course
-            </button>
-            <div class="dropdown-content">
-                <a href="#">Course1</a>
-                <a href="#">Course2</a>
-                <a href="#">Course3</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <i class="fa fa-caret-down"></i>
-                Select Term
-            </button>
-            <div class="dropdown-content">
-                <a href="#">year1</a>
-                <a href="#">year2</a>
-                <a href="#">year3</a>
-            </div>
-        </div>
-
-        <button class="btn">Instuctor</button>
-        <button class="btn">Logout</button>
+        <a href="${pageContext.request.contextPath}/home_page.jsp" class="btn">Logout</a>
     </div>
 </div>
 
@@ -200,16 +157,31 @@
         <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-container">
-        <a href="analysis_swp_instr.jsp">SWP-Row, Mean, & Median Scores</a>
-        <a href="analysis_CSOP_instr.jsp">Course SO Performance</a>
-        <a href="analysis_ISOP_instr.jsp">Instructor SO Performance</a>
-        <a href="analysis_ALL_CSOP_instr.jsp">All Courses SO Performance by Term</a>
-        <a href="analysis_CSOP_byTerm_intru.jsp">Courses SO Performance by Term</a>
+        <a href="AdminServlet?action=analyzeRawGET">SWP-Row, Mean, & Median Scores</a>
+        <a href="${pageContext.request.contextPath}/Admin/analysis_CSOP_instr.jsp">Course SO Performance</a>
+        <a href="${pageContext.request.contextPath}/Admin/analysis_ISOP_instr.jsp">Instructor SO Performance</a>
+        <a href="${pageContext.request.contextPath}/Admin/analysis_ALL_CSOP_instr.jsp">All Courses SO Performance by Term</a>
+        <a href="${pageContext.request.contextPath}/Admin/analysis_CSOP_byTerm_intru.jsp">Courses SO Performance by Term</a>
     </div>
-    <a href="setup_instuctor.jsp">Setup Term & Year</a>
-    <a href="student.jsp">Students</a>
-    <a href="SWP.jsp">SWP</a>
-    <a href="grades.jsp">Grades</a>
+    <a href="AdminServlet?action=addTermGET">Add Term</a>
+    <a href="AdminServlet?action=addCourseGET">Add Course</a>
+    <a href="AdminServlet?action=assocCourseTermGET">Setup Courses and Instructors</a>
 </div>
+<script>
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
 </body>
 </html>

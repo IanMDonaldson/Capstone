@@ -1,11 +1,19 @@
-
-<%--doctype html--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<jsp:include page="topSideNav.jsp"/>
 <html lang="en">
   <head>
     <title>DCIA</title>
-    <!style sheet here>
+
+      <style>
+          .container {
+              padding-left: 12vw;
+              padding-top: 5vh;
+          }
+      </style>
+
   </head>
   <body>
+  <div class="container">
   	<h1>Add new Term</h1>
   	<form action="AdminServlet?action=addTermPOST" method="post">
 		<fieldset>
@@ -21,5 +29,6 @@
 			<input type="submit" name="submit" onclick="" value="Add Term"/>
 		</fieldset>
 	</form>
+  </div>
   </body>
 </html>

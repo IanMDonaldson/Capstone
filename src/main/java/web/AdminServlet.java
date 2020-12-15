@@ -55,7 +55,7 @@ public class AdminServlet extends HttpServlet {
                     req.getSession().setAttribute("id",Integer.toString(termID));
                     req.getRequestDispatcher("Admin/TermAdd.jsp").forward(req, resp);
                     break;
-                case"addCourseGet":
+                case"addCourseGET":
                     req.getSession().setAttribute("id",Integer.toString(courseID));
                     req.getRequestDispatcher("Admin/CourseAdd.jsp").forward(req, resp);
                     break;
@@ -160,9 +160,11 @@ public class AdminServlet extends HttpServlet {
                     courseID = Integer.parseInt(courseIDParm);
                     if (termDao.assocCourse(termID, courseID))
                     {
-                        req.getRequestDispatcher("Admin/TermList.jsp").forward(req,resp);
+                        req.getSession().setAttribute("courseList", courseDao.getAllCourses());
+                        req.getSession().setAttribute("instructorList", instructorDao.getAllInstructor());
+                        req.getRequestDispatcher("Admin/assocCourse2Instructor.jsp").forward(req,resp);
                     }else{
-                        req.getSession().setAttribute("update",true);
+                        req.getSession().setAttribute("message","association of course to term failed!");
                         req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                     }
                     break;
@@ -179,10 +181,11 @@ public class AdminServlet extends HttpServlet {
 
                     if (courseDao.associateInstructor(instructor,termID,courseID))
                     {
-                        req.getRequestDispatcher("Admin/TermList.jsp").forward(req,resp);
+                        req.getSession().setAttribute("courseList",courseDao.getCoursesNotAssocWInstructor());
+                        req.getRequestDispatcher("Admin/CourseList.jsp").forward(req,resp);
 
                     }else{
-                        req.getSession().setAttribute("update",true);
+                        req.getSession().setAttribute("message","association of course to Instructor failed!");
                         req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                     }
                     break;

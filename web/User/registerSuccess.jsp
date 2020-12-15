@@ -58,9 +58,9 @@
 
         /* style the container */
         .container {
-            position: relative;
             border-radius: 5px;
             padding: 20px 0 30px 0;
+            position: center;
         }
         form{
 
@@ -140,9 +140,9 @@
 </head>
 <body style="background-color:#F7F8FC">
 <div class="topnav">
-    <a class="active" href="home_Page.jsp">Home</a>
+    <a class="active" href="home_page.jsp">Home</a>
     <div class="topnav-right">
-        <a href="Login">Login</a>
+        <a href="Login?action=loginGET">Login</a>
         <a href="RegisterServlet?action=registerGET">Register</a>
     </div>
 </div>
@@ -151,7 +151,7 @@
     <h3><b>Upon registration request acceptance or denial, an email will be sent to you
     <br>notifying you of their decision.</b></h3>
     <br><br>
-    <a href="${pageContext.request.contextPath}/../home_page.jsp">Return to Home</a>
+    <a href="${pageContext.request.contextPath}/home_page.jsp">Return to Home</a>
 </div>
 </body>
 </html>

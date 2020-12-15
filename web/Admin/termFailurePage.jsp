@@ -1,14 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<jsp:include page="topSideNav.jsp"/>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+
 <html>
 <head>
 	<title>Movie Rental Co. - Failure Page</title>
-<meta charset="UTF-8">
+	<style>
+		.container {
+			padding-left: 12vw;
+			padding-top: 5vh;
+		}
+	</style>
+	<meta charset="UTF-8">
 </head>
 <body>
-
+<div class="container">
 <c:choose>
 	<c:when test="${sessionScope.add }">
 		<h2>Add failed!</h2><br>
@@ -23,6 +29,6 @@
 		<a href="Home">Click Here to return to Main Menu</a>
 	</c:when>
 </c:choose>
-
+</div>
 </body>
 </html>

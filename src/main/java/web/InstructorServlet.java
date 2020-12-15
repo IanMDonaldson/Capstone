@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-//@BasicAuthenticationMechanismDefinition(realmName="${'jdbc/dcia'}")
-//@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
-//@ServletSecurity(@HttpConstraint(rolesAllowed = "instructor"))
+@BasicAuthenticationMechanismDefinition(realmName="${'jdbc/dcia'}")
+@DeclareRoles({ "admin", "publicUser", "root", "instructor" })
+@ServletSecurity(@HttpConstraint(rolesAllowed = "instructor"))
 @WebServlet("/InstructorServlet")
 public class InstructorServlet extends HttpServlet {
     private static final long serialVersionUID =1L;
@@ -67,8 +67,7 @@ public class InstructorServlet extends HttpServlet {
                     req.getSession().setAttribute("termID", termID);
                     req.getSession().setAttribute("courseID",courseID);
                     req.getSession().setAttribute("uname", uname);
-                    //todo: addstudentsGET, set attributes for page so that the if they go to another page, the terms
-                    // and course id will be there
+
                     req.getRequestDispatcher("Instructor/addStudents.jsp").forward(req, resp);
                     break;
                 case "assocStudentsGET":
