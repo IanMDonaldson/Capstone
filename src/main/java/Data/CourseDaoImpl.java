@@ -351,21 +351,22 @@ public boolean courseExist(Course course)
     Connection conn = ConnectionFactory.getConnection();
     try {
         PreparedStatement ps = conn.prepareStatement("select * from course where " +
-                "course_title = ? AND department_id = ?" );
+                "course_title = ? AND department_id = ?;" );
         ps.setString(1, course.getCourseTitle());
         ps.setString(2,course.getDepartment());
         ResultSet rs = ps.executeQuery();
-        if (rs == null) {
+
+        if (!rs.next()) {
             rs.close();
             ps.close();
             conn.close();
-            return true;
+            return false;
             //if resultset returns nothing then term doesn't exist yet
         } else {
             rs.close();
             ps.close();
             conn.close();
-            return false;
+            return true;
         }
 
     } catch (SQLException throwables) {
@@ -605,12 +606,42 @@ public boolean courseExist(Course course)
         }
         return courses;
     }
+
+    @Override
+    public List<Course> getCoursesAssoc2Instructor(int termID, int courseID) {
+        Connection conn = ConnectionFactory.getConnection();
+        List<Course> courseList = new LinkedList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from course " +
+                    "join teaches t on course.course_id = t.fk_teaches_course " +
+                    "where course_id = ? AND fk_teaches_term = ?;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course(rs.getInt("course_id"),
+                        rs.getInt("course_number"),
+                        rs.getString("department_id"),
+                        rs.getString("course_title"));
+                courseList.add(course);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return courseList;
+    }
+
     @Override
     public List<Course> getCoursesNotAssocWInstructor(){
         Connection conn = ConnectionFactory.getConnection();
-        List<Course> courseNotAssoc = new LinkedList<Course>();
+        List<Course> courseNotAssoc = new LinkedList<>();
         try{
-            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches on course.course_id = teaches.fk_teaches_course where teaches.fk_teaches_instructor IS null;");
+            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches " +
+                    "on course.course_id = teaches.fk_teaches_course " +
+                    "where teaches.fk_teaches_instructor IS null;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Course course = new Course();
@@ -620,6 +651,7 @@ public boolean courseExist(Course course)
                 course.setCourseNumber(rs.getInt("course_number"));
                 courseNotAssoc.add(course);
             }
+            rs.close();
             ps.close();
             conn.close();
         } catch (SQLException throwables) {

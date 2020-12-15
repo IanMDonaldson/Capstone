@@ -112,7 +112,7 @@ public class AdminServlet extends HttpServlet {
                     }
                     else{
                         if(!termDao.addTerm(term)){
-                            req.getSession().setAttribute("add", true);
+                            req.getSession().setAttribute("message", "Adding New Term Failed!");
                             req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                         }
                         else{
@@ -133,19 +133,20 @@ public class AdminServlet extends HttpServlet {
                 course.setDepartment(departmetID);
                 boolean courseExist = courseDao.courseExist(course);
                 if(courseExist){
+                    req.getSession().setAttribute("message", "Course Exists. Cannot add duplicate Courses.");
                     req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                 }
                 else{
-                    if(!courseDao.insertCourse(course)){
-                        req.getSession().setAttribute("add", true);
-                        req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
-                    }
-                    else{
+                    if(courseDao.insertCourse(course)){
                         req.getSession().setAttribute("courseNumber", course.getCourseNumber());
                         req.getSession().setAttribute("Department", course.getDepartment());
                         req.getSession().setAttribute("courseTitle", course.getCourseTitle());
                         req.getSession().setAttribute("courseList",courseDao.getAllCourses());
                         req.getRequestDispatcher("Admin/CourseList.jsp").forward(req, resp);
+                    }
+                    else{
+                        req.getSession().setAttribute("message", "Course add Failed!");
+                        req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                     }
                 }
                 break;
@@ -160,11 +161,11 @@ public class AdminServlet extends HttpServlet {
                     courseID = Integer.parseInt(courseIDParm);
                     if (termDao.assocCourse(termID, courseID))
                     {
-                        req.getSession().setAttribute("courseList", courseDao.getAllCourses());
+                        req.getSession().setAttribute("courseList", courseDao.getCoursesNotAssocWInstructor());
                         req.getSession().setAttribute("instructorList", instructorDao.getAllInstructor());
                         req.getRequestDispatcher("Admin/assocCourse2Instructor.jsp").forward(req,resp);
                     }else{
-                        req.getSession().setAttribute("message","association of course to term failed!");
+                        req.getSession().setAttribute("message","Association of course to term failed!");
                         req.getRequestDispatcher("failure_page.jsp").forward(req, resp);
                     }
                     break;

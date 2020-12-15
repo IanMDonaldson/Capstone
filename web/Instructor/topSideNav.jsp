@@ -24,7 +24,7 @@
             padding-left: 201px;
             background-color: #F7F8FC;
             position: fixed;
-            width: 87%;
+            width: 100vw;
         }
 
 
@@ -158,31 +158,9 @@
 </head>
 <body>
 <div class="topnav">
-    <a  href="#page_name">Student</a>
     <div class="topnav-right">
-        <button class="btn"><i class="fas fa-edit"></i>Edit</button>
-        <button class="btn"><i class="fa fa-trash"></i>Delete</button>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <i class="fa fa-caret-down"></i>
-                Select Course
-            </button>
-            <div class="dropdown-content">
 
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <i class="fa fa-caret-down"></i>
-                Select Term
-            </button>
-            <div class="dropdown-content">
-
-            </div>
-        </div>
-
-        <button class="btn">Instructor</button>
-        <button class="btn">Logout</button>
+        <a href="${pageContext.request.contextPath}/home_page.jsp" class="btn">Logout</a>
     </div>
 </div>
 
@@ -198,16 +176,17 @@
         <a href="analysis_ALL_CSOP_instr.jsp">All Courses SO Performance by Term</a>
         <a href="analysis_CSOP_byTerm_intru.jsp">Courses SO Performance by Term</a>
     </div>
-    <a href="InstructorServlet?action=changeCourseGET">Change Course</a>
-    <a href="InstructorServlet?action=addStudentsGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Add Students to Course</a><!--todo have add students to go associate students page immediately after-->
-    <a href="InstructorServlet?action=editStudentsGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Edit Students</a>
+    <a href="InstructorServlet?action=changeCourseGET&termID=${sessionScope.termID}&uname=${sessionScope.uname}">Change Course</a>
+    <a href="InstructorServlet?action=addStudentsGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Add New Students</a>
+    <a href="InstructorServlet?action=assocStudentsGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Enroll Students to Course</a>
+    <a href="InstructorServlet?action=studentListGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Student List</a>
     <a href="InstructorServlet?action=createSwpGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Add Student Work Product</a>
     <a href="InstructorServlet?action=gradebookGET&termID=${sessionScope.termID}&courseID=${sessionScope.courseID}&uname=${sessionScope.uname}">Gradebook</a>
 
 </div>
 <script>
     /* Loop through all navDropdowns buttons to toggle between hiding and showing its navDropdowns content - This allows the user to have multiple dropdowns without any conflict */
-    var navDropdowns = document.getElementsByClassName("dropdown-btn");
+    var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;
 
     for (i = 0; i < dropdown.length; i++) {

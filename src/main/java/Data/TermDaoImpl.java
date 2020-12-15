@@ -20,7 +20,7 @@ public class TermDaoImpl implements TermDao {
             ps.setString(1, term.getTermName());
             ps.setInt(2, term.getTermYear());
             ResultSet rs = ps.executeQuery();
-            if (rs == null) {
+            if (!rs.next()) {
                 rs.close();
                 ps.close();
                 conn.close();
@@ -79,6 +79,8 @@ public class TermDaoImpl implements TermDao {
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
+                ps.close();
+                conn.close();
                 return isAddSuccessful;
             }
             else
@@ -175,6 +177,8 @@ public class TermDaoImpl implements TermDao {
             ps.setInt(2, termID);
             int rowChange = ps.executeUpdate();
             if (rowChange == 0) {
+                ps.close();
+                conn.close();
                 return false;
             } else {
                 ps.close();
