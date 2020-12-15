@@ -610,10 +610,9 @@ public boolean courseExist(Course course)
         Connection conn = ConnectionFactory.getConnection();
         List<Course> courseNotAssoc = new LinkedList<Course>();
         try{
-            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches on course.course_id = teaches.fk_teaches_course where teaches.fk_teaches_instructor IS null");
+            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches on course.course_id = teaches.fk_teaches_course where teaches.fk_teaches_instructor IS null;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Term term =new Term();
                 Course course = new Course();
                 course.setCourseID(rs.getInt("course_id"));
                 course.setDepartment(rs.getString("department_id"));

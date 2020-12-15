@@ -135,9 +135,9 @@ input[type=submit]:hover {
     
 
   <div class="topnav">
-    <a class="active" href="home_Page.jsp">Home</a>
+    <a class="active" href="home_page.jsp">Home</a>
     <div class="topnav-right">
-      <a href="Login">Login</a>
+      <a href="LoginServlet?action=loginGET">Login</a>
       <a href="RegisterServlet?action=registerGET">Register</a>
     </div>
   </div>

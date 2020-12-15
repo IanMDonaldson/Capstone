@@ -14,5 +14,7 @@
 </head>
 <body>
 <h1>${sessionScope.message}</h1>
+
+<a href="RootServlet?action=pubUserListGET">User List</a>
 </body>
 </html>

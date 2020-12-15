@@ -13,11 +13,11 @@
     <form action="InstructorServlet?action=changeCoursePOST" method="post">
         <input type="hidden" name="termID" value="${sessionScope.term.termId}"/>
         <label for="select">Course: </label>
-            <select id="select" name="courseID">
-                <c:forEach items="${sessionScope.courses}" var="current">
-                    <option value="${current.courseID}" >${current.department} ${current.courseNumber} ${current.courseTitle} </option>
-                </c:forEach>
-            </select>
+        <select id="select" name="courseID">
+            <c:forEach items="${sessionScope.courses}" var="current">
+                <option value="${current.courseID}">${current.department} ${current.courseNumber} ${current.courseTitle} </option>
+            </c:forEach>
+        </select>
 
         <input type="submit" id="submit" name="submit" value="Submit">
     </form>

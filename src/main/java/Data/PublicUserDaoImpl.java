@@ -49,10 +49,11 @@ public class PublicUserDaoImpl implements PublicUserDao {
             ps.setString(4,pubUser.getFirstName());
             ps.setString(5,pubUser.getLastName());
             ps.setString(6,pubUser.getAccessLevel());
-            if (ps.execute()) {
+            int rowchanged = ps.executeUpdate();
+            if (rowchanged == 0) {
                 ps.close();
                 conn.close();
-                return true;
+                return false;
             }
             ps.close();
             conn.close();
@@ -61,7 +62,7 @@ public class PublicUserDaoImpl implements PublicUserDao {
             throwables.printStackTrace();
         }
 
-        return false;
+        return true;
     }
 
     @Override

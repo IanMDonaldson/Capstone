@@ -2,8 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <title>Title</title>
+<style>
+    .container {
+        padding-left: 12vw;
+        padding-top: 5vh;
+    }
+</style>
 
 <body>
+<div class="container">
 <h2>Associate Course to</h2>
 <form action="AdminServlet?action=assocInstructorPOST" method="post">
     <input type="hidden" id="hiddenTerms" value="${sessionScope.term.termId}"name="Term">
@@ -23,5 +30,6 @@
     <input type="submit" value="Submit" id = "submit">
 
 </form>
+</div>
 </body>
 </html>
