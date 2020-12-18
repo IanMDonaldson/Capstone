@@ -6,6 +6,16 @@ public class Course {
     private String department;
     private String courseTitle;
 
+    public Course() {}
+
+    public Course(int courseID, int courseNumber, String department, String courseTitle) {
+        this.courseID = courseID;
+        this.courseNumber = courseNumber;
+        this.department = department;
+        this.courseTitle = courseTitle;
+    }
+
+
     public int getCourseID() {
         return courseID;
     }
@@ -38,3 +48,5 @@ public class Course {
         this.courseTitle = courseTitle;
     }
 }
+
+

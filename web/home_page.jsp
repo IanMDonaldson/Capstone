@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Department Continuous Improvement Application</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
@@ -45,16 +46,16 @@ h1 {
 <body>
 
 <div class="topnav">
-  <a class="active" href="home_Page.html">Home</a>
+  <a class="active" href="home_page.jsp">Home</a>
   <div class="topnav-right">
-    <a href="Login?action=loginPage">Login</a>
-    <a href="Login?action=registerPage">Register</a>
+    <a href="LoginServlet?action=loginGET">Login</a>
+    <a href="Register?action=registerGET">Register</a>
   </div>
 </div>
 
 <div class="title_center" style="padding:20px;margin-top:30px;align-content: center;" >
     
-  <h1 id="title_header"> Department Continuos Improvement Application</h1>
+  <h1 id="title_header"> Department Continuous Improvement Application</h1>
 
 </div>
 

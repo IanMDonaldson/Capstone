@@ -1,0 +1,31 @@
+.container {
+    display: grid;
+    grid-template-columns: 25vw 40vw auto;
+    grid-gap: 1rem;
+}
+.soCheckbox {
+    display: grid;
+    grid-template-columns: 2vw 35vw auto;
+    grid-gap: 1rem;
+}
+#soID {
+    align-self: center;
+    height: 2vh;
+    width: 2vw;
+}
+#soLabel {
+    float: right;
+    align-self: center;
+}
+
+h3 {
+    padding-left: 11%;
+    padding-top: 5%;
+}
+#submit {
+    height: 3vh;
+    width: 6vw;
+    background-color: #dddddd;
+    text-decoration: #818181;
+    margin-left: 15%;
+}

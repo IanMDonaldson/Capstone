@@ -1,27 +1,31 @@
-
-<%--doctype html--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<jsp:include page="topSideNav.jsp"/>
 <html lang="en">
   <head>
     <title>DCIA</title>
-    <!style sheet here>
 
-    <script> type="application/javascript"; src="Script/validateTermAdd.js"> </script>
+      <style>
+          .container {
+              padding-left: 12vw;
+              padding-top: 5vh;
+          }
+      </style>
+
   </head>
   <body>
+  <div class="container">
   	<h1>Add new Term</h1>
-  	<form action="AdminServlet?action=addTermPOST">
+  	<form action="AdminServlet?action=addTermPOST" method="post">
 		<fieldset>
-			<%--@declare id="term year"--%>
-                <%--@declare id="term name"--%>
-                <label for="Term Year">Term Year: </label><label>
-                <input type="number">
-            </label><br>
-			<label for="Term Name">Term Name: </label><label>
-                <input type="text">
-            </label><br>
-			<input type="submit" name="submit" onclick="" value="Add Term"/>
-			<input type="button" onclick="window.location='TermManagement.jsp'" value="Cancel"/>
+                <label for="termYear">Term Year: </label>
+                <input type="text" id="termYear" name="termYear" pattern="^[0-9]*$">
+            <br>
+			<label for="termName">Term Name: </label>
+                <input type="text"id="termName" name="termName">
+           <br>
+			<input type="submit" name="submit" value="Add Term"/>
 		</fieldset>
 	</form>
+  </div>
   </body>
 </html>

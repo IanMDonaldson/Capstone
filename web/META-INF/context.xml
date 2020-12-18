@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context privileged="false" cookies="true">
-    <Realm className="org.apache.catalina.realm.JDBCRealm"
-           driverName="com.mysql.cj.jdbc.Driver"
-           connectionName="root"
-           connectionPassword="${"
-           />
-    <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
-                     sameSiteCookies="strict" />
-    <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-           allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
-    <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+<Context>
+    <Resource name="jdbc/dcia"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="100"
+              maxIdle="30"
+              maxWaitMillis="10000"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/dcia"
+              username="root"
+              password="Toor1234!"
+    />
 </Context>

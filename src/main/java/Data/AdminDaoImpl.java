@@ -13,7 +13,7 @@ public class AdminDaoImpl implements AdminDao {
         boolean exists = false;
         Connection conn = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from dcia.admin as i where i.admin_uname=? AND i.admin_pw=?;");
+            PreparedStatement ps = conn.prepareStatement("select * from dcia.user as i where i.user_uname=? AND i.user_pw=?;");
             ps.setString(1, admin.getUsername());
             ps.setString(2, admin.getPassword());
             ResultSet rs = ps.executeQuery();
