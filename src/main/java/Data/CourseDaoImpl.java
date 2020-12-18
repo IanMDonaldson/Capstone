@@ -1,5 +1,6 @@
 package Data;
 
+import javax.mail.MessagingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +22,8 @@ public class CourseDaoImpl implements CourseDao {
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
+                ps.close();
+                conn.close();
                 return false;
             }
             else
@@ -62,21 +65,65 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> getAllCourses() {
-        return null;
+        List<Course> courseList = new LinkedList<Course>();
+        Connection conn = ConnectionFactory.getConnection();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * from course order by course_id;");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course();
+                course.setCourseID(rs.getInt("course_id"));
+                course.setDepartment(rs.getString("department_id"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                courseList.add(course);
+            }
+            rs.close();
+            conn.close();
+            ps.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  courseList;
     }
+
+    @Override
+    public Course getCourse(int Id) {
+        Course course=new Course();
+        try{
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select * from course where course.course_id = ?;");
+            ps.setInt(1,Id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                course.setCourseID(rs.getInt("course_id"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setDepartment(rs.getString("department_id"));
+            }
+            conn.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return course;
+    }
+
     /* Inserts into the ENROLLMENT TABLE a list of students to a course
-    *  checks to see if student is associated with a course already by searching
-    *  database for a row matching all of STUDENTID, COURSEID, TERMID
-    *                 :D       */
+     *  checks to see if student is associated with a course already by searching
+     *  database for a row matching all of STUDENTID, COURSEID, TERMID
+     *                 :D       */
     @Override
     public boolean associateStudents(List<Student> students, int courseID, int termID) {
         PreparedStatement ps = null;
         Connection conn = ConnectionFactory.getConnection();
         try {
             conn.setAutoCommit(false);//if one of the inserts fails, this allows for rollbacks
+            ps = conn.prepareStatement("insert into " +
+                    "enrollment(fk_enrollment_student, fk_enrollment_course, fk_enrollment_term) VALUES(?,?,?);");
             for (Student student : students) {
-                ps = conn.prepareStatement("insert into " +
-                        "enrollment(fk_enrollment_student, fk_enrollment_course, fk_enrollment_term) VALUES(?,?,?);");
                 ps.setInt(1, student.getStudentId());
                 ps.setInt(2, courseID);
                 ps.setInt(3, termID);
@@ -103,44 +150,34 @@ public class CourseDaoImpl implements CourseDao {
         return false;
     }
     /* todo: maybe change the parameters of the function based on what information is pulled from the page
-    *       when adding a set of students and their student work products*/
+     *       when adding a set of students and their student work products*/
     @Override
-    public boolean assocSWPs2Course(List<StudentWorkProduct> swpList, int courseID, int termID, String instructorUname) {
+    public boolean assocSwp2Course(StudentWorkProduct swp) {
         SwpDaoImpl swpDaoImpl = new SwpDaoImpl();
         PreparedStatement ps = null;
         Connection conn = ConnectionFactory.getConnection();
         try {
-            conn.setAutoCommit(false);//if one of the inserts fails, this allows for rollbacks
-            for (StudentWorkProduct swp: swpList) {
-                ps = conn.prepareStatement("insert into " +
-                        "student_work_product(swp_title, swp_grade, fk_swp_course,fk_swp_term,fk_swp_student,fk_swp_instructor) " +
-                        "VALUES(?,?,?,?,?,?);");
-                ps.setString(1, swp.getName());
-                ps.setFloat(2, swp.getGrade());
-                ps.setInt(3, courseID);
-                ps.setInt(4, termID);
-                ps.setInt(5, swp.getStudentID());
-                ps.setString(6, instructorUname);
-                //opens another connection...may cause double null
-                swpDaoImpl.assocStudentOutcomes(swp.getSoList(), swp.getSwpID());
-                ps.addBatch();
-            }
-            assert ps != null;
-            ps.executeBatch();
-            ps.close();
-            conn.setAutoCommit(true);
-            conn.close();
-            return true;
-        } catch (SQLException throwables) {
-            /* if execute batch throws an exception( means one of them failed to execute )
-             *   we can rollback the changes*/
-            try {
-                conn.rollback();
-                conn.setAutoCommit(true);
+            ps = conn.prepareStatement("insert into " +
+                    "student_work_product(swp_title, swp_grade, fk_swp_course,fk_swp_term,fk_swp_student,fk_swp_instructor) " +
+                    "VALUES(?,?,?,?,?,?);");
+            ps.setString(1, swp.getName());
+            ps.setFloat(2, swp.getGrade());
+            ps.setInt(3, swp.getCourseID());
+            ps.setInt(4, swp.getTermID());
+            ps.setInt(5, swp.getStudentID());
+            ps.setString(6, swp.getInstructorUname());
+            //opens another connection...may cause double null
+            //swpDaoImpl.assocStudentOutcomes(swp.getSoList(), swp.getSwpID());
+            boolean success = ps.execute();
+            if (success) {
                 ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                conn.close();
+                return true;
             }
+            ps.close();
+            conn.close();
+            return false;
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return false;
@@ -149,8 +186,8 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     /*assumes that TermDaoImpl.assocCourse has already been called
-    * - meaning that theres an entry inside of TEACHES table where instructor = null
-    *   that's where we will insert the instructor*/
+     * - meaning that theres an entry inside of TEACHES table where instructor = null
+     *   that's where we will insert the instructor*/
     public boolean associateInstructor(Instructor instructor, int termID, int courseID) {
         Connection conn = ConnectionFactory.getConnection();
         try {
@@ -226,13 +263,37 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public List<String> getSwpNames(int courseID, int termID) {
+        List<String> swpNames = new LinkedList<>();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select distinct swp_title from student_work_product " +
+                    "where fk_swp_course = ? AND fk_swp_term = ?;" );
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                swpNames.add(rs.getString("swp_title"));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return swpNames;
+
+    }
+
+    @Override
     public List<StudentWorkProduct> getSWPs4Course(int courseID, int termID) {
         List<StudentWorkProduct> swpList = new LinkedList<>();
         SwpDaoImpl swpDaoImpl = new SwpDaoImpl();
         Connection conn = ConnectionFactory.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement("select * from student_work_product " +
-                    "where fk_swp_course = ? AND fk_swp_term = ?;");
+                    "where fk_swp_course = ? AND fk_swp_term = ? " +
+                    "order by swp_id ;");
             ps.setInt(1, courseID);
             ps.setInt(2, termID);
             ResultSet rs = ps.executeQuery();
@@ -242,7 +303,7 @@ public class CourseDaoImpl implements CourseDao {
                 swp.setName(rs.getString("swp_title"));
                 swp.setSwpID(rs.getInt("swp_id"));
                 swp.setStudentID(rs.getInt("fk_swp_student"));
-                swp.setInstructorID(rs.getString("fk_swp_instructor"));
+                swp.setInstructorUname(rs.getString("fk_swp_instructor"));
                 swp.setSoList(null);
                 swpList.add(swp);
             }
@@ -256,27 +317,71 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public boolean addCourse(Course course) {
+        boolean isAddSuccessful = false;
+        Connection conn = ConnectionFactory.getConnection();
+        try{
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO course(course_id,course_title,department_id,course_number)" + "VALUES (?,?,?,?);");
+            ps.setInt(1,course.getCourseID());
+            ps.setString(2,course.getCourseTitle());
+            ps.setString(3,course.getDepartment());
+            ps.setInt(4,course.getCourseNumber());
+
+            int rowChanged = ps.executeUpdate();
+            if (rowChanged == 0)
+            {
+                return isAddSuccessful;
+            }
+            else
+            {
+                isAddSuccessful = true;
+                ps.close();
+                conn.close();
+                return isAddSuccessful;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return isAddSuccessful;
+    }
+@Override
+public boolean courseExist(Course course)
+{
+    Connection conn = ConnectionFactory.getConnection();
+    try {
+        PreparedStatement ps = conn.prepareStatement("select * from course where " +
+                "course_title = ? AND department_id = ?;" );
+        ps.setString(1, course.getCourseTitle());
+        ps.setString(2,course.getDepartment());
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return false;
+            //if resultset returns nothing then term doesn't exist yet
+        } else {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+
+    } catch (SQLException throwables) {
+        throwables.printStackTrace();
+    }
+
+    return false;
+}
+    @Override
     public List<StudentOutcome> getSOs4Course(int courseID, int termID) {
         return null;
     }
 
     @Override
     public List<StudentWorkProduct> getCoursesMeanSWPOverTime(int courseID, int[] termIDRange) {
-        /*- StudentOutcome class has private double performance;
-            - create sum, counter, studentOutcome INT variable and mean DOUBLE variable
-            - Instrcutor instructor = new instructor;
-            - grab first row in ResultSet and set that studentOUtcome variable to the first Row's so_id
-            - for each row in ResultSet
-                - sum += resultset.getInt(grade)
-                - counter++;
-                - IF ResultSet.next(getInt(so_id) != studentOutcome
-                    - mean = sum/counter;
-                    - So.setPerformance(mean)
-                    - mean,counter,sum=0;
-                    - studentOutcome (local variable) = ResultSet.next(getInt(fulfills.fk_fulfills_so))
-                    - StudentOUtcome so = new studentOutcome;
-                    - so.setPerformance(mean);
-                    - soList.add(so);*/
         List<StudentWorkProduct> swps = new LinkedList<>();
         Connection conn = ConnectionFactory.getConnection();
 
@@ -284,8 +389,38 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     /* each of the student Outcomes in the returned list holds its own performance variable
-    *
-    * - is a list of all student outcome performances for each student outcome*/
+     *
+     * - is a list of all student outcome performances for each student outcome*/
+    public String[] SOnames(int courseID, int termID) {
+        List<String> nameList = new LinkedList<>();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select distinct so.student_outcome_id from student_work_product " +
+                    "join fulfills f on student_work_product.swp_id = f.fk_fulfills_swp " +
+                    "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
+                    "where fk_swp_course = ? AND fk_swp_term = ? " +
+                    "order by f.fk_fulfills_so;");
+            ps.setInt(1,courseID);
+            ps.setInt(2,termID);
+            ResultSet rs = ps.executeQuery();
+
+            nameList.add("SO");
+            while (rs.next()) {
+                nameList.add("SO" + rs.getInt("student_outcome_id"));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String[] names = new String[nameList.size()];
+        names[0] = "SO";
+        for (int i = 1; i< nameList.size(); i++) {
+            names[i] = nameList.get(i);
+        }
+        return names;
+    }
     @Override
     public List<StudentOutcome> getCourseSORaw(int courseID, int termID) {
         List<StudentOutcome> soList = new LinkedList<>();
@@ -296,12 +431,17 @@ public class CourseDaoImpl implements CourseDao {
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 StudentOutcome so = new StudentOutcome(rs.getInt("student_outcome_id"),
                         rs.getFloat("swp_grade"), rs.getString("student_outcome_title"));
                 soList.add(so);
             }
+            rs.close();
+            ps.close();
+            conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -320,19 +460,25 @@ public class CourseDaoImpl implements CourseDao {
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
             ResultSet rs = ps.executeQuery();
             rs.next();
 
             float counter = 1;
             int currOutcomeID = rs.getInt("student_outcome_id");
             float sum = rs.getFloat("swp_grade");
-
+            StudentOutcome so = new StudentOutcome(currOutcomeID,sum,rs.getString("student_outcome_title"));
+            int firstListIndex = 0;
+            soList.add(so);
             while (rs.next()) {
                 if(rs.getInt("student_outcome_id") != currOutcomeID) {
-                    StudentOutcome so = new StudentOutcome(currOutcomeID,
-                            (sum/counter),
+                    soList.get(firstListIndex).setPerformance(sum/counter); //sets performance of first studentOutcome to the mean
+                    so = new StudentOutcome(rs.getInt("student_outcome_id"),
+                            -1,
                             rs.getString("student_outcome_title"));
                     soList.add(so);
+                    firstListIndex++;
                     sum=rs.getFloat("swp_grade");
                     counter=1;
                     currOutcomeID=rs.getInt("student_outcome_id");
@@ -341,6 +487,10 @@ public class CourseDaoImpl implements CourseDao {
                     sum += rs.getFloat("swp_grade");
                 }
             }
+            rs.close();
+            ps.close();
+            conn.close();
+            soList.get(firstListIndex).setPerformance(sum/counter);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -357,45 +507,158 @@ public class CourseDaoImpl implements CourseDao {
                     "join student_outcome so on fk_fulfills_so = so.student_outcome_id " +
                     "where fk_swp_course = ? AND fk_swp_term = ? " +
                     "order by f.fk_fulfills_so;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
             ResultSet rs = ps.executeQuery();
             rs.next();
 
             float counter = 1;
             int currOutcomeID = rs.getInt("student_outcome_id");
-
+            int listIndex = 0;
+            StudentOutcome so = new StudentOutcome(currOutcomeID,-1,rs.getString("student_outcome_title"));
             ArrayList<Float> grades = new ArrayList<Float>();
             grades.add(rs.getFloat("swp_grade"));
+            soList.add(so);
             while (rs.next()) {
                 if(rs.getInt("student_outcome_id") != currOutcomeID) {
-                    float median;
-                    int size = grades.size();
-                    if (grades.size() %2 == 0) {
-                        median = ((grades.get(size-1)+(grades.get(size+1))/2));
-                        StudentOutcome so = new StudentOutcome(currOutcomeID,
-                                median,
-                                rs.getString("student_outcome_title"));
-                        soList.add(so);
-                    } else {
-                        median = grades.get(size/2);
-                        StudentOutcome so = new StudentOutcome(currOutcomeID,
-                                median,
-                                rs.getString("student_outcome_title"));
-                        soList.add(so);
-                    }
-                    counter=1;
+                    float median = getMedian(grades);
+                    soList.get(listIndex).setPerformance(median);
+                    so = new StudentOutcome(rs.getInt("student_outcome_id"),
+                            -1,
+                            rs.getString("student_outcome_title"));
+                    soList.add(so);
+                    listIndex++;
                     currOutcomeID=rs.getInt("student_outcome_id");
                     grades.clear();
                     grades.add(rs.getFloat("swp_grade"));
                     counter=1;
-                    currOutcomeID=rs.getInt("student_outcome_id");
                 } else {
                     counter++;
                     grades.add(rs.getFloat("swp_grade"));
                 }
             }
+            rs.close();
+            ps.close();
+            conn.close();
+            soList.get(listIndex).setPerformance(getMedian(grades));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return soList;
+    }
+    public Float getMedian(ArrayList<Float> grades) {
+        int half = grades.size()/2;
+        float median;
+        if (grades.size() %2 == 0) {
+            median = ((grades.get(half)+(grades.get(half-1))/2));
+        } else {
+            median = grades.get(grades.size()/2);
+        }
+        return median;
+    }
+    //todo doesn't work with 1 so
+    public Float[][] so2Array(List<StudentOutcome> soList,String[] soNames) {
+        Float[][] list = new Float[soList.size()][soNames.length];
+        for (int i = 0; i < soList.size();i++) {
+            if (i == 0) {
+                list[i][0]= (float)i;
+                list[i][1] = soList.get(i).getPerformance();
+            } else if (soList.get(i).getSoID() > soList.get(i-1).getSoID()) {
+                int newsize = soList.size() - i;
+                for (int j=0;j<newsize;j++) {
+                    int k = i+j;
+                    list[j][2] = soList.get(k).getPerformance();
+                }
+                i = soList.size();
+            } else {
+                list[i][0]= (float)i;
+                list[i][1] = soList.get(i).getPerformance();
+            }
+        }
+
+        return list;
+    }
+    public static void main(String[] args) throws MessagingException {
+        JavaMail jmail = new JavaMail();
+        jmail.sendEmail("dragomundoh@gmail.com", "body ofmessage", "Test subject");
+
+    }
+    private int courseCount(){
+        int count = -1;
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select count(*) as count from course;" );
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            count = rs.getInt("count");
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return count;
+    }
+    public Course[] courseList2Arr(List<Course> courseList) {
+        Course[] courses = new Course[courseCount()];
+        for (int i = 0; i <courseList.size();i++) {
+            courses[i] = courseList.get(i);
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCoursesAssoc2Instructor(int termID, int courseID) {
+        Connection conn = ConnectionFactory.getConnection();
+        List<Course> courseList = new LinkedList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from course " +
+                    "join teaches t on course.course_id = t.fk_teaches_course " +
+                    "where course_id = ? AND fk_teaches_term = ?;");
+            ps.setInt(1, courseID);
+            ps.setInt(2, termID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course(rs.getInt("course_id"),
+                        rs.getInt("course_number"),
+                        rs.getString("department_id"),
+                        rs.getString("course_title"));
+                courseList.add(course);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return courseList;
+    }
+
+    @Override
+    public List<Course> getCoursesNotAssocWInstructor(){
+        Connection conn = ConnectionFactory.getConnection();
+        List<Course> courseNotAssoc = new LinkedList<>();
+        try{
+            PreparedStatement ps = conn.prepareStatement("Select * from course join teaches " +
+                    "on course.course_id = teaches.fk_teaches_course " +
+                    "where teaches.fk_teaches_instructor IS null;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course();
+                course.setCourseID(rs.getInt("course_id"));
+                course.setDepartment(rs.getString("department_id"));
+                course.setCourseTitle(rs.getString("course_title"));
+                course.setCourseNumber(rs.getInt("course_number"));
+                courseNotAssoc.add(course);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return  courseNotAssoc;
     }
 }

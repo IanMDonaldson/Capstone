@@ -8,4 +8,5 @@ public interface StudentOutcomeDao {
     public List<StudentOutcome> getAllSO();
     public List<StudentOutcome> getAllSOforCourse(Course course);
     public StudentOutcome getSOforSWP(StudentWorkProduct swp);
+    StudentOutcome getSO(int soID);
 }

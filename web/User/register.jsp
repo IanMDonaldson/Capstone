@@ -135,16 +135,16 @@ input[type=submit]:hover {
     
 
   <div class="topnav">
-    <a class="active" href="home_Page.jsp">Home</a>
+    <a class="active" href="home_page.jsp">Home</a>
     <div class="topnav-right">
-      <a href="login.jsp">Login</a>
-      <a href="register.jsp">Register</a>
+      <a href="LoginServlet?action=loginGET">Login</a>
+      <a href="RegisterServlet?action=registerGET">Register</a>
     </div>
   </div>
 
 
   <div class="container">
-    <form action="/action_page.php">
+    <form action="Register?action=registerPOST" method="post">
 
         <h1 class="title_pg" >DCIA Register</h1>
 
@@ -154,15 +154,17 @@ input[type=submit]:hover {
           <input type="text" name="last_name" placeholder="Last Name" required>
         </div>
           <input type="text" name="email" placeholder="Enter Email" required>
-
-          <select name="accessLevel" id="access_Level" required>
+            <label for="access_level">Access Level: </label>
+          <select name="access_level" id="access_level" required>
             <option value="admin">Admin</option>
             <option value="instructor">Instructor</option>
           </select>
-
-
-          <input type="password" name="password" placeholder="Password" required>
-          <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <label for="username">Username: </label>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <label for="password">Password: </label>
+          <input type="password" name="password" id="password" placeholder="Password" required>
+            <label for="confirm_password">Confirm Password: </label>
+          <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
 
           <input class="registation_btn" type="submit" value="Register">
         </div>
@@ -171,7 +173,14 @@ input[type=submit]:hover {
     </form>
   </div>
   
- 
+<script>
+    $('#password, #confirm_password').on('keyup', function () {
+        if ($('#password').val() === $('#confirm_password').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+    });
+</script>
   
 
 </body>

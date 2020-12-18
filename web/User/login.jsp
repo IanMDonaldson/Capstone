@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -141,31 +142,27 @@ input[type=submit]:hover {
         </style>
 </head>
 <body style="background-color:#F7F8FC;">
-    
 
-  <div class="topnav">
-    <a class="active" href="home_Page.html">Home</a>
-    <div class="topnav-right">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
+
+<div class="topnav">
+  <a class="active" href="home_page.jsp">Home</a>
+  <div class="topnav-right">
+    <a href="LoginServlet?action=loginGET">Login</a>
+    <a href="Register?action=registerGET">Register</a>
   </div>
+</div>
 
 
   <div class="container">
-    <form action="Login?action=loginPOST" method="post">
+    <form action="LoginServlet?action=loginPOST" method="post">
       <div class="row">
         <h1 class="title_pg">DCIA Login</h1>
 
         <div class="col">
-          <select name="access_Level" id="access_Level" required>
-            <option value="admin">Admin</option>
-            <option value="instructor">Instructor</option>
-          </select>
           <label for="username"><b>Username:</b></label>
-          <input type="text" name="username" id="username" placeholder="Enter Username" required>
+          <input type="text" name="j_username" id="username" placeholder="Enter Username" required>
           <label for="password"><b>Password:</b></label>
-          <input type="password" name="password" id="password" placeholder="Enter Password" required>
+          <input type="password" name="j_password" id="password" placeholder="Enter Password" required>
           <a href="home_page.jsp" style="float:right;">Forgotten Password?</a>
           <input class="login_btn" type="submit" value="Login">
         </div>
@@ -173,6 +170,9 @@ input[type=submit]:hover {
       </div>
     </form>
   </div>
+  <c:forEach items="${sessionScope.messages}" var="message">
+    <h1>${message}</h1>
 
+  </c:forEach>
 </body>
 </html>

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Student {
     private int studentId;
-    private List<Student> studentList;
+    private List<StudentWorkProduct> swpList;
     private String studentFname;
     private String StudentLname;
 
@@ -16,12 +16,12 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public List<Student> getStudentList() {
-        return studentList;
+    public List<StudentWorkProduct> getSwpList() {
+        return swpList;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setSwpList(List<StudentWorkProduct> swpList) {
+        this.swpList = swpList;
     }
 
     public String getStudentFname() {

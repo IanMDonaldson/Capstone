@@ -4,15 +4,34 @@ import java.util.List;
 
 public class StudentWorkProduct {
     private float grade;
-    private String name;
-    private int swpID;
-    private List<StudentOutcome> soList;
-    private int studentID;
-    private String instructorID;
-    private int termID;
     private int courseID;
+    private int studentID;
+    private int swpID;
+    private int termID;
+    private List<StudentOutcome> soList;
+    private String instructorUname;
+    private String name;
+    public StudentWorkProduct() {}
 
-
+    public StudentWorkProduct(int swpID, String name, int courseID, int termID, String instructorUname, int studentID, float grade, List<StudentOutcome> soList) {
+        this.swpID = swpID;
+        this.name = name;
+        this.courseID = courseID;
+        this.termID = termID;
+        this.instructorUname = instructorUname;
+        this.grade = grade;
+        this.soList = soList;
+    }
+    public StudentWorkProduct(int swpID, String name, int courseID, int termID, String instructorUname, int studentID, float grade) {
+        this.swpID = swpID;
+        this.name = name;
+        this.courseID = courseID;
+        this.termID = termID;
+        this.instructorUname = instructorUname;
+        this.studentID = studentID;
+        this.grade = grade;
+        this.soList = null;
+    }
 
     public float getGrade() {
         return grade;
@@ -55,12 +74,12 @@ public class StudentWorkProduct {
         this.studentID = studentID;
     }
 
-    public String getInstructorID() {
-        return instructorID;
+    public String getInstructorUname() {
+        return instructorUname;
     }
 
-    public void setInstructorID(String instructorID) {
-        this.instructorID = instructorID;
+    public void setInstructorUname(String instructorUname) {
+        this.instructorUname = instructorUname;
     }
 
     public int getTermID() {

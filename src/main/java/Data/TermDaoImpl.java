@@ -13,7 +13,56 @@ public class TermDaoImpl implements TermDao {
 
     @Override
     public boolean termExists(Term term) {
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from term where " +
+                    "term_name = ? AND term_year = ?;" );
+            ps.setString(1, term.getTermName());
+            ps.setInt(2, term.getTermYear());
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                rs.close();
+                ps.close();
+                conn.close();
+                return false;
+                //if resultset returns nothing then term doesn't exist yet
+            } else {
+                rs.close();
+                ps.close();
+                conn.close();
+                return true;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return false;
+    }
+
+    @Override
+    public Term getLastTerm() {
+        Term term = new Term();
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from term;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.isLast()) {
+                    term.setTermName(rs.getString("term_name"));
+                    term.setTermYear(rs.getInt("term_year"));
+                    term.setTermId(rs.getInt("term_id"));
+                }
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return term;
     }
 
     @Override
@@ -30,6 +79,8 @@ public class TermDaoImpl implements TermDao {
             int rowChanged = ps.executeUpdate();
             if (rowChanged == 0)
             {
+                ps.close();
+                conn.close();
                 return isAddSuccessful;
             }
             else
@@ -80,13 +131,37 @@ public class TermDaoImpl implements TermDao {
                 term.setTermYear(rs.getInt("term_year"));
                 termList.add(term);
             }
+            rs.close();
+            ps.close();
+            conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return termList;
     }
-
+    private int termCount(){
+        int count = -1;
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("select count(*) as count from term;" );
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            count = rs.getInt("count");
+            conn.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return count;
+    }
+    public Term[] termList2Arr(List<Term> termList) {
+        Term[] terms = new Term[termCount()];
+        for (int i = 0; i<termList.size();i++) {
+            terms[i] = termList.get(i);
+        }
+        return terms;
+    }
 
     /*inside 3.3.2 Setup - Department's Courses- Admin will enter the information
      *for the set of courses offered by the department
@@ -102,6 +177,8 @@ public class TermDaoImpl implements TermDao {
             ps.setInt(2, termID);
             int rowChange = ps.executeUpdate();
             if (rowChange == 0) {
+                ps.close();
+                conn.close();
                 return false;
             } else {
                 ps.close();
